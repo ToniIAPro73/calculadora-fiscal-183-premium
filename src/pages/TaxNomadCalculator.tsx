@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
@@ -183,9 +183,9 @@ const TaxNomadCalculator: React.FC = () => {
               <span className="font-light text-xs tracking-widest uppercase">© 2026 TaxNomad Digital Utility</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
-              <a href="#" className="hover:text-primary transition-colors">{t('footer.privacy')}</a>
-              <a href="#" className="hover:text-primary transition-colors">{t('footer.terms')}</a>
-              <a href="#" className="hover:text-primary transition-colors">Contact</a>
+              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer">{t('footer.privacy')}</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer">{t('footer.terms')}</Link>
+              <a href="mailto:support@taxnomad.app" className="hover:text-primary transition-colors cursor-pointer">Contact</a>
            </div>
         </div>
       </footer>

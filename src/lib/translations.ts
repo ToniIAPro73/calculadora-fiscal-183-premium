@@ -36,19 +36,32 @@ export const translations = {
       limitUsage: "Day Limit Usage %",
       status: "Status",
     },
+    calculator: {
+      totalDays: "Total Days",
+    },
     summary: {
       title: "Summary",
       status: "Status",
     },
+    labels: {
+      name: "Name",
+      taxId: "Tax ID / NIE",
+    },
     actions: {
       downloadPdf: "Download Audit-Ready PDF - 9.99 €",
-      viewExample: "View example"
+      viewExample: "View example",
+      cancel: "Cancel",
+      downloadReport: "Download PDF Report",
+      backHome: "Back Home"
     },
     toast: {
       overlap: "Note: Overlapping days detected and excluded for accuracy",
       rangeAdded: "Date range added",
       rangeRemoved: "Date range removed",
-      stripeMock: "Stripe Integration Detected. Awaiting API keys to process real payment."
+      stripeMock: "Stripe Integration Detected. Awaiting API keys to process real payment.",
+      mockModeEnabled: "Mock mode enabled - development only",
+      paymentSuccess: "Payment successful!",
+      successReport: "Report downloaded successfully!"
     },
     userDetails: {
       title: "Report Details",
@@ -113,13 +126,25 @@ export const translations = {
       poweredBy: "Powered by Infrastructure"
     },
     payment: {
-      successTitle: "Payment Successful",
-      successDesc: "Your premium report is now ready for download.",
-      errorTitle: "Payment Failed",
-      errorDesc: "Something went wrong with your transaction. Please try again.",
-      downloadReport: "Download Premium PDF",
-      backToDashboard: "Back to Dashboard",
-      tryAgain: "Try Again"
+      title: "Complete Your Purchase",
+      item: "Premium Report",
+      days: "Total Days",
+      total: "Total",
+      secureNote: "Payments are securely processed by Stripe. Your card information is never stored on our servers.",
+      vatNote: "Price includes 21% VAT. EU consumers will receive a VAT invoice.",
+      processing: "Processing...",
+      payNow: "Pay €9.99",
+      verifying: "Verifying payment...",
+      reportDetails: "Report Details",
+      sessionId: "Session ID",
+      generating: "Generating...",
+      pdfReady: "Your PDF is Ready",
+      pdfNote: "Download your report anytime. This page will remain accessible for 30 days.",
+      successTitle: "Payment Confirmed",
+      successMessage: "Your premium tax report is ready for download. Your payment has been processed securely.",
+      pendingTitle: "Payment Pending",
+      pendingMessage: "Your payment is being processed. This page will update automatically.",
+      errorTitle: "Verification Failed",
     },
     onboarding: {
       welcomeTitle: "Welcome to TaxNomad",
@@ -173,19 +198,32 @@ export const translations = {
       limitUsage: "Límite de Días %",
       status: "Estado",
     },
+    calculator: {
+      totalDays: "Días Totales",
+    },
     summary: {
       title: "Resumen",
       status: "Estado",
     },
+    labels: {
+      name: "Nombre",
+      taxId: "Número de Pasaporte / NIE",
+    },
     actions: {
       downloadPdf: "Descargar PDF Listo para Auditoría - 9.99 €",
-      viewExample: "Ver ejemplo"
+      viewExample: "Ver ejemplo",
+      cancel: "Cancelar",
+      downloadReport: "Descargar Informe PDF",
+      backHome: "Volver al Inicio"
     },
     toast: {
       overlap: "Nota: Días superpuestos detectados y excluidos para mayor precisión",
       rangeAdded: "Rango de fechas añadido",
       rangeRemoved: "Rango de fechas eliminado",
-      stripeMock: "Integración de Stripe detectada. Esperando claves API para procesar el pago real."
+      stripeMock: "Integración de Stripe detectada. Esperando claves API para procesar el pago real.",
+      mockModeEnabled: "Modo mock habilitado - solo para desarrollo",
+      paymentSuccess: "¡Pago exitoso!",
+      successReport: "¡Informe descargado exitosamente!"
     },
     userDetails: {
       title: "Datos del Informe",
@@ -250,13 +288,25 @@ export const translations = {
       poweredBy: "Impulsado por Infraestructura"
     },
     payment: {
-      successTitle: "Pago Exitoso",
-      successDesc: "Tu informe premium ya está listo para descargar.",
-      errorTitle: "Pago Fallido",
-      errorDesc: "Algo salió mal con tu transacción. Por favor, inténtalo de nuevo.",
-      downloadReport: "Descargar PDF Premium",
-      backToDashboard: "Volver al Panel",
-      tryAgain: "Intentar de Nuevo"
+      title: "Completa tu Compra",
+      item: "Informe Premium",
+      days: "Días Totales",
+      total: "Total",
+      secureNote: "Los pagos se procesan de forma segura a través de Stripe. Tu información de tarjeta nunca se almacena en nuestros servidores.",
+      vatNote: "El precio incluye IVA del 21%. Los consumidores de la UE recibirán una factura de IVA.",
+      processing: "Procesando...",
+      payNow: "Pagar €9.99",
+      verifying: "Verificando pago...",
+      reportDetails: "Detalles del Informe",
+      sessionId: "ID de Sesión",
+      generating: "Generando...",
+      pdfReady: "Tu PDF está Listo",
+      pdfNote: "Descarga tu informe en cualquier momento. Esta página permanecerá accesible durante 30 días.",
+      successTitle: "Pago Confirmado",
+      successMessage: "Tu informe fiscal premium está listo para descargar. Tu pago se ha procesado de forma segura.",
+      pendingTitle: "Pago Pendiente",
+      pendingMessage: "Tu pago se está procesando. Esta página se actualizará automáticamente.",
+      errorTitle: "Verificación Fallida",
     },
     onboarding: {
       welcomeTitle: "Bienvenido a TaxNomad",

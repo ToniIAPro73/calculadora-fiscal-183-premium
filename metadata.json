@@ -1,0 +1,7 @@
+{
+  "name": "183-Day Tax Calculator Premium",
+  "description": "Premium version of the 183-day fiscal residency calculator with advanced features for digital nomads in Spain and EU. Includes audit-ready PDF reports and comprehensive tax planning tools.",
+  "version": "1.0.0",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["PDF Report Generation", "Tax Calculation", "Multi-Language Support", "Dark Theme"]
+}

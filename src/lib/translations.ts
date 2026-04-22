@@ -36,6 +36,10 @@ export const translations = {
       limitUsage: "Day Limit Usage %",
       status: "Status",
     },
+    summary: {
+      title: "Summary",
+      status: "Status",
+    },
     actions: {
       downloadPdf: "Download Audit-Ready PDF - 9.99 €",
       viewExample: "View example"
@@ -167,6 +171,10 @@ export const translations = {
       totalDays: "Total de Días Seleccionados",
       remainingDays: "Días Restantes",
       limitUsage: "Límite de Días %",
+      status: "Estado",
+    },
+    summary: {
+      title: "Resumen",
       status: "Estado",
     },
     actions: {

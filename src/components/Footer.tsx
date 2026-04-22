@@ -31,14 +31,14 @@ const Footer: React.FC = () => {
           {/* Product */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.product') || 'Product'}</h4>
-            <ul className="space-y-3 text-sm opacity-60">
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/" className="hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.calculator') || 'Calculator'}
                 </Link>
               </li>
               <li>
-                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.authority') || 'Tax Authority'}
                 </a>
               </li>
@@ -48,14 +48,14 @@ const Footer: React.FC = () => {
           {/* Legal */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.legal') || 'Legal'}</h4>
-            <ul className="space-y-3 text-sm opacity-60">
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/privacy" className="hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/privacy" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.privacy') || 'Privacy Policy'}
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/terms" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.terms') || 'Terms of Service'}
                 </Link>
               </li>
@@ -65,16 +65,16 @@ const Footer: React.FC = () => {
           {/* Contact */}
           <div className="space-y-4">
             <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.support') || 'Support'}</h4>
-            <div className="space-y-3 text-sm opacity-60">
+            <div className="space-y-3 text-sm">
               <div className="font-light">
                 <p className="text-xs opacity-50 mb-1">{t('footer.contactEmail') || 'Email'}</p>
-                <a href="mailto:support@taxnomad.app" className="hover:opacity-100 transition-opacity hover:text-primary">
+                <a href="mailto:support@taxnomad.app" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
                   support@taxnomad.app
                 </a>
               </div>
               <div className="font-light">
                 <p className="text-xs opacity-50 mb-1">{t('footer.website') || 'Website'}</p>
-                <a href="https://taxnomad.app" className="hover:opacity-100 transition-opacity hover:text-primary">
+                <a href="https://taxnomad.app" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
                   taxnomad.app
                 </a>
               </div>

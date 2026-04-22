@@ -9,6 +9,7 @@ import ProgressBar from '@/components/ProgressBar';
 import SummaryCard from '@/components/SummaryCard';
 import DataAuthoritySection from '@/components/DataAuthoritySection';
 import UserDetailsModal from '@/components/UserDetailsModal';
+import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
 import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,7 +23,8 @@ const TaxNomadCalculator: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [userData, setUserData] = useState({ name: '', documentType: 'passport', taxId: '', email: '' });
 
@@ -60,30 +62,14 @@ const TaxNomadCalculator: React.FC = () => {
     }
   };
 
-  const handleGenerateReport = async () => {
-    setIsProcessing(true);
-    try {
-      await handleDownloadPremiumPDF();
-      setIsModalOpen(false);
-    } finally {
-      setIsProcessing(false);
-    }
+  const handleConfirmUserDetails = () => {
+    setIsUserDetailsModalOpen(false);
+    setIsPaymentModalOpen(true);
   };
 
-  const handleDownloadPremiumPDF = async () => {
-    try {
-      const doc = await generateTaxReport({
-        name: userData.name || 'Premium User',
-        taxId: userData.taxId || 'N/A',
-        documentType: userData.documentType,
-        totalDays,
-        ranges: selectedRanges,
-      });
-      doc.save(`TaxNomad_Report_2026_Premium.pdf`);
-      toast.success(t('toast.successReport') || 'Report generated successfully!');
-    } catch (error) {
-      toast.error(t('toast.errorReport') || 'Failed to generate report');
-    }
+  const handlePaymentSuccess = async () => {
+    setIsPaymentModalOpen(false);
+    toast.success(t('toast.paymentSuccess') || 'Payment successful! Your report is being prepared...');
   };
 
 
@@ -139,7 +125,7 @@ const TaxNomadCalculator: React.FC = () => {
                   <div className="space-y-4">
                     <Button
                       disabled={totalDays === 0}
-                      onClick={() => setIsModalOpen(true)}
+                      onClick={() => setIsUserDetailsModalOpen(true)}
                       className="w-full h-20 rounded-3xl text-sm tracking-[0.2em] font-bold gap-3 shadow-2xl bg-primary hover:bg-primary/80 transition-all active:scale-95"
                     >
                       <FileDown className="w-5 h-5" />
@@ -192,11 +178,20 @@ const TaxNomadCalculator: React.FC = () => {
 
 
       <UserDetailsModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleGenerateReport}
+        isOpen={isUserDetailsModalOpen}
+        onClose={() => setIsUserDetailsModalOpen(false)}
+        onConfirm={handleConfirmUserDetails}
         userData={userData}
         setUserData={setUserData}
+        isLoading={isProcessing}
+      />
+
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        userData={userData}
+        totalDays={totalDays}
+        onPaymentSuccess={handlePaymentSuccess}
         isLoading={isProcessing}
       />
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Button } from '@/components/ui/button';
-import { X, ChevronRight, Check, Calendar, Merge, BarChart3, FileText } from 'lucide-react';
+import { ChevronRight, Check, Calendar, Merge, BarChart3, FileText } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const steps = [
@@ -54,15 +54,7 @@ const OnboardingTutorial: React.FC = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[440px] p-0 overflow-hidden border-none glass shadow-none">
-        <div className="relative p-12 flex flex-col items-center text-center space-y-8">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={handleClose}
-            className="absolute right-4 top-4 hover:bg-white/5 rounded-full"
-          >
-            <X className="w-4 h-4 text-white/40" />
-          </Button>
+        <div className="p-12 flex flex-col items-center text-center space-y-8">
 
           <AnimatePresence mode="wait">
             <motion.div

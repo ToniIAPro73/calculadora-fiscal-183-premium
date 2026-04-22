@@ -29,28 +29,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const {
-    name,
-    taxId,
-    email,
-    totalDays,
-    statusLabel,
-    documentType = 'passport',
-    ranges = [],
-  } = req.body as CreateSessionRequest;
+  try {
+    const {
+      name,
+      taxId,
+      email,
+      totalDays,
+      statusLabel,
+      documentType = 'passport',
+      ranges = [],
+    } = req.body as CreateSessionRequest;
 
-  if (!name || !taxId) {
-    return res.status(400).json({ error: 'name and taxId are required' });
-  }
+    if (!name || !taxId) {
+      return res.status(400).json({ error: 'name and taxId are required' });
+    }
 
-  const stripeKey = process.env.STRIPE_SECRET_KEY;
-  const priceId = process.env.STRIPE_PRICE_ID;
-  const appUrl = process.env.APP_URL;
-  const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
+    const priceId = process.env.STRIPE_PRICE_ID;
+    const appUrl = process.env.APP_URL;
+    const databaseUrl = process.env.DATABASE_URL;
+    const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
 
-  // ── REAL STRIPE MODE ──────────────────────────────────────────
-  if (stripeKey) {
-    try {
+    // ── REAL STRIPE MODE ──────────────────────────────────────────
+    if (stripeKey && databaseUrl) {
       const stripe = new Stripe(stripeKey);
       const baseUrl = normalizeBaseUrl(appUrl || '');
 
@@ -113,20 +114,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
 
       return res.status(200).json({ url: session.url, mode: 'stripe' });
-    } catch (err) {
-      const error = err as Error;
-      console.error('Stripe error:', error.message);
-      return res.status(500).json({ error: error.message });
     }
-  }
 
-  // ── MOCK / DEV MODE ──────────────────────────────────────────
-  if (isProduction) {
-    return res.status(500).json({ error: 'Stripe is not configured for production' });
-  }
+    // ── MOCK / DEV MODE ──────────────────────────────────────────
+    if (isProduction) {
+      return res.status(500).json({ error: 'Stripe is not configured for production' });
+    }
 
-  return res.status(200).json({
-    url: '/payment-mock',
-    mode: 'mock_dev',
-  });
+    return res.status(200).json({
+      url: '/payment-mock',
+      mode: 'mock_dev',
+    });
+  } catch (error) {
+    const err = error as Error;
+    console.error('Checkout session error:', err.message);
+    return res.status(500).json({ error: err.message || 'Failed to create checkout session' });
+  }
 }

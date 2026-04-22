@@ -6,6 +6,7 @@ interface CreateSessionRequest {
   name: string;
   taxId: string;
   totalDays: number;
+  email?: string;
   statusLabel?: string;
   documentType?: string;
   ranges?: Array<{ start: Date; end: Date }>;
@@ -31,6 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const {
     name,
     taxId,
+    email,
     totalDays,
     statusLabel,
     documentType = 'passport',
@@ -85,6 +87,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         payment_method_types: ['card'],
         line_items: [{ price: priceId, quantity: 1 }],
         mode: 'payment',
+        customer_email: email || undefined,
         success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/?cancelled=true`,
         client_reference_id: clientReferenceId,

@@ -42,6 +42,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           name: userData.name,
           taxId: userData.taxId,
           documentType: userData.documentType,
+          email: userData.email,
           totalDays,
           statusLabel: `${totalDays} days of physical presence in Spain`,
         }),

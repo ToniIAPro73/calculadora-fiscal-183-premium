@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Globe, Sun, Moon, FileText, Info } from 'lucide-react';
 
@@ -11,14 +12,14 @@ const Header: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/10 glass">
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <Link to="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer">
           <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
             <span className="text-primary-foreground font-bold text-xl">T</span>
           </div>
           <h1 className="text-2xl font-light tracking-widest font-serif">
             TAX<span className="font-bold text-primary">NOMAD</span>
           </h1>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-6">
           <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-60">

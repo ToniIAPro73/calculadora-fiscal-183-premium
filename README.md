@@ -1,4 +1,4 @@
-# 183-Day Tax Calculator Premium
+# 183-Day Tax Calculator Premium Claude Code
 
 Premium version of the 183-day fiscal residency calculator for digital nomads in Spain and the EU. Designed with a luxury visual system and comprehensive tax planning features.
 

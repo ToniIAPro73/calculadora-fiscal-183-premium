@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
@@ -9,7 +8,6 @@ import RangeList from '@/components/RangeList';
 import ProgressBar from '@/components/ProgressBar';
 import UserDetailsModal from '@/components/UserDetailsModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
-import PaymentStatusModal from '@/components/PaymentStatusModal';
 import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,41 +15,24 @@ import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
-const stripePromise = loadStripe((import.meta as any).env.VITE_STRIPE_PUBLISHABLE_KEY || '');
-
 const TaxNomadCalculator: React.FC = () => {
   const { t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  
+
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [userData, setUserData] = useState({ name: '', documentType: 'passport', taxId: '', email: '' });
-  
-  const [paymentStatus, setPaymentStatus] = useState<'success' | 'error' | null>(null);
-  const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
-  const [hasPaid, setHasPaid] = useState(false);
 
   const { merged, annotatedRanges } = mergeDateRanges(selectedRanges);
   const totalDays = calculateUniqueDays(merged);
 
   useEffect(() => {
-    const status = searchParams.get('status');
-    const sessionId = searchParams.get('session_id');
-
-    if (status === 'success' && sessionId) {
-      setPaymentStatus('success');
-      setIsStatusModalOpen(true);
-      setHasPaid(true);
-      // Clean up URL
-      setSearchParams({}, { replace: true });
-    } else if (status === 'cancel') {
-      setPaymentStatus('error');
-      setIsStatusModalOpen(true);
+    // Clean up URL search params
+    if (searchParams.toString()) {
       setSearchParams({}, { replace: true });
     }
-  }, [searchParams, setSearchParams]);
+  }, []);
   
   const handleAddRange = (range: DateRange) => {
     setSelectedRanges(prev => [...prev, range]);
@@ -77,26 +58,12 @@ const TaxNomadCalculator: React.FC = () => {
     }
   };
 
-  const handleInitiatePayment = async () => {
+  const handleGenerateReport = async () => {
     setIsProcessing(true);
     try {
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...userData,
-          totalDays,
-        }),
-      });
-
-      const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error(data.error || 'Failed to create payment session');
-      }
-    } catch (error: any) {
-      toast.error(error.message);
+      await handleDownloadPremiumPDF();
+      setIsModalOpen(false);
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -117,10 +84,6 @@ const TaxNomadCalculator: React.FC = () => {
     }
   };
 
-  const handleBackToDashboard = () => {
-    setIsStatusModalOpen(false);
-    setPaymentStatus(null);
-  };
 
   return (
     <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
@@ -190,24 +153,14 @@ const TaxNomadCalculator: React.FC = () => {
                   <ProgressBar totalDays={totalDays} />
                   
                   <div className="space-y-4">
-                    {hasPaid ? (
-                      <Button 
-                        onClick={handleDownloadPremiumPDF}
-                        className="w-full h-20 rounded-3xl text-sm tracking-[0.2em] font-bold gap-3 shadow-2xl bg-emerald-500 hover:bg-emerald-400 text-black transition-all active:scale-95"
-                      >
-                        <Download className="w-5 h-5" />
-                        DOWNLOAD PREMIUM PDF
-                      </Button>
-                    ) : (
-                      <Button 
-                        disabled={totalDays === 0} 
-                        onClick={() => setIsModalOpen(true)}
-                        className="w-full h-20 rounded-3xl text-sm tracking-[0.2em] font-bold gap-3 shadow-2xl bg-primary hover:bg-primary/80 transition-all active:scale-95"
-                      >
-                        <FileDown className="w-5 h-5" />
-                        {t('calculator.generateReport')} (9,99€)
-                      </Button>
-                    )}
+                    <Button
+                      disabled={totalDays === 0}
+                      onClick={() => setIsModalOpen(true)}
+                      className="w-full h-20 rounded-3xl text-sm tracking-[0.2em] font-bold gap-3 shadow-2xl bg-primary hover:bg-primary/80 transition-all active:scale-95"
+                    >
+                      <FileDown className="w-5 h-5" />
+                      {t('calculator.generateReport')}
+                    </Button>
                     
                     <Button 
                       variant="ghost" 
@@ -232,14 +185,6 @@ const TaxNomadCalculator: React.FC = () => {
               </Card>
             </div>
 
-            <div className="px-8 space-y-6">
-               <h4 className="text-[9px] font-bold uppercase tracking-[0.3em] opacity-20 text-center">{t('calculator.poweredBy')}</h4>
-               <div className="flex justify-center items-center gap-8 opacity-20 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" className="h-4 dark:invert" />
-                  <div className="h-3 w-[1px] bg-border" />
-                  <span className="font-bold text-[10px] tracking-widest">NEON DB</span>
-               </div>
-            </div>
           </div>
           
         </div>
@@ -262,21 +207,13 @@ const TaxNomadCalculator: React.FC = () => {
       </footer>
 
 
-      <UserDetailsModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onConfirm={handleInitiatePayment}
+      <UserDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleGenerateReport}
         userData={userData}
         setUserData={setUserData}
         isLoading={isProcessing}
-      />
-
-      <PaymentStatusModal 
-        isOpen={isStatusModalOpen}
-        onClose={() => setIsStatusModalOpen(false)}
-        status={paymentStatus}
-        onDownload={handleDownloadPremiumPDF}
-        onBackToDashboard={handleBackToDashboard}
       />
     </div>
   );

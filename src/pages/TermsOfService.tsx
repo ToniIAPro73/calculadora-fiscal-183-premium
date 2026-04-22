@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Scale, CreditCard, AlertCircle, CheckCircle2, Globe, ShieldAlert } from 'lucide-react';
-import { useLanguage } from '@/hooks/useLanguage';
+import { useLanguage } from '@/contexts/i18nContext';
 
 const contentByLanguage = {
   es: {

@@ -6,6 +6,8 @@ import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
 import RangeList from '@/components/RangeList';
 import ProgressBar from '@/components/ProgressBar';
+import SummaryCard from '@/components/SummaryCard';
+import DataAuthoritySection from '@/components/DataAuthoritySection';
 import UserDetailsModal from '@/components/UserDetailsModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
 import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRangeMerger';
@@ -119,33 +121,15 @@ const TaxNomadCalculator: React.FC = () => {
                 </h3>
                 <div className="h-[1px] flex-1 bg-border/20"></div>
               </div>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card className="glass border-none rounded-3xl">
-                  <CardContent className="p-8 space-y-4">
-                    <h4 className="font-serif text-lg neon-accent">{t('calculator.whatCountsTitle')}</h4>
-                    <p className="text-xs opacity-50 leading-relaxed font-light">
-                      {t('calculator.whatCountsDesc')}
-                    </p>
-                    <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase font-bold tracking-widest stripe-accent flex items-center gap-1 hover:text-foreground transition-colors">
-                      {t('calculator.seeOfficialSource')} <ExternalLink className="w-2.5 h-2.5" />
-                    </a>
-                  </CardContent>
-                </Card>
-                <Card className="glass border-none rounded-3xl">
-                  <CardContent className="p-8 space-y-4">
-                    <h4 className="font-serif text-lg stripe-accent">{t('calculator.rule183Title')}</h4>
-                    <p className="text-xs opacity-50 leading-relaxed font-light">
-                      {t('calculator.rule183Desc')}
-                    </p>
-                  </CardContent>
-                </Card>
-              </div>
+
+              <DataAuthoritySection />
             </section>
           </div>
 
           {/* Right Column: Results & CTA */}
           <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-8">
+            <SummaryCard totalDays={totalDays} />
+
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-[42px] blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
               <Card className="relative rounded-[40px] border-white/5 glass overflow-hidden shadow-none">

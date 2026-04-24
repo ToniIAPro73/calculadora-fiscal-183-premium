@@ -37,21 +37,69 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const sessionId = req.query.session_id as string | undefined;
 
-  if (!sessionId || typeof sessionId !== 'string') {
-    return res.status(400).json({ error: 'session_id is required' });
+  if (!sessionId || typeof sessionId !== 'string' || sessionId.trim().length === 0) {
+    return res.status(400).json({
+      error: 'session_id is required and must be a non-empty string',
+      timestamp: new Date().toISOString(),
+    });
   }
 
   try {
-    const stripe = getStripeClient();
-    const session = (await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ['payment_intent'],
-    })) as Stripe.Checkout.Session & {
-      payment_intent?: Stripe.PaymentIntent;
-    };
+    let stripe;
+    try {
+      stripe = getStripeClient();
+    } catch (stripeInitError) {
+      console.error('Failed to initialize Stripe client:', stripeInitError);
+      return res.status(500).json({
+        error: 'Stripe is not configured',
+        timestamp: new Date().toISOString(),
+      });
+    }
 
-    const report =
-      (await getReportByStripeSessionId(session.id)) ||
-      (await getReportByReportKey((session.metadata?.report_key as string) || null));
+    let session;
+    try {
+      session = (await stripe.checkout.sessions.retrieve(sessionId, {
+        expand: ['payment_intent'],
+      })) as Stripe.Checkout.Session & {
+        payment_intent?: Stripe.PaymentIntent;
+      };
+
+      console.log('Session retrieved from Stripe:', {
+        sessionId: session.id,
+        status: session.status,
+        paymentStatus: session.payment_status,
+        reportKeyFromMetadata: session.metadata?.report_key,
+      });
+    } catch (stripeError) {
+      const err = stripeError as any;
+      console.error('Stripe session retrieval failed:', {
+        sessionId,
+        error: err.message,
+        code: err.code,
+      });
+      return res.status(404).json({
+        error: 'Session not found or invalid',
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    let report;
+    try {
+      report =
+        (await getReportByStripeSessionId(session.id)) ||
+        (await getReportByReportKey((session.metadata?.report_key as string) || null));
+
+      console.log('Report lookup result:', {
+        sessionId: session.id,
+        reportFound: !!report,
+        reportKey: report?.reportKey ?? 'not-found',
+      });
+    } catch (dbError) {
+      console.error('Database lookup error:', {
+        error: dbError,
+        sessionId,
+      });
+    }
 
     const isVerifiedPayment =
       session.mode === 'payment' &&
@@ -83,10 +131,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       verified: isVerifiedPayment,
     };
 
+    console.log('Session status response:', {
+      sessionId: session.id,
+      verified: isVerifiedPayment,
+      status: session.status,
+      paymentStatus: session.payment_status,
+    });
+
     return res.status(200).json(response);
   } catch (error) {
     const err = error as Error;
-    console.error('Checkout session status error:', err.message);
-    return res.status(500).json({ error: 'Unable to verify checkout session' });
+    console.error('Checkout session status error:', {
+      message: err.message,
+      stack: err.stack,
+      name: err.name,
+    });
+    return res.status(500).json({
+      error: 'Unable to verify checkout session',
+      timestamp: new Date().toISOString(),
+    });
   }
 }

@@ -8,12 +8,14 @@ const DataAuthoritySection: React.FC = () => {
 
   const authorities = [
     {
-      name: 'Spanish Tax Authority',
+      nameKey: 'authority.spanishTaxAuthority',
+      nameFallback: 'Spanish Tax Authority',
       url: 'https://sede.agenciatributaria.gob.es/',
       abbr: 'Agencia Tributaria',
     },
     {
-      name: 'EU Regulations',
+      nameKey: 'authority.euRegulations',
+      nameFallback: 'EU Regulations',
       url: 'https://eur-lex.europa.eu/',
       abbr: 'EUR-Lex',
     },
@@ -32,7 +34,7 @@ const DataAuthoritySection: React.FC = () => {
         <Card className="glass border-none rounded-3xl">
           <CardContent className="p-8 space-y-4">
             <h4 className="font-serif text-lg text-primary">{t('authority.whatIsTitle') || 'What is the 183-Day Rule?'}</h4>
-            <p className="text-sm opacity-60 leading-relaxed font-light">
+            <p className="text-sm opacity-70 leading-relaxed font-light">
               {t('authority.whatIsDesc') ||
                 'An individual is considered a tax resident if they spend more than 183 days in Spain during a calendar year.'}
             </p>
@@ -42,7 +44,7 @@ const DataAuthoritySection: React.FC = () => {
         <Card className="glass border-none rounded-3xl">
           <CardContent className="p-8 space-y-4">
             <h4 className="font-serif text-lg text-primary">{t('authority.whatCountsTitle') || 'What Counts?'}</h4>
-            <ul className="text-sm opacity-60 space-y-2 font-light">
+            <ul className="text-sm opacity-70 space-y-2 font-light">
               <li>✓ {t('authority.whatCountsList1') || 'Any part of a day spent in Spain'}</li>
               <li>✓ {t('authority.whatCountsList2') || 'Personal property residing there'}</li>
               <li>✓ {t('authority.whatCountsList3') || 'Family members living there'}</li>
@@ -67,14 +69,14 @@ const DataAuthoritySection: React.FC = () => {
                 className="p-4 rounded-2xl bg-accent/10 hover:bg-accent/20 transition-colors flex items-center justify-between group"
               >
                 <div>
-                  <p className="text-xs opacity-60 font-light">{auth.abbr}</p>
-                  <p className="text-sm font-medium group-hover:text-primary transition-colors">{auth.name}</p>
+                  <p className="text-xs opacity-70 font-light">{auth.abbr}</p>
+                  <p className="text-sm font-medium group-hover:text-primary transition-colors">{t(auth.nameKey) || auth.nameFallback}</p>
                 </div>
-                <ExternalLink className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
+                <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
               </a>
             ))}
           </div>
-          <p className="text-xs opacity-40 italic">
+          <p className="text-xs opacity-60 italic">
             {t('authority.disclaimer') ||
               'This calculator is for informational purposes only. Consult with a tax professional for your specific situation.'}
           </p>

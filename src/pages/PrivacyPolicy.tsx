@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MinimalFooter from '@/components/MinimalFooter';
 import { ShieldCheck, Eye, Lock, Mail, FileText, UserCheck, Trash2, Globe } from 'lucide-react';
 import { useLanguage } from '@/contexts/i18nContext';
 
@@ -368,7 +368,7 @@ const PrivacyPolicy = () => {
             </div>
           </div>
         </main>
-        <Footer />
+        <MinimalFooter />
       </div>
     </>
   );

@@ -11,3 +11,6 @@ dist
 .turbo
 .vercel
 .env*.local
+# AI assistant local config
+.codex/
+.claude/

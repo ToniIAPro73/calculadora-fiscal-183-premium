@@ -147,8 +147,8 @@ const TaxNomadCalculator: React.FC = () => {
                       <ShieldCheck className="w-3 h-3" />
                       {t('calculator.verificationComplete')}
                     </div>
-                    <p className="text-[10px] opacity-30 font-light text-center px-4 leading-relaxed">
-                      Official reporting standards for Spanish Agencia Tributaria & EU Compliance.
+                    <p className="text-[10px] opacity-60 font-light text-center px-4 leading-relaxed">
+                      {t('calculator.complianceNote') || 'Official reporting standards for Spanish Agencia Tributaria & EU Compliance.'}
                     </p>
                   </div>
                 </div>
@@ -160,13 +160,13 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="border-t border-border py-16 mt-20 opacity-30">
+      <footer className="border-t border-border py-16 mt-20 opacity-60">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
            <div className="flex items-center gap-4">
               <div className="w-8 h-8 rounded bg-accent flex items-center justify-center border border-border">
                 <FileDown className="w-4 h-4" />
               </div>
-              <span className="font-light text-xs tracking-widest uppercase">© 2026 TaxNomad Digital Utility</span>
+              <span className="font-light text-xs tracking-widest uppercase">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
               <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer">{t('footer.privacy')}</Link>

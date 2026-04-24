@@ -138,6 +138,7 @@ export const translations = {
       rule183Desc: "If you spend 183 days or more in Spain during a calendar year, you are generally considered a tax resident. Our tool automatically merges your overlap to ensure mathematical accuracy.",
       generateReport: "GENERATE REPORT",
       verificationComplete: "Verification Complete",
+      complianceNote: "Official reporting standards for Spanish Agencia Tributaria & EU Compliance.",
       poweredBy: "Powered by Infrastructure"
     },
     payment: {
@@ -346,6 +347,7 @@ export const translations = {
       rule183Desc: "Si pasas 183 días o más en España durante un año natural, generalmente se te considera residente fiscal. Nuestra herramienta une automáticamente tus solapes.",
       generateReport: "GENERAR INFORME",
       verificationComplete: "Verificación Completada",
+      complianceNote: "Estándares de informes oficiales para Agencia Tributaria Española & Cumplimiento de la UE.",
       poweredBy: "Impulsado por Infraestructura"
     },
     payment: {

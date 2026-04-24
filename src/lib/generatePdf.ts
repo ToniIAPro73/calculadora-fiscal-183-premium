@@ -252,40 +252,41 @@ export async function generateTaxReport({
 
   // Header Bar
   doc.setFillColor(C.dark[0], C.dark[1], C.dark[2]);
-  doc.rect(0, 0, W, 40, 'F');
+  doc.rect(0, 0, W, 48, 'F');
 
-  // App Logo
+  // App Logo & Subtitle (Left Column)
   doc.setTextColor(C.primary[0], C.primary[1], C.primary[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
   doc.text('TaxNomad', M, 18);
-  
+
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
   doc.text('ANÁLISIS DE RESIDENCIA FISCAL AVANZADO', M, 24);
 
-  // Example Mode Badge
+  // Example Mode Badge (Top Right)
   if (exampleMode) {
     doc.setFillColor(C.warning[0], C.warning[1], C.warning[2]);
-    doc.roundedRect(W - M - 40, 12, 40, 7, 2, 2, 'F');
+    doc.roundedRect(W - M - 35, 8, 35, 7, 2, 2, 'F');
     doc.setTextColor(C.white[0], C.white[1], C.white[2]);
     doc.setFontSize(7);
     doc.setFont('helvetica', 'bold');
-    doc.text('VERSION DE PRUEBA', W - M - 20, 16.5, { align: 'center' });
+    doc.text('VERSIÓN DE PRUEBA', W - M - 17.5, 12.2, { align: 'center' });
   }
 
-  // Ref & Date Header
-  doc.setFontSize(8);
+  // Ref & Date Header (Right Column, below badge)
+  doc.setFontSize(7.5);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
+  doc.setFont('helvetica', 'normal');
   const referenceText = language === 'en' ? 'REFERENCE' : 'REFERENCIA';
   const dateText = language === 'en' ? 'ISSUED DATE' : 'FECHA DE EMISIÓN';
   const fiscalYearText = language === 'en' ? 'FISCAL YEAR' : 'EJERCICIO FISCAL';
-  doc.text(`${referenceText}: ${refNum}`, W - M, 18, { align: 'right' });
-  doc.text(`${dateText}: ${genDate.toUpperCase()}`, W - M, 24, { align: 'right' });
-  doc.text(`${fiscalYearText}: ${fiscalYear}`, W - M, 30, { align: 'right' });
+  doc.text(`${referenceText}: ${refNum}`, W - M, 20, { align: 'right' });
+  doc.text(`${dateText}: ${genDate.toUpperCase()}`, W - M, 26, { align: 'right' });
+  doc.text(`${fiscalYearText}: ${fiscalYear}`, W - M, 32, { align: 'right' });
 
-  let y = 55;
+  let y = 60;
 
   // Title
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);

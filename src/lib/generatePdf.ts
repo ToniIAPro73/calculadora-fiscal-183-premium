@@ -242,14 +242,14 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
     ? `Audit Software: ${fileOwnerLine}`
     : `Software de Auditoría: ${fileOwnerLine}`;
 
-  doc.text(generatedByText, margin, pageHeight - 20);
-  doc.text(auditSoftwareText, margin, pageHeight - 14);
+  doc.text(generatedByText, margin, pageHeight - 28);
+  doc.text(auditSoftwareText, margin, pageHeight - 22);
 
   doc.setFont('helvetica', 'bold');
   const reportIdText = language === 'en' ? 'REPORT ID' : 'ID DE INFORME';
   const pageText = language === 'en' ? 'Page 1 of 1' : 'Página 1 de 1';
-  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 10, pageHeight - 20, { align: 'right' });
-  doc.text(pageText, pageWidth - margin - 10, pageHeight - 14, { align: 'right' });
+  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 10, pageHeight - 28, { align: 'right' });
+  doc.text(pageText, pageWidth - margin - 10, pageHeight - 22, { align: 'right' });
 }
 
 export async function generateTaxReport({

@@ -31,3 +31,14 @@ export async function getReportByStripeSessionId(sessionId: string): Promise<any
 export async function getReportByReportKey(reportKey: string | null): Promise<any> {
   return null;
 }
+
+export async function updateReportPaymentStatus(data: {
+  reportKey?: string | null;
+  stripeSessionId?: string;
+  stripePaymentIntentId?: string | null;
+  paymentStatus: 'paid' | 'completed' | 'expired' | 'failed';
+  customerEmail?: string | null;
+}): Promise<any> {
+  console.log('Report payment status updated:', data);
+  return null;
+}

@@ -171,7 +171,7 @@ const TaxNomadCalculator: React.FC = () => {
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
               <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer">{t('footer.privacy')}</Link>
               <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer">{t('footer.terms')}</Link>
-              <a href="mailto:support@taxnomad.app" className="hover:text-primary transition-colors cursor-pointer">Contact</a>
+              <a href="mailto:hola@regla183.com" className="hover:text-primary transition-colors cursor-pointer">{t('footer.contact') || 'Contact'}</a>
            </div>
         </div>
       </footer>

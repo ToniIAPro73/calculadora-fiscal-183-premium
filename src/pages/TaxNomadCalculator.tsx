@@ -87,7 +87,7 @@ const TaxNomadCalculator: React.FC = () => {
               <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
                 {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
               </h1>
-              <p className="text-xl opacity-60 font-light max-w-2xl leading-relaxed">
+              <p className="text-xl opacity-70 font-light max-w-2xl leading-relaxed">
                 {t('calculator.heroSubtitle')}
               </p>
             </div>

@@ -105,6 +105,7 @@ export const translations = {
     },
     footer: {
       tagline: "Master your fiscal residency with our premium audit-ready calculator for 2026",
+      subtitle: "Premium Tax Calculator",
       product: "Product",
       calculator: "Calculator",
       authority: "Tax Authority",
@@ -117,6 +118,10 @@ export const translations = {
       copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
       rights: "All rights reserved. Premium tax calculator for digital nomads.",
       disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
+    },
+    authority: {
+      spanishTaxAuthority: "Spanish Tax Authority",
+      euRegulations: "EU Regulations",
     },
     calculator: {
       totalDays: "Total Days",
@@ -306,6 +311,7 @@ export const translations = {
     },
     footer: {
       tagline: "Domina tu residencia fiscal con nuestra calculadora premium lista para auditoría 2026",
+      subtitle: "Calculadora Fiscal Premium",
       product: "Producto",
       calculator: "Calculadora",
       authority: "Autoridad Fiscal",
@@ -318,6 +324,10 @@ export const translations = {
       copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
       rights: "Todos los derechos reservados. Calculadora fiscal premium para nómadas digitales.",
       disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
+    },
+    authority: {
+      spanishTaxAuthority: "Agencia Tributaria Española",
+      euRegulations: "Regulaciones de la UE",
     },
     calculator: {
       totalDays: "Días Totales",

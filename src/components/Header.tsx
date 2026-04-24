@@ -25,8 +25,8 @@ const Header: React.FC = () => {
         </Link>
 
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-60">
-            <button 
+          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-70">
+            <button
               onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
               className="hover:opacity-100 transition-opacity flex items-center gap-2"
             >

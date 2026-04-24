@@ -17,7 +17,7 @@ import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } f
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo.webp';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 

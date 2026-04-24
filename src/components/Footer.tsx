@@ -1,44 +1,46 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
-import { FileDown } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border/10 bg-background/50 backdrop-blur-sm mt-24">
+    <footer className="border-t border-border/20 bg-background/80 backdrop-blur-md mt-24">
       <div className="max-w-7xl mx-auto px-4 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded bg-accent flex items-center justify-center border border-border">
-                <FileDown className="w-4 h-4" />
-              </div>
+              <img
+                src={logo}
+                alt="TaxNomad"
+                className="w-16 h-16 rounded"
+              />
               <div>
-                <p className="font-serif text-lg">TaxNomad</p>
-                <p className="text-xs opacity-50 font-light">Premium Tax Calculator</p>
+                <p className="font-serif text-lg font-bold">TaxNomad</p>
+                <p className="text-xs opacity-80 font-light">{t('footer.subtitle') || 'Premium Tax Calculator'}</p>
               </div>
             </div>
-            <p className="text-sm opacity-60 font-light leading-relaxed">
+            <p className="text-sm opacity-80 font-light leading-relaxed">
               {t('footer.tagline') || 'Master your fiscal residency with our premium audit-ready calculator for 2026'}
             </p>
           </div>
 
           {/* Product */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.product') || 'Product'}</h4>
+            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.product') || 'Product'}</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.calculator') || 'Calculator'}
                 </Link>
               </li>
               <li>
-                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.authority') || 'Tax Authority'}
                 </a>
               </li>
@@ -47,15 +49,15 @@ const Footer: React.FC = () => {
 
           {/* Legal */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.legal') || 'Legal'}</h4>
+            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.legal') || 'Legal'}</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/privacy" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/privacy" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.privacy') || 'Privacy Policy'}
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                <Link to="/terms" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
                   {t('footer.terms') || 'Terms of Service'}
                 </Link>
               </li>
@@ -64,17 +66,17 @@ const Footer: React.FC = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold uppercase tracking-widest opacity-80">{t('footer.support') || 'Support'}</h4>
+            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.support') || 'Support'}</h4>
             <div className="space-y-3 text-sm">
               <div className="font-light">
-                <p className="text-xs opacity-50 mb-1">{t('footer.contactEmail') || 'Email'}</p>
-                <a href="mailto:hola@regla183.com" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
+                <p className="text-xs opacity-85 mb-1">{t('footer.contactEmail') || 'Email'}</p>
+                <a href="mailto:hola@regla183.com" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
                   hola@regla183.com
                 </a>
               </div>
               <div className="font-light">
-                <p className="text-xs opacity-50 mb-1">{t('footer.website') || 'Website'}</p>
-                <a href="https://regla183.com" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
+                <p className="text-xs opacity-85 mb-1">{t('footer.website') || 'Website'}</p>
+                <a href="https://regla183.com" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
                   regla183.com
                 </a>
               </div>
@@ -87,10 +89,10 @@ const Footer: React.FC = () => {
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs opacity-40 font-light">
+          <p className="text-xs opacity-80 font-light">
             © {currentYear} TaxNomad. {t('footer.rights') || 'All rights reserved. Premium tax calculator for digital nomads.'}
           </p>
-          <p className="text-xs opacity-40 font-light text-center md:text-right">
+          <p className="text-xs opacity-80 font-light text-center md:text-right">
             {t('footer.disclaimer') || 'This calculator is for informational purposes only. Consult a tax professional for your specific situation.'}
           </p>
         </div>

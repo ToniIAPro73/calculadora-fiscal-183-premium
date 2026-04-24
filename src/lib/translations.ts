@@ -58,15 +58,21 @@ export const translations = {
       stripeMock: "Stripe Integration Detected. Awaiting API keys to process real payment.",
       mockModeEnabled: "Mock mode enabled - development only",
       paymentSuccess: "Payment successful!",
-      successReport: "Report downloaded successfully!"
+      successReport: "Report downloaded successfully!",
+      invalidDateRange: "Invalid date range",
+      futureDate: "Dates cannot be in the future",
+      errorPreview: "Failed to generate preview",
+      fiscalYearChanged: "Fiscal year changed. All data has been reset."
     },
     userDetails: {
       title: "Report Details",
       description: "Enter your details to personalize the official PDF.",
       nameLabel: "Full name",
+      emailLabel: "Email address",
       documentLabel: "Document type",
       documentTypePassport: "Passport",
       documentTypeNie: "NIE",
+      number: "Number",
       taxIdLabel: "Passport / NIE number",
       taxIdPlaceholder: "e.g. X1234567Z",
       note: "DNI is not supported. Use Passport or NIE.",
@@ -105,6 +111,7 @@ export const translations = {
     },
     footer: {
       tagline: "Master your fiscal residency with our premium audit-ready calculator for 2026",
+      subtitle: "Premium Tax Calculator",
       product: "Product",
       calculator: "Calculator",
       authority: "Tax Authority",
@@ -112,6 +119,7 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       support: "Support",
+      contact: "Contact",
       contactEmail: "Email",
       website: "Website",
       copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
@@ -131,6 +139,7 @@ export const translations = {
       rule183Desc: "If you spend 183 days or more in Spain during a calendar year, you are generally considered a tax resident. Our tool automatically merges your overlap to ensure mathematical accuracy.",
       generateReport: "GENERATE REPORT",
       verificationComplete: "Verification Complete",
+      complianceNote: "Official reporting standards for Spanish Agencia Tributaria & EU Compliance.",
       poweredBy: "Powered by Infrastructure"
     },
     payment: {
@@ -259,15 +268,21 @@ export const translations = {
       stripeMock: "Integración de Stripe detectada. Esperando claves API para procesar el pago real.",
       mockModeEnabled: "Modo mock habilitado - solo para desarrollo",
       paymentSuccess: "¡Pago exitoso!",
-      successReport: "¡Informe descargado exitosamente!"
+      successReport: "¡Informe descargado exitosamente!",
+      invalidDateRange: "Rango de fechas inválido",
+      futureDate: "Las fechas no pueden ser futuras",
+      errorPreview: "No se pudo generar la vista previa",
+      fiscalYearChanged: "Ejercicio fiscal cambiado. Todos los datos han sido resetados."
     },
     userDetails: {
       title: "Datos del Informe",
       description: "Introduce tus datos para personalizar el PDF oficial.",
       nameLabel: "Nombre completo",
+      emailLabel: "Dirección de correo",
       documentLabel: "Tipo de documento",
       documentTypePassport: "Pasaporte",
       documentTypeNie: "NIE",
+      number: "Número",
       taxIdLabel: "Número de Pasaporte / NIE",
       taxIdPlaceholder: "Ej. X1234567Z",
       note: "DNI no está disponible. Usa Pasaporte o NIE.",
@@ -306,6 +321,7 @@ export const translations = {
     },
     footer: {
       tagline: "Domina tu residencia fiscal con nuestra calculadora premium lista para auditoría 2026",
+      subtitle: "Calculadora Fiscal Premium",
       product: "Producto",
       calculator: "Calculadora",
       authority: "Autoridad Fiscal",
@@ -313,6 +329,7 @@ export const translations = {
       privacy: "Política de Privacidad",
       terms: "Términos de Servicio",
       support: "Soporte",
+      contact: "Contacto",
       contactEmail: "Correo",
       website: "Sitio Web",
       copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
@@ -332,6 +349,7 @@ export const translations = {
       rule183Desc: "Si pasas 183 días o más en España durante un año natural, generalmente se te considera residente fiscal. Nuestra herramienta une automáticamente tus solapes.",
       generateReport: "GENERAR INFORME",
       verificationComplete: "Verificación Completada",
+      complianceNote: "Estándares de informes oficiales para Agencia Tributaria Española & Cumplimiento de la UE.",
       poweredBy: "Impulsado por Infraestructura"
     },
     payment: {

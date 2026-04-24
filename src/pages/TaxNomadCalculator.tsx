@@ -11,18 +11,22 @@ import DataAuthoritySection from '@/components/DataAuthoritySection';
 import UserDetailsModal from '@/components/UserDetailsModal';
 import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
-import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRangeMerger';
+import FiscalYearSelector from '@/components/FiscalYearSelector';
+import { getCurrentYear } from '@/lib/fiscalYear';
+import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
 const TaxNomadCalculator: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
+  const [fiscalYear, setFiscalYear] = useState<number>(getCurrentYear());
   const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -37,6 +41,18 @@ const TaxNomadCalculator: React.FC = () => {
       setSearchParams({}, { replace: true });
     }
   }, []);
+
+  useEffect(() => {
+    // Domain validation: enforce no future dates even if client-side is bypassed
+    if (selectedRanges.length > 0) {
+      const validation = validateDateRanges(selectedRanges);
+      if (!validation.valid) {
+        toast.error(validation.error || t('toast.futureDate'));
+        // Clear invalid ranges to protect report integrity
+        setSelectedRanges([]);
+      }
+    }
+  }, [selectedRanges, t]);
   
   const handleAddRange = (range: DateRange) => {
     setSelectedRanges(prev => [...prev, range]);
@@ -49,11 +65,13 @@ const TaxNomadCalculator: React.FC = () => {
   };
 
   const handleViewExample = async () => {
-    const example = buildExampleReportPayload();
+    const example = buildExampleReportPayload(fiscalYear);
     try {
       const doc = await generateTaxReport({
         ...example,
-        exampleMode: true
+        exampleMode: true,
+        fiscalYear,
+        language
       });
       const blobUrl = doc.output('bloburl');
       window.open(blobUrl, '_blank');
@@ -72,6 +90,15 @@ const TaxNomadCalculator: React.FC = () => {
     toast.success(t('toast.paymentSuccess') || 'Payment successful! Your report is being prepared...');
   };
 
+  const handleFiscalYearChange = (newYear: number) => {
+    setFiscalYear(newYear);
+    setSelectedRanges([]);
+    setUserData({ name: '', documentType: 'passport', taxId: '', email: '' });
+    setIsUserDetailsModalOpen(false);
+    setIsPaymentModalOpen(false);
+    toast.success(t('toast.fiscalYearChanged') || `Fiscal year changed to ${newYear}. Data has been reset.`);
+  };
+
 
   return (
     <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
@@ -80,16 +107,21 @@ const TaxNomadCalculator: React.FC = () => {
       
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 md:py-16">
         <div className="grid lg:grid-cols-12 gap-12">
-          
+
           {/* Left Column: Input & Management */}
           <div className="lg:col-span-8 space-y-12">
             <div className="space-y-6">
-              <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
-                {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
-              </h1>
-              <p className="text-xl opacity-60 font-light max-w-2xl leading-relaxed">
-                {t('calculator.heroSubtitle')}
-              </p>
+              <div className="flex items-end justify-between gap-4">
+                <div className="flex-1">
+                  <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
+                    {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
+                  </h1>
+                  <p className="text-xl opacity-70 font-light max-w-2xl leading-relaxed mt-4">
+                    {t('calculator.heroSubtitle')}
+                  </p>
+                </div>
+                <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
+              </div>
             </div>
 
             <div className="space-y-8">
@@ -147,8 +179,8 @@ const TaxNomadCalculator: React.FC = () => {
                       <ShieldCheck className="w-3 h-3" />
                       {t('calculator.verificationComplete')}
                     </div>
-                    <p className="text-[10px] opacity-30 font-light text-center px-4 leading-relaxed">
-                      Official reporting standards for Spanish Agencia Tributaria & EU Compliance.
+                    <p className="text-[10px] opacity-60 font-light text-center px-4 leading-relaxed">
+                      {t('calculator.complianceNote') || 'Official reporting standards for Spanish Agencia Tributaria & EU Compliance.'}
                     </p>
                   </div>
                 </div>
@@ -160,18 +192,16 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="border-t border-border py-16 mt-20 opacity-30">
+      <footer className="border-t border-border/20 py-16 mt-20">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded bg-accent flex items-center justify-center border border-border">
-                <FileDown className="w-4 h-4" />
-              </div>
-              <span className="font-light text-xs tracking-widest uppercase">© 2026 TaxNomad Digital Utility</span>
+              <img src={logo} alt="TaxNomad" className="w-16 h-16 rounded" />
+              <span className="font-light text-xs tracking-widest uppercase opacity-85">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
-              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer">{t('footer.terms')}</Link>
-              <a href="mailto:support@taxnomad.app" className="hover:text-primary transition-colors cursor-pointer">Contact</a>
+           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] opacity-85">
+              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.privacy')}</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.terms')}</Link>
+              <a href="mailto:hola@regla183.com" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
            </div>
         </div>
       </footer>

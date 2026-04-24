@@ -1,10 +1,35 @@
-import { differenceInDays, eachDayOfInterval, isWithinInterval, max } from 'date-fns';
+import { differenceInDays, eachDayOfInterval, isWithinInterval, max, startOfDay } from 'date-fns';
 
 export interface DateRange {
   start: Date;
   end: Date;
   days: number;
 }
+
+export const validateDateRanges = (ranges: DateRange[]): {
+  valid: boolean;
+  error?: string;
+} => {
+  const today = startOfDay(new Date());
+
+  for (const range of ranges) {
+    if (range.start > today) {
+      return {
+        valid: false,
+        error: `Start date cannot be in the future: ${range.start.toDateString()}`,
+      };
+    }
+
+    if (range.end > today) {
+      return {
+        valid: false,
+        error: `End date cannot be in the future: ${range.end.toDateString()}`,
+      };
+    }
+  }
+
+  return { valid: true };
+};
 
 export interface AnnotatedRange extends DateRange {
   overlapDays: number;

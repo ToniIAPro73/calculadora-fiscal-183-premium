@@ -17,7 +17,7 @@ const Header: React.FC = () => {
           <img
             src={logo}
             alt="TaxNomad"
-            className="w-10 h-10 rounded-lg"
+            className="w-20 h-20 rounded-lg"
           />
           <h1 className="text-2xl font-light tracking-widest font-serif">
             TAX<span className="font-bold text-primary">NOMAD</span>
@@ -25,8 +25,8 @@ const Header: React.FC = () => {
         </Link>
 
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-60">
-            <button 
+          <div className="hidden md:flex items-center gap-8 text-[10px] uppercase tracking-[0.2em] font-bold opacity-70">
+            <button
               onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
               className="hover:opacity-100 transition-opacity flex items-center gap-2"
             >

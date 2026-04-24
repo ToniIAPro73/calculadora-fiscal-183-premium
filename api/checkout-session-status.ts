@@ -120,14 +120,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       metadata: (session.metadata as Record<string, string>) ?? {},
       report_payload: {
         name: report?.name ?? null,
-        taxId: report?.taxId ?? null,
-        documentType: report?.documentType ?? 'passport',
-        totalDays: Number(report?.totalDays ?? 0),
-        statusLabel: report?.statusLabel ?? null,
-        ranges: report?.ranges ?? [],
+        taxId: report?.tax_id ?? null,
+        documentType: report?.document_type ?? 'passport',
+        totalDays: Number(report?.total_days ?? 0),
+        statusLabel: report?.status_label ?? null,
+        ranges: Array.isArray(report?.ranges) ? report.ranges : (report?.ranges ? JSON.parse(report.ranges) : []),
       },
       client_reference_id: session.client_reference_id ?? null,
-      report_key: report?.reportKey ?? (session.metadata?.report_key as string) ?? null,
+      report_key: report?.report_key ?? (session.metadata?.report_key as string) ?? null,
       verified: isVerifiedPayment,
     };
 

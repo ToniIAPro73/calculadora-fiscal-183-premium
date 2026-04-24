@@ -58,7 +58,10 @@ export const translations = {
       stripeMock: "Stripe Integration Detected. Awaiting API keys to process real payment.",
       mockModeEnabled: "Mock mode enabled - development only",
       paymentSuccess: "Payment successful!",
-      successReport: "Report downloaded successfully!"
+      successReport: "Report downloaded successfully!",
+      invalidDateRange: "Invalid date range",
+      futureDate: "Dates cannot be in the future",
+      errorPreview: "Failed to generate preview"
     },
     userDetails: {
       title: "Report Details",
@@ -264,7 +267,10 @@ export const translations = {
       stripeMock: "Integración de Stripe detectada. Esperando claves API para procesar el pago real.",
       mockModeEnabled: "Modo mock habilitado - solo para desarrollo",
       paymentSuccess: "¡Pago exitoso!",
-      successReport: "¡Informe descargado exitosamente!"
+      successReport: "¡Informe descargado exitosamente!",
+      invalidDateRange: "Rango de fechas inválido",
+      futureDate: "Las fechas no pueden ser futuras",
+      errorPreview: "No se pudo generar la vista previa"
     },
     userDetails: {
       title: "Datos del Informe",

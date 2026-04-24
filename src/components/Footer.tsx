@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo.webp';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();

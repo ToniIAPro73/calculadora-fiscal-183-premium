@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Globe, Sun, Moon } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo.webp';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Header: React.FC = () => {

@@ -26,7 +26,7 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
       <CardContent className="p-0">
         <TooltipProvider>
           {ranges.length === 0 ? (
-            <div className="p-12 text-center opacity-20 text-xs uppercase tracking-widest leading-loose">
+            <div className="p-12 text-center opacity-60 text-xs uppercase tracking-widest leading-loose">
               {t('rangeList.empty')}
             </div>
           ) : (
@@ -36,7 +36,7 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-3 font-light text-sm tracking-wide">
                       <span className="opacity-80">{format(range.start, 'MMM d, yyyy')}</span>
-                      <span className="opacity-20">—</span>
+                      <span className="opacity-60">—</span>
                       <span className="opacity-80">{format(range.end, 'MMM d, yyyy')}</span>
                       {range.overlapDays > 0 && (
                         <Tooltip>
@@ -47,7 +47,7 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
                         </Tooltip>
                       )}
                     </div>
-                    <div className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-30 flex items-center gap-2">
+                    <div className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-60 flex items-center gap-2">
                       <span className="text-primary">{range.days} {range.days === 1 ? t('dateSelector.day') : t('dateSelector.days')}</span>
                       {range.overlapDays > 0 && (
                         <span className="text-red-500/50">({range.overlapDays} overlapped)</span>

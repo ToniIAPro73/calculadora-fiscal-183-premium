@@ -34,14 +34,14 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           <DialogTitle className="text-2xl font-serif font-bold text-center">
             {t('userDetails.title')}
           </DialogTitle>
-          <DialogDescription className="text-center italic opacity-60">
+          <DialogDescription className="text-center italic opacity-70">
             {t('userDetails.description')}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-40 tracking-[0.2em] ml-1">
+            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
               {t('userDetails.nameLabel')}
             </Label>
             <Input
@@ -53,8 +53,8 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-40 tracking-[0.2em] ml-1">
-              EMAIL ADDRESS
+            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+              {t('userDetails.emailLabel') || 'Email Address'}
             </Label>
             <Input
               type="email"
@@ -66,7 +66,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           </div>
           
           <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-40 tracking-[0.2em] ml-1">
+            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
               {t('userDetails.documentLabel')}
             </Label>
             <div className="grid grid-cols-2 gap-3">
@@ -93,8 +93,8 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-40 tracking-[0.2em] ml-1">
-              {userData.documentType === 'nie' ? t('userDetails.documentTypeNie') : t('userDetails.documentTypePassport')} NUMBER
+            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+              {userData.documentType === 'nie' ? t('userDetails.documentTypeNie') : t('userDetails.documentTypePassport')} {t('userDetails.number') || 'NUMBER'}
             </Label>
             <Input
               placeholder={t('userDetails.taxIdPlaceholder')}
@@ -104,7 +104,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
             />
           </div>
           
-          <p className="text-[9px] opacity-30 text-center px-4 leading-relaxed font-light">
+          <p className="text-[9px] opacity-60 text-center px-4 leading-relaxed font-light">
             {t('userDetails.note')}
           </p>
         </div>

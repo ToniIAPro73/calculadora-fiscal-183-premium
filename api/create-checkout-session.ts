@@ -24,6 +24,18 @@ function buildClientReferenceId(taxId: string): string {
   return `taxnomad_${Date.now()}_${normalizedTaxId || 'guest'}`;
 }
 
+function validateEmail(email: string | undefined): boolean {
+  if (!email) return true;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function validateTotalDays(days: number | undefined): boolean {
+  if (days === undefined || days === null) return false;
+  const numDays = Number(days);
+  return !isNaN(numDays) && numDays > 0 && numDays <= 365;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -40,8 +52,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ranges = [],
     } = req.body as CreateSessionRequest;
 
-    if (!name || !taxId) {
-      return res.status(400).json({ error: 'name and taxId are required' });
+    // Validate required fields
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      return res.status(400).json({ error: 'name is required and must be a non-empty string' });
+    }
+
+    if (!taxId || typeof taxId !== 'string' || taxId.trim().length === 0) {
+      return res.status(400).json({ error: 'taxId is required and must be a non-empty string' });
+    }
+
+    // Validate totalDays
+    if (!validateTotalDays(totalDays)) {
+      return res.status(400).json({ error: 'totalDays is required and must be between 1 and 365' });
+    }
+
+    // Validate email if provided
+    if (!validateEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email format' });
+    }
+
+    // Validate ranges if provided
+    if (ranges && !Array.isArray(ranges)) {
+      return res.status(400).json({ error: 'ranges must be an array' });
     }
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
@@ -110,36 +142,71 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       // Create Stripe checkout session
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{ price: priceId, quantity: 1 }],
-        mode: 'payment',
-        customer_email: email || undefined,
-        success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/?cancelled=true`,
-        client_reference_id: clientReferenceId,
-        metadata: {
-          source: 'taxnomad',
-          product_type: 'premium_report',
-          report_key: reportKey,
-        },
-        payment_intent_data: {
+      let session;
+      try {
+        session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: [{ price: priceId, quantity: 1 }],
+          mode: 'payment',
+          customer_email: email || undefined,
+          success_url: `${baseUrl}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${baseUrl}/?cancelled=true`,
+          client_reference_id: clientReferenceId,
           metadata: {
             source: 'taxnomad',
             product_type: 'premium_report',
             report_key: reportKey,
           },
-        },
-      });
+          payment_intent_data: {
+            metadata: {
+              source: 'taxnomad',
+              product_type: 'premium_report',
+              report_key: reportKey,
+            },
+          },
+        });
+        console.log('Stripe session created successfully:', {
+          sessionId: session.id,
+          reportKey,
+          clientReferenceId,
+        });
+      } catch (stripeError) {
+        const err = stripeError as any;
+        console.error('Stripe session creation failed:', {
+          error: err.message,
+          code: err.code,
+          type: err.type,
+          reportKey,
+        });
+        throw new Error(`Stripe error: ${err.message || 'Failed to create checkout session'}`);
+      }
 
       // Attach Stripe session to report
-      await attachStripeSession({
-        reportKey,
-        stripeSessionId: session.id,
-        clientReferenceId,
-      });
+      try {
+        await attachStripeSession({
+          reportKey,
+          stripeSessionId: session.id,
+          clientReferenceId,
+        });
+        console.log('Stripe session attached to report:', {
+          reportKey,
+          sessionId: session.id,
+        });
+      } catch (attachError) {
+        console.error('Failed to attach Stripe session to report:', {
+          error: attachError,
+          reportKey,
+          sessionId: session.id,
+        });
+        throw new Error('Failed to save session data. Please try again.');
+      }
 
-      return res.status(200).json({ url: session.url, mode: 'stripe' });
+      return res.status(200).json({
+        url: session.url,
+        mode: 'stripe',
+        sessionId: session.id,
+        reportKey,
+      });
     }
 
     // ── MOCK / DEV MODE ──────────────────────────────────────────
@@ -153,7 +220,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
   } catch (error) {
     const err = error as Error;
-    console.error('Checkout session error:', err.message);
-    return res.status(500).json({ error: err.message || 'Failed to create checkout session' });
+    console.error('Checkout session error:', {
+      message: err.message,
+      stack: err.stack,
+      name: err.name,
+    });
+    return res.status(500).json({
+      error: err.message || 'Failed to create checkout session',
+      timestamp: new Date().toISOString(),
+    });
   }
 }

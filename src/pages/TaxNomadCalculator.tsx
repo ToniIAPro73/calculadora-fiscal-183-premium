@@ -15,6 +15,7 @@ import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRange
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
@@ -163,9 +164,7 @@ const TaxNomadCalculator: React.FC = () => {
       <footer className="border-t border-border py-16 mt-20 opacity-60">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded bg-accent flex items-center justify-center border border-border">
-                <FileDown className="w-4 h-4" />
-              </div>
+              <img src={logo} alt="TaxNomad" className="w-8 h-8 rounded" />
               <span className="font-light text-xs tracking-widest uppercase">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">

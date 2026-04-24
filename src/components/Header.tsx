@@ -17,7 +17,7 @@ const Header: React.FC = () => {
           <img
             src={logo}
             alt="TaxNomad"
-            className="w-10 h-10 rounded-lg"
+            className="w-14 h-14 rounded-lg"
           />
           <h1 className="text-2xl font-light tracking-widest font-serif">
             TAX<span className="font-bold text-primary">NOMAD</span>

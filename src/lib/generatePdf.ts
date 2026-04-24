@@ -306,7 +306,7 @@ export async function generateTaxReport({
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
-  doc.text(labels.advancedTaxResidencyAnalysis, M, 24);
+  doc.text(labels.advancedTaxResidencyAnalysis, M, 24, { align: 'justify' });
 
   // Example Mode Badge (Top Right)
   if (exampleMode) {
@@ -340,7 +340,7 @@ export async function generateTaxReport({
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(C.slate600[0], C.slate600[1], C.slate600[2]);
-  doc.text(`${labels.auditSubtitle} ${fiscalYear}`, M, y);
+  doc.text(`${labels.auditSubtitle} ${fiscalYear}`, M, y, { align: 'justify' });
   
   y += 15;
 
@@ -453,7 +453,7 @@ export async function generateTaxReport({
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   const legalLines = doc.splitTextToSize(labels.legalText, CW);
-  doc.text(legalLines, M, pageY);
+  doc.text(legalLines, M, pageY, { align: 'justify' });
 
   // Draw footer on page 2
   drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, 2, 2);

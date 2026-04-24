@@ -450,6 +450,16 @@ export async function generateTaxReport({
   const legalLines = doc.splitTextToSize(labels.legalText, CW);
   doc.text(legalLines, M, y);
 
+  // Calculate space needed for footer
+  const estimatedLegalHeight = legalLines.length * 4;
+  const contentEndY = y + estimatedLegalHeight;
+  const footerStartY = H - 35; // Space needed for footer
+
+  // Add new page if content runs into footer space
+  if (contentEndY > footerStartY) {
+    doc.addPage();
+  }
+
   drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, fiscalYear);
 
   return doc;

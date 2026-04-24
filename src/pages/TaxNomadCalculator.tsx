@@ -22,7 +22,7 @@ import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
 const TaxNomadCalculator: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
@@ -71,7 +71,7 @@ const TaxNomadCalculator: React.FC = () => {
         ...example,
         exampleMode: true,
         fiscalYear,
-        language: t('meta.language') === 'English' ? 'en' : 'es'
+        language
       });
       const blobUrl = doc.output('bloburl');
       window.open(blobUrl, '_blank');

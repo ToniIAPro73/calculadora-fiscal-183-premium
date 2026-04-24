@@ -46,9 +46,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     const priceId = process.env.STRIPE_PRICE_ID;
-    const appUrl = process.env.APP_URL;
     const databaseUrl = process.env.DATABASE_URL;
     const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+
+    // Build base URL from request or use APP_URL env var
+    let appUrl = process.env.APP_URL;
+    if (!appUrl && req.headers.host) {
+      const protocol = req.headers['x-forwarded-proto'] || 'https';
+      appUrl = `${protocol}://${req.headers.host}`;
+    }
 
     // ── REAL STRIPE MODE ──────────────────────────────────────────
     if (stripeKey && databaseUrl) {

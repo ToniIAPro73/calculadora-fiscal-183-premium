@@ -91,17 +91,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const clientReferenceId = buildClientReferenceId(taxId);
 
       // Create draft report
-      await createDraftReport({
-        reportKey,
-        source: 'taxnomad',
-        productType: 'premium_report',
-        name,
-        taxId,
-        documentType: String(documentType || 'passport'),
-        totalDays: Number(totalDays ?? 0),
-        statusLabel: String(statusLabel ?? ''),
-        ranges,
-      });
+      try {
+        await createDraftReport({
+          reportKey,
+          source: 'taxnomad',
+          productType: 'premium_report',
+          name,
+          taxId,
+          documentType: String(documentType || 'passport'),
+          totalDays: Number(totalDays ?? 0),
+          statusLabel: String(statusLabel ?? ''),
+          ranges,
+        });
+        console.log('Draft report created successfully:', reportKey);
+      } catch (dbError) {
+        console.error('Error creating draft report:', dbError);
+        throw dbError;
+      }
 
       // Create Stripe checkout session
       const session = await stripe.checkout.sessions.create({

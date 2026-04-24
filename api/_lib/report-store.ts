@@ -1,3 +1,5 @@
+import { neon } from '@neondatabase/serverless';
+
 interface DraftReportPayload {
   reportKey: string;
   source: string;
@@ -16,125 +18,117 @@ interface StripeSessionPayload {
   clientReferenceId: string;
 }
 
-// In-memory cache to store reports during the session
-const reportCache = new Map<string, any>();
+let sqlInstance: any = null;
+let schemaReady = false;
+
+function getSql() {
+  if (!sqlInstance) {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      throw new Error('DATABASE_URL not configured');
+    }
+    sqlInstance = neon(databaseUrl);
+  }
+  return sqlInstance;
+}
+
+async function ensureSchema() {
+  if (schemaReady) return;
+
+  const sql = getSql();
+  try {
+    await sql(`
+      CREATE TABLE IF NOT EXISTS premium_reports (
+        report_key TEXT PRIMARY KEY,
+        stripe_session_id TEXT UNIQUE,
+        stripe_payment_intent_id TEXT,
+        client_reference_id TEXT,
+        source TEXT NOT NULL,
+        product_type TEXT NOT NULL,
+        name TEXT NOT NULL,
+        tax_id TEXT NOT NULL,
+        document_type TEXT NOT NULL,
+        total_days INTEGER NOT NULL,
+        status_label TEXT,
+        ranges_json JSONB NOT NULL DEFAULT '[]'::jsonb,
+        payment_status TEXT NOT NULL DEFAULT 'pending',
+        customer_email TEXT,
+        paid_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_stripe_session_id ON premium_reports(stripe_session_id);
+      CREATE INDEX IF NOT EXISTS idx_payment_status ON premium_reports(payment_status);
+      CREATE INDEX IF NOT EXISTS idx_created_at ON premium_reports(created_at);
+    `);
+    schemaReady = true;
+  } catch (error) {
+    console.error('Error creating schema:', error);
+    throw error;
+  }
+}
 
 export async function createDraftReport(payload: DraftReportPayload): Promise<void> {
-  // Store in memory first (always works)
-  reportCache.set(payload.reportKey, {
-    reportKey: payload.reportKey,
-    stripeSessionId: null,
-    clientReferenceId: null,
-    source: payload.source,
-    productType: payload.productType,
-    name: payload.name,
-    taxId: payload.taxId,
-    documentType: payload.documentType,
-    totalDays: payload.totalDays,
-    statusLabel: payload.statusLabel,
-    ranges: payload.ranges,
-    paymentStatus: 'pending',
-  });
+  await ensureSchema();
+  const sql = getSql();
 
-  console.log('Draft report created:', payload.reportKey);
-
-  // Try to store in database if configured
-  if (process.env.DATABASE_URL) {
-    try {
-      const { sql } = await import('@neondatabase/serverless');
-      const db = sql(process.env.DATABASE_URL);
-      const rangesJson = JSON.stringify(payload.ranges);
-
-      await db`
-        INSERT INTO reports (
-          report_key, source, product_type, name, tax_id,
-          document_type, total_days, status_label, ranges, payment_status
-        ) VALUES (
-          ${payload.reportKey}, ${payload.source}, ${payload.productType},
-          ${payload.name}, ${payload.taxId}, ${payload.documentType},
-          ${payload.totalDays}, ${payload.statusLabel}, ${rangesJson}, 'pending'
-        )
-        ON CONFLICT (report_key) DO UPDATE SET
-          updated_at = NOW()
-      `;
-
-      console.log('Draft report stored in database:', payload.reportKey);
-    } catch (error) {
-      console.warn('Could not store report in database:', error);
-      // Continue anyway, report is in memory cache
-    }
+  try {
+    await sql(
+      `INSERT INTO premium_reports (
+        report_key, source, product_type, name, tax_id, document_type,
+        total_days, status_label, ranges_json
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      ON CONFLICT (report_key) DO NOTHING`,
+      [
+        payload.reportKey,
+        payload.source,
+        payload.productType,
+        payload.name,
+        payload.taxId,
+        payload.documentType,
+        payload.totalDays,
+        payload.statusLabel,
+        JSON.stringify(payload.ranges),
+      ]
+    );
+    console.log('Draft report created:', payload.reportKey);
+  } catch (error) {
+    console.error('Error creating draft report:', error);
+    throw error;
   }
 }
 
 export async function attachStripeSession(payload: StripeSessionPayload): Promise<void> {
-  // Update memory cache
-  const report = reportCache.get(payload.reportKey);
-  if (report) {
-    report.stripeSessionId = payload.stripeSessionId;
-    report.clientReferenceId = payload.clientReferenceId;
-  }
+  await ensureSchema();
+  const sql = getSql();
 
-  console.log('Stripe session attached:', payload.reportKey);
-
-  // Try to update in database if configured
-  if (process.env.DATABASE_URL) {
-    try {
-      const { sql } = await import('@neondatabase/serverless');
-      const db = sql(process.env.DATABASE_URL);
-
-      await db`
-        UPDATE reports
-        SET stripe_session_id = ${payload.stripeSessionId},
-            client_reference_id = ${payload.clientReferenceId},
-            updated_at = NOW()
-        WHERE report_key = ${payload.reportKey}
-      `;
-
-      console.log('Stripe session stored in database:', payload.reportKey);
-    } catch (error) {
-      console.warn('Could not update Stripe session in database:', error);
-    }
+  try {
+    await sql(
+      `UPDATE premium_reports SET stripe_session_id = $1, client_reference_id = $2 WHERE report_key = $3`,
+      [payload.stripeSessionId, payload.clientReferenceId, payload.reportKey]
+    );
+    console.log('Stripe session attached:', payload.reportKey);
+  } catch (error) {
+    console.error('Error attaching Stripe session:', error);
+    throw error;
   }
 }
 
 export async function getReportByStripeSessionId(sessionId: string): Promise<any> {
-  // Try database first
-  if (process.env.DATABASE_URL) {
-    try {
-      const { sql } = await import('@neondatabase/serverless');
-      const db = sql(process.env.DATABASE_URL);
+  await ensureSchema();
+  const sql = getSql();
 
-      const result = await db`
-        SELECT * FROM reports
-        WHERE stripe_session_id = ${sessionId}
-        LIMIT 1
-      `;
-
-      if (result && result.length > 0) {
-        const row = result[0];
-        return {
-          reportKey: row.report_key,
-          name: row.name,
-          taxId: row.tax_id,
-          documentType: row.document_type,
-          totalDays: row.total_days,
-          statusLabel: row.status_label,
-          ranges: row.ranges ? JSON.parse(row.ranges) : [],
-        };
-      }
-    } catch (error) {
-      console.warn('Could not retrieve report from database:', error);
-    }
+  try {
+    const results = await sql(
+      `SELECT * FROM premium_reports WHERE stripe_session_id = $1`,
+      [sessionId]
+    );
+    return results.length > 0 ? mapRow(results[0]) : null;
+  } catch (error) {
+    console.error('Error getting report by Stripe session ID:', error);
+    return null;
   }
-
-  // Fall back to memory cache
-  for (const report of reportCache.values()) {
-    if (report.stripeSessionId === sessionId) {
-      return report;
-    }
-  }
-
-  return null;
 }
 
 export async function getReportByReportKey(reportKey: string | null): Promise<any> {
@@ -142,50 +136,19 @@ export async function getReportByReportKey(reportKey: string | null): Promise<an
     return null;
   }
 
-  // Try database first
-  if (process.env.DATABASE_URL) {
-    try {
-      const { sql } = await import('@neondatabase/serverless');
-      const db = sql(process.env.DATABASE_URL);
+  await ensureSchema();
+  const sql = getSql();
 
-      const result = await db`
-        SELECT * FROM reports
-        WHERE report_key = ${reportKey}
-        LIMIT 1
-      `;
-
-      if (result && result.length > 0) {
-        const row = result[0];
-        return {
-          reportKey: row.report_key,
-          name: row.name,
-          taxId: row.tax_id,
-          documentType: row.document_type,
-          totalDays: row.total_days,
-          statusLabel: row.status_label,
-          ranges: row.ranges ? JSON.parse(row.ranges) : [],
-        };
-      }
-    } catch (error) {
-      console.warn('Could not retrieve report from database:', error);
-    }
+  try {
+    const results = await sql(
+      `SELECT * FROM premium_reports WHERE report_key = $1`,
+      [reportKey]
+    );
+    return results.length > 0 ? mapRow(results[0]) : null;
+  } catch (error) {
+    console.error('Error getting report by report key:', error);
+    return null;
   }
-
-  // Fall back to memory cache
-  const report = reportCache.get(reportKey);
-  if (report) {
-    return {
-      reportKey: report.reportKey,
-      name: report.name,
-      taxId: report.taxId,
-      documentType: report.documentType,
-      totalDays: report.totalDays,
-      statusLabel: report.statusLabel,
-      ranges: report.ranges,
-    };
-  }
-
-  return null;
 }
 
 export async function updateReportPaymentStatus(data: {
@@ -195,57 +158,58 @@ export async function updateReportPaymentStatus(data: {
   paymentStatus: 'paid' | 'completed' | 'expired' | 'failed';
   customerEmail?: string | null;
 }): Promise<any> {
-  // Update memory cache
-  let report = null;
+  await ensureSchema();
+  const sql = getSql();
 
-  if (data.reportKey) {
-    report = reportCache.get(data.reportKey);
-  } else if (data.stripeSessionId) {
-    for (const r of reportCache.values()) {
-      if (r.stripeSessionId === data.stripeSessionId) {
-        report = r;
-        break;
-      }
+  try {
+    let query = '';
+    let params: any[] = [];
+
+    if (data.reportKey) {
+      query = `UPDATE premium_reports
+        SET payment_status = $1, stripe_payment_intent_id = $2, customer_email = $3, updated_at = NOW()
+        WHERE report_key = $4`;
+      params = [data.paymentStatus, data.stripePaymentIntentId || null, data.customerEmail || null, data.reportKey];
+    } else if (data.stripeSessionId) {
+      query = `UPDATE premium_reports
+        SET payment_status = $1, stripe_payment_intent_id = $2, customer_email = $3, updated_at = NOW()
+        WHERE stripe_session_id = $4`;
+      params = [data.paymentStatus, data.stripePaymentIntentId || null, data.customerEmail || null, data.stripeSessionId];
+    } else {
+      console.warn('No reportKey or stripeSessionId provided for status update');
+      return;
     }
+
+    await sql(query, params);
+    console.log('Report payment status updated:', data);
+  } catch (error) {
+    console.error('Error updating report payment status:', error);
+    throw error;
   }
+}
 
-  if (report) {
-    report.paymentStatus = data.paymentStatus;
-    report.stripePaymentIntentId = data.stripePaymentIntentId;
-    report.customerEmail = data.customerEmail;
-  }
+function mapRow(row: any): any {
+  if (!row) return null;
 
-  console.log('Report payment status updated:', data);
-
-  // Try to update in database if configured
-  if (process.env.DATABASE_URL) {
-    try {
-      const { sql } = await import('@neondatabase/serverless');
-      const db = sql(process.env.DATABASE_URL);
-
-      if (data.reportKey) {
-        await db`
-          UPDATE reports
-          SET payment_status = ${data.paymentStatus},
-              stripe_payment_intent_id = ${data.stripePaymentIntentId || null},
-              customer_email = ${data.customerEmail || null},
-              updated_at = NOW()
-          WHERE report_key = ${data.reportKey}
-        `;
-      } else if (data.stripeSessionId) {
-        await db`
-          UPDATE reports
-          SET payment_status = ${data.paymentStatus},
-              stripe_payment_intent_id = ${data.stripePaymentIntentId || null},
-              customer_email = ${data.customerEmail || null},
-              updated_at = NOW()
-          WHERE stripe_session_id = ${data.stripeSessionId}
-        `;
-      }
-
-      console.log('Payment status updated in database:', data);
-    } catch (error) {
-      console.warn('Could not update payment status in database:', error);
-    }
-  }
+  return {
+    report_key: row.report_key,
+    reportKey: row.report_key,
+    stripe_session_id: row.stripe_session_id,
+    stripeSessionId: row.stripe_session_id,
+    name: row.name,
+    taxId: row.tax_id,
+    tax_id: row.tax_id,
+    documentType: row.document_type,
+    document_type: row.document_type,
+    totalDays: row.total_days,
+    total_days: row.total_days,
+    statusLabel: row.status_label,
+    status_label: row.status_label,
+    ranges: Array.isArray(row.ranges_json) ? row.ranges_json : [],
+    ranges_json: row.ranges_json,
+    paymentStatus: row.payment_status,
+    payment_status: row.payment_status,
+    customerEmail: row.customer_email,
+    source: row.source,
+  };
 }

@@ -49,9 +49,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       payment_intent?: Stripe.PaymentIntent;
     };
 
+    console.log('Fetching report for session:', {
+      sessionId: session.id,
+      reportKeyFromMetadata: session.metadata?.report_key,
+    });
+
     const report =
       (await getReportByStripeSessionId(session.id)) ||
       (await getReportByReportKey((session.metadata?.report_key as string) || null));
+
+    console.log('Report found:', { report });
 
     const isVerifiedPayment =
       session.mode === 'payment' &&

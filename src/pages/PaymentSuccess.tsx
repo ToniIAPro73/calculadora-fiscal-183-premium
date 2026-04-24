@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/contexts/i18nContext';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -115,7 +114,6 @@ const PaymentSuccess: React.FC = () => {
               <p className="text-base opacity-60">{t('payment.verifying') || 'Verifying payment...'}</p>
             </div>
           </main>
-          <Footer />
         </div>
       </>
     );
@@ -132,7 +130,7 @@ const PaymentSuccess: React.FC = () => {
       <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
         <Header />
 
-        <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-6">
+        <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-6 flex items-center">
           {isVerified && (
             <>
               {/* Success State */}
@@ -140,9 +138,9 @@ const PaymentSuccess: React.FC = () => {
                 {/* Success Icon */}
                 <div className="flex justify-center pt-4 pb-2">
                   <div className="relative w-24 h-24">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-xl"></div>
-                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/10 border-2 border-primary">
-                      <CheckCircle2 className="w-14 h-14 text-primary" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full blur-xl"></div>
+                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/20 border-2 border-primary">
+                      <CheckCircle2 className="w-14 h-14 text-primary fill-primary" />
                     </div>
                   </div>
                 </div>
@@ -277,8 +275,6 @@ const PaymentSuccess: React.FC = () => {
             </>
           )}
         </main>
-
-        <Footer />
       </div>
     </>
   );

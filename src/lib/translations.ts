@@ -61,7 +61,8 @@ export const translations = {
       successReport: "Report downloaded successfully!",
       invalidDateRange: "Invalid date range",
       futureDate: "Dates cannot be in the future",
-      errorPreview: "Failed to generate preview"
+      errorPreview: "Failed to generate preview",
+      fiscalYearChanged: "Fiscal year changed. All data has been reset."
     },
     userDetails: {
       title: "Report Details",
@@ -270,7 +271,8 @@ export const translations = {
       successReport: "¡Informe descargado exitosamente!",
       invalidDateRange: "Rango de fechas inválido",
       futureDate: "Las fechas no pueden ser futuras",
-      errorPreview: "No se pudo generar la vista previa"
+      errorPreview: "No se pudo generar la vista previa",
+      fiscalYearChanged: "Ejercicio fiscal cambiado. Todos los datos han sido resetados."
     },
     userDetails: {
       title: "Datos del Informe",

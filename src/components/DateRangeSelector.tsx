@@ -36,16 +36,16 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
           <CalendarIcon className="text-primary w-5 h-5" />
           {t('dateSelector.title')}
         </CardTitle>
-        <CardDescription className="opacity-40 text-[11px] uppercase tracking-widest">{t('dateSelector.description')}</CardDescription>
+        <CardDescription className="opacity-70 text-[11px] uppercase tracking-widest">{t('dateSelector.description')}</CardDescription>
       </CardHeader>
       <CardContent className="p-8 space-y-8">
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-3">
-            <label className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold ml-1">{t('dateSelector.startDate')}</label>
+            <label className="text-[10px] uppercase tracking-[0.2em] opacity-70 font-bold ml-1">{t('dateSelector.startDate')}</label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" className={cn("w-full justify-start text-left font-light h-14 rounded-xl bg-accent border border-border hover:bg-accent/80 transition-all", !startDate && "opacity-30")}>
-                  <CalendarIcon className="mr-3 h-4 w-4 opacity-40" />
+                <Button variant="ghost" className={cn("w-full justify-start text-left font-light h-14 rounded-xl bg-accent border border-border hover:bg-accent/80 transition-all", !startDate && "opacity-60")}>
+                  <CalendarIcon className="mr-3 h-4 w-4 opacity-70" />
                   {startDate ? format(startDate, 'PPP') : t('dateSelector.pickDate')}
                 </Button>
               </PopoverTrigger>
@@ -56,11 +56,11 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] uppercase tracking-[0.2em] opacity-40 font-bold ml-1">{t('dateSelector.endDate')}</label>
+            <label className="text-[10px] uppercase tracking-[0.2em] opacity-70 font-bold ml-1">{t('dateSelector.endDate')}</label>
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="ghost" className={cn("w-full justify-start text-left font-light h-14 rounded-xl bg-accent border border-border hover:bg-accent/80 transition-all", !endDate && "opacity-30")}>
-                  <CalendarIcon className="mr-3 h-4 w-4 opacity-40" />
+                <Button variant="ghost" className={cn("w-full justify-start text-left font-light h-14 rounded-xl bg-accent border border-border hover:bg-accent/80 transition-all", !endDate && "opacity-60")}>
+                  <CalendarIcon className="mr-3 h-4 w-4 opacity-70" />
                   {endDate ? format(endDate, 'PPP') : t('dateSelector.pickDate')}
                 </Button>
               </PopoverTrigger>

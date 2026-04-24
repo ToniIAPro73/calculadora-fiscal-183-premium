@@ -36,9 +36,6 @@ export const translations = {
       limitUsage: "Day Limit Usage %",
       status: "Status",
     },
-    calculator: {
-      totalDays: "Total Days",
-    },
     summary: {
       title: "Summary",
       status: "Status",
@@ -112,6 +109,7 @@ export const translations = {
       terms: "Terms of Service"
     },
     calculator: {
+      totalDays: "Total Days",
       heroTitlePrefix: "Master Your",
       heroTitleSuffix: "Residency.",
       heroSubtitle: "Track your residency days with our premium audit-ready calculator for 2026.",
@@ -198,9 +196,6 @@ export const translations = {
       limitUsage: "Límite de Días %",
       status: "Estado",
     },
-    calculator: {
-      totalDays: "Días Totales",
-    },
     summary: {
       title: "Resumen",
       status: "Estado",
@@ -274,6 +269,7 @@ export const translations = {
       terms: "Términos de Servicio"
     },
     calculator: {
+      totalDays: "Días Totales",
       heroTitlePrefix: "Domina tu",
       heroTitleSuffix: "Residencia.",
       heroSubtitle: "Rastrea tus días con nuestra calculadora premium lista para auditoría 2026.",

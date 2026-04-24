@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
-import { createDraftReport, attachStripeSession } from './_lib/report-store';
+import { createDraftReport, attachStripeSession } from './_lib/report-store.js';
 
 interface CreateSessionRequest {
   name: string;
@@ -46,9 +46,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const stripeKey = process.env.STRIPE_SECRET_KEY;
     const priceId = process.env.STRIPE_PRICE_ID;
-    const appUrl = process.env.APP_URL;
     const databaseUrl = process.env.DATABASE_URL;
     const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+
+    // Build base URL from APP_URL env var, request headers, or Vercel URL
+    let appUrl = process.env.APP_URL;
+
+    if (!appUrl && req.headers.host) {
+      const protocol = req.headers['x-forwarded-proto'] || 'https';
+      appUrl = `${protocol}://${req.headers.host}`;
+    }
+
+    // Fallback to Vercel's automatic URL if available
+    if (!appUrl && process.env.VERCEL_URL) {
+      const protocol = process.env.VERCEL_ENV === 'production' ? 'https' : 'https';
+      appUrl = `${protocol}://${process.env.VERCEL_URL}`;
+    }
 
     // ── REAL STRIPE MODE ──────────────────────────────────────────
     if (stripeKey && databaseUrl) {
@@ -64,7 +77,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       if (!baseUrl) {
-        return res.status(500).json({ error: 'APP_URL not configured' });
+        console.error('URL construction failed:', {
+          appUrl,
+          'env.APP_URL': process.env.APP_URL,
+          'env.VERCEL_URL': process.env.VERCEL_URL,
+          'headers.host': req.headers.host,
+          'headers.x-forwarded-proto': req.headers['x-forwarded-proto'],
+        });
+        return res.status(500).json({ error: 'Unable to construct application URL' });
       }
 
       const reportKey = crypto.randomUUID();

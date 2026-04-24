@@ -11,6 +11,8 @@ import DataAuthoritySection from '@/components/DataAuthoritySection';
 import UserDetailsModal from '@/components/UserDetailsModal';
 import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
+import FiscalYearSelector from '@/components/FiscalYearSelector';
+import { getCurrentYear } from '@/lib/fiscalYear';
 import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,6 +26,7 @@ const TaxNomadCalculator: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
+  const [fiscalYear, setFiscalYear] = useState<number>(getCurrentYear());
   const [isUserDetailsModalOpen, setIsUserDetailsModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -62,11 +65,13 @@ const TaxNomadCalculator: React.FC = () => {
   };
 
   const handleViewExample = async () => {
-    const example = buildExampleReportPayload();
+    const example = buildExampleReportPayload(fiscalYear);
     try {
       const doc = await generateTaxReport({
         ...example,
-        exampleMode: true
+        exampleMode: true,
+        fiscalYear,
+        language: t('meta.language') === 'English' ? 'en' : 'es'
       });
       const blobUrl = doc.output('bloburl');
       window.open(blobUrl, '_blank');
@@ -85,6 +90,15 @@ const TaxNomadCalculator: React.FC = () => {
     toast.success(t('toast.paymentSuccess') || 'Payment successful! Your report is being prepared...');
   };
 
+  const handleFiscalYearChange = (newYear: number) => {
+    setFiscalYear(newYear);
+    setSelectedRanges([]);
+    setUserData({ name: '', documentType: 'passport', taxId: '', email: '' });
+    setIsUserDetailsModalOpen(false);
+    setIsPaymentModalOpen(false);
+    toast.success(t('toast.fiscalYearChanged') || `Fiscal year changed to ${newYear}. Data has been reset.`);
+  };
+
 
   return (
     <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
@@ -93,16 +107,21 @@ const TaxNomadCalculator: React.FC = () => {
       
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 md:py-16">
         <div className="grid lg:grid-cols-12 gap-12">
-          
+
           {/* Left Column: Input & Management */}
           <div className="lg:col-span-8 space-y-12">
             <div className="space-y-6">
-              <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
-                {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
-              </h1>
-              <p className="text-xl opacity-70 font-light max-w-2xl leading-relaxed">
-                {t('calculator.heroSubtitle')}
-              </p>
+              <div className="flex items-end justify-between gap-4">
+                <div className="flex-1">
+                  <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
+                    {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
+                  </h1>
+                  <p className="text-xl opacity-70 font-light max-w-2xl leading-relaxed mt-4">
+                    {t('calculator.heroSubtitle')}
+                  </p>
+                </div>
+                <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
+              </div>
             </div>
 
             <div className="space-y-8">

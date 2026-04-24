@@ -1,7 +1,48 @@
 import { jsPDF } from 'jspdf';
 import { format, differenceInCalendarDays, eachDayOfInterval, isWithinInterval } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { es, enUS } from 'date-fns/locale';
 import { reportOwner } from './reportMetadata';
+
+const pdfLabels = {
+  es: {
+    statusLimitExceeded: 'LÍMITE SUPERADO',
+    statusExceededBadge: 'STATUS: NO SEGURO',
+    statusExceededDesc: 'Residente Fiscal en España',
+    statusApproaching: 'ATENCIÓN CRÍTICA',
+    statusApproachingBadge: 'STATUS: PRECAUCIÓN',
+    statusApproachingDesc: 'Próximo al límite de 183 días',
+    statusCompliant: 'CUMPLIMIENTO LEGAL',
+    statusCompliantBadge: 'STATUS: SEGURO',
+    statusCompliantDesc: 'No residente (vía permanencia)',
+    limit183: 'LÍMITE 183',
+    startDate: 'FECHA INICIO',
+    endDate: 'FECHA FIN',
+    grossDays: 'DÍAS BRUTOS',
+    overlapAdjustment: 'AJUSTE SOLAPO',
+    fiscalYear: 'EJERCICIO FISCAL',
+    reportReference: 'REFERENCIA INFORME',
+    generatedDate: 'FECHA GENERACIÓN',
+  },
+  en: {
+    statusLimitExceeded: 'LIMIT EXCEEDED',
+    statusExceededBadge: 'STATUS: NOT SAFE',
+    statusExceededDesc: 'Tax Resident in Spain',
+    statusApproaching: 'CRITICAL ATTENTION',
+    statusApproachingBadge: 'STATUS: CAUTION',
+    statusApproachingDesc: 'Approaching 183-day limit',
+    statusCompliant: 'LEGAL COMPLIANCE',
+    statusCompliantBadge: 'STATUS: SAFE',
+    statusCompliantDesc: 'Non-resident (via permanence)',
+    limit183: '183 LIMIT',
+    startDate: 'START DATE',
+    endDate: 'END DATE',
+    grossDays: 'GROSS DAYS',
+    overlapAdjustment: 'OVERLAP ADJ',
+    fiscalYear: 'FISCAL YEAR',
+    reportReference: 'REFERENCE',
+    generatedDate: 'GENERATED DATE',
+  },
+};
 
 const C = {
   primary: [16, 185, 129] as [number, number, number], // Emerald-500
@@ -18,10 +59,11 @@ const C = {
   accentBg: [240, 253, 244] as [number, number, number], // Very light emerald
 };
 
-function statusInfo(totalDays: number) {
-  if (totalDays > 183) return { color: C.danger, bg: [254, 226, 226] as [number, number, number], title: 'LÍMITE SUPERADO', badge: 'STATUS: NO SEGURO', desc: 'Residente Fiscal en España' };
-  if (totalDays > 150) return { color: C.warning, bg: [254, 243, 199] as [number, number, number], title: 'ATENCIÓN CRÍTICA', badge: 'STATUS: PRECAUCIÓN', desc: 'Próximo al límite de 183 días' };
-  return { color: C.success, bg: [220, 252, 231] as [number, number, number], title: 'CUMPLIMIENTO LEGAL', badge: 'STATUS: SEGURO', desc: 'No residente (vía permanencia)' };
+function statusInfo(totalDays: number, language: string = 'es') {
+  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
+  if (totalDays > 183) return { color: C.danger, bg: [254, 226, 226] as [number, number, number], title: labels.statusLimitExceeded, badge: labels.statusExceededBadge, desc: labels.statusExceededDesc };
+  if (totalDays > 150) return { color: C.warning, bg: [254, 243, 199] as [number, number, number], title: labels.statusApproaching, badge: labels.statusApproachingBadge, desc: labels.statusApproachingDesc };
+  return { color: C.success, bg: [220, 252, 231] as [number, number, number], title: labels.statusCompliant, badge: labels.statusCompliantBadge, desc: labels.statusCompliantDesc };
 }
 
 function normalizeRange(range: any) {
@@ -52,10 +94,11 @@ function drawSectionHeader(doc: jsPDF, text: string, x: number, y: number) {
   doc.line(x, y + 1.5, x + 15, y + 1.5);
 }
 
-function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalDays: number) {
+function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalDays: number, language: string = 'es') {
   const limit = 183;
   const pct = Math.min((totalDays / limit) * 100, 100);
-  const status = statusInfo(totalDays);
+  const status = statusInfo(totalDays, language);
+  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
 
   // Bar Background
   doc.setFillColor(C.slate200[0], C.slate200[1], C.slate200[2]);
@@ -74,12 +117,13 @@ function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalD
   doc.setFontSize(7);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
-  doc.text('LÍMITE 183', markerX, y - 4, { align: 'center' });
+  doc.text(labels.limit183, markerX, y - 4, { align: 'center' });
 }
 
-function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, ranges: any[]) {
+function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, ranges: any[], language: string = 'es') {
+  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
   const colWidths = [width * 0.3, width * 0.3, width * 0.2, width * 0.2];
-  const headers = ['FECHA INICIO', 'FECHA FIN', 'DÍAS BRUTOS', 'AJUSTE SOLAPO'];
+  const headers = [labels.startDate, labels.endDate, labels.grossDays, labels.overlapAdjustment];
   
   // Header
   doc.setFillColor(C.dark[0], C.dark[1], C.dark[2]);
@@ -141,21 +185,28 @@ function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, rang
   return currentY;
 }
 
-function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: number, fileOwnerLine: string, refNum: string) {
+function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: number, fileOwnerLine: string, refNum: string, language: string = 'es', fiscalYear: number = 2026) {
+  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
   doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
   doc.setLineWidth(0.2);
   doc.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
-  
+
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
-  
-  doc.text('Generado por TaxNomad Premium Analytics · Cumplimiento Fiscal Expatriados · rule183.com', margin, pageHeight - 14);
+
+  const generatedByText = language === 'en'
+    ? 'Generated by TaxNomad Premium Analytics · Tax Compliance for Expatriates · rule183.com'
+    : 'Generado por TaxNomad Premium Analytics · Cumplimiento Fiscal Expatriados · rule183.com';
+
+  doc.text(generatedByText, margin, pageHeight - 14);
   doc.text(`Software de Auditoría: ${fileOwnerLine}`, margin, pageHeight - 10);
-  
+
   doc.setFont('helvetica', 'bold');
-  doc.text(`ID DE INFORME: ${refNum}`, pageWidth - margin, pageHeight - 14, { align: 'right' });
-  doc.text(`Página 1 de 1`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+  const reportIdText = language === 'en' ? 'REPORT ID' : 'ID DE INFORME';
+  const pageText = language === 'en' ? 'Page 1 of 1' : 'Página 1 de 1';
+  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin, pageHeight - 14, { align: 'right' });
+  doc.text(pageText, pageWidth - margin, pageHeight - 10, { align: 'right' });
 }
 
 export async function generateTaxReport({
@@ -165,6 +216,8 @@ export async function generateTaxReport({
   totalDays,
   ranges = [],
   exampleMode = false,
+  language = 'es',
+  fiscalYear = new Date().getFullYear(),
 }: {
   name: string;
   taxId: string;
@@ -173,6 +226,7 @@ export async function generateTaxReport({
   ranges?: any[];
   language?: string;
   exampleMode?: boolean;
+  fiscalYear?: number;
 }) {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   const W = doc.internal.pageSize.getWidth();
@@ -180,12 +234,16 @@ export async function generateTaxReport({
   const M = 20; // Margin
   const CW = W - 2 * M; // Content Width
 
-  const status = statusInfo(totalDays);
+  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
+  const dateLocale = language === 'en' ? enUS : es;
+  const status = statusInfo(totalDays, language);
   const remaining = Math.max(183 - totalDays, 0);
   const refNum = `TXN-${format(new Date(), 'yyyyMMdd')}-${Math.floor(Math.random() * 90000 + 10000)}`;
-  const genDate = format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: es });
+  const genDate = language === 'en'
+    ? format(new Date(), "MMMM dd, yyyy", { locale: enUS })
+    : format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: es });
   const sortedRanges = [...ranges].map(normalizeRange).sort((a, b) => a.start.getTime() - b.start.getTime());
-  const identifierLabel = documentType === 'nie' ? 'NIE' : 'PASAPORTE';
+  const identifierLabel = documentType === 'nie' ? 'NIE' : (language === 'en' ? 'PASSPORT' : 'PASAPORTE');
   const fileOwnerLine = `${reportOwner.name} (${reportOwner.nif})`;
   
   // Background Shape
@@ -220,8 +278,12 @@ export async function generateTaxReport({
   // Ref & Date Header
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
-  doc.text(`REFERENCIA: ${refNum}`, W - M, 18, { align: 'right' });
-  doc.text(`FECHA DE EMISIÓN: ${genDate.toUpperCase()}`, W - M, 24, { align: 'right' });
+  const referenceText = language === 'en' ? 'REFERENCE' : 'REFERENCIA';
+  const dateText = language === 'en' ? 'ISSUED DATE' : 'FECHA DE EMISIÓN';
+  const fiscalYearText = language === 'en' ? 'FISCAL YEAR' : 'EJERCICIO FISCAL';
+  doc.text(`${referenceText}: ${refNum}`, W - M, 18, { align: 'right' });
+  doc.text(`${dateText}: ${genDate.toUpperCase()}`, W - M, 24, { align: 'right' });
+  doc.text(`${fiscalYearText}: ${fiscalYear}`, W - M, 30, { align: 'right' });
 
   let y = 55;
 
@@ -313,17 +375,19 @@ export async function generateTaxReport({
   doc.setFontSize(9);
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
   doc.setFont('helvetica', 'bold');
-  doc.text('INDICADOR VISUAL DE EXPOSICIÓN FISCAL', M, y);
+  const visualIndicatorText = language === 'en' ? 'TAX EXPOSURE VISUAL INDICATOR' : 'INDICADOR VISUAL DE EXPOSICIÓN FISCAL';
+  doc.text(visualIndicatorText, M, y);
   y += 8;
-  drawProgressBar(doc, M, y, CW, totalDays);
-  
+  drawProgressBar(doc, M, y, CW, totalDays, language);
+
   y += 20;
 
   // Breakdown Table
-  drawSectionHeader(doc, 'DESGLOSE CRONOLÓGICO DE PERIODOS', M, y);
+  const breakdownText = language === 'en' ? 'CHRONOLOGICAL BREAKDOWN OF PERIODS' : 'DESGLOSE CRONOLÓGICO DE PERIODOS';
+  drawSectionHeader(doc, breakdownText, M, y);
   y += 6;
-  
-  y = drawDetailedTable(doc, M, y, CW, sortedRanges);
+
+  y = drawDetailedTable(doc, M, y, CW, sortedRanges, language);
   
   y += 15;
 
@@ -343,7 +407,7 @@ export async function generateTaxReport({
   const legalLines = doc.splitTextToSize(legalText, CW);
   doc.text(legalLines, M, y);
 
-  drawFooter(doc, W, H, M, fileOwnerLine, refNum);
+  drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, fiscalYear);
 
   return doc;
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/contexts/i18nContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
@@ -17,46 +18,9 @@ interface TestScenario {
   color: string;
 }
 
-const TEST_SCENARIOS: TestScenario[] = [
-  {
-    name: 'Pago Exitoso',
-    description: 'Simula un pago completado correctamente',
-    cardNumber: '4242 4242 4242 4242',
-    expectedResult: 'Pago confirmado - Puede descargar el reporte',
-    color: 'bg-green-500/10 border-green-500/20',
-  },
-  {
-    name: 'Tarjeta Rechazada',
-    description: 'Simula una tarjeta rechazada por el banco',
-    cardNumber: '4000 0000 0000 0002',
-    expectedResult: 'Error de pago - Mostrar mensaje de error',
-    color: 'bg-red-500/10 border-red-500/20',
-  },
-  {
-    name: '3D Secure Requerido',
-    description: 'Requiere autenticación adicional (3D Secure)',
-    cardNumber: '4000 0025 0000 3155',
-    expectedResult: 'Pago pendiente - Requiere verificación',
-    color: 'bg-amber-500/10 border-amber-500/20',
-  },
-  {
-    name: 'Expiración Requerida',
-    description: 'Tarjeta expirada - usa fecha pasada (ej: 01/23)',
-    cardNumber: '4000 0000 0000 0069',
-    expectedResult: 'Error - Tarjeta expirada',
-    color: 'bg-red-500/10 border-red-500/20',
-  },
-  {
-    name: 'CVC Inválido',
-    description: 'Tarjeta válida pero CVC incorrecto',
-    cardNumber: '4000 0000 0000 0127',
-    expectedResult: 'Error - CVC inválido',
-    color: 'bg-red-500/10 border-red-500/20',
-  },
-];
-
 const PaymentTest: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [testResults, setTestResults] = useState<Record<string, any>>({});
   const [expandedScenario, setExpandedScenario] = useState<string | null>(null);
@@ -69,6 +33,44 @@ const PaymentTest: React.FC = () => {
     statusLabel: 'resident',
     documentType: 'passport',
   });
+
+  const TEST_SCENARIOS: TestScenario[] = useMemo(() => [
+    {
+      name: t('paymentTest.successScenario') || 'Successful Payment',
+      description: t('paymentTest.successDesc') || 'Simulates a successfully completed payment',
+      cardNumber: '4242 4242 4242 4242',
+      expectedResult: 'Pago confirmado - Puede descargar el reporte',
+      color: 'bg-green-500/10 border-green-500/20',
+    },
+    {
+      name: t('paymentTest.declinedScenario') || 'Card Declined',
+      description: t('paymentTest.declinedDesc') || 'Simulates a card rejected by the bank',
+      cardNumber: '4000 0000 0000 0002',
+      expectedResult: 'Error de pago - Mostrar mensaje de error',
+      color: 'bg-red-500/10 border-red-500/20',
+    },
+    {
+      name: t('paymentTest.threedsecureScenario') || '3D Secure Required',
+      description: t('paymentTest.threedsecureDesc') || 'Requires additional authentication (3D Secure)',
+      cardNumber: '4000 0025 0000 3155',
+      expectedResult: 'Pago pendiente - Requiere verificación',
+      color: 'bg-amber-500/10 border-amber-500/20',
+    },
+    {
+      name: t('paymentTest.expiredScenario') || 'Expiration Required',
+      description: t('paymentTest.expiredDesc') || 'Expired card - use past date (e.g., 01/23)',
+      cardNumber: '4000 0000 0000 0069',
+      expectedResult: 'Error - Tarjeta expirada',
+      color: 'bg-red-500/10 border-red-500/20',
+    },
+    {
+      name: t('paymentTest.invalidcvcScenario') || 'Invalid CVC',
+      description: t('paymentTest.invalidcvcDesc') || 'Valid card but incorrect CVC',
+      cardNumber: '4000 0000 0000 0127',
+      expectedResult: 'Error - CVC inválido',
+      color: 'bg-red-500/10 border-red-500/20',
+    },
+  ], [t]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -171,18 +173,18 @@ const PaymentTest: React.FC = () => {
           <div className="space-y-8">
             {/* Header */}
             <div className="space-y-2">
-              <h1 className="text-4xl font-bold tracking-tight">Payment Testing</h1>
+              <h1 className="text-4xl font-bold tracking-tight">{t('paymentTest.title') || 'Payment Testing'}</h1>
               <p className="text-lg opacity-60">
-                Prueba diferentes escenarios de pago usando tarjetas de prueba de Stripe
+                {t('paymentTest.subtitle') || 'Test different payment scenarios using Stripe test cards'}
               </p>
             </div>
 
             {/* Form Section */}
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Datos de Prueba</h2>
+              <h2 className="text-xl font-semibold mb-4">{t('paymentTest.testData') || 'Test Data'}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Nombre</label>
+                  <label className="block text-sm font-medium mb-2">{t('paymentTest.name') || 'Name'}</label>
                   <Input
                     name="name"
                     value={formData.name}
@@ -191,7 +193,7 @@ const PaymentTest: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Tax ID</label>
+                  <label className="block text-sm font-medium mb-2">{t('paymentTest.taxId') || 'Tax ID'}</label>
                   <Input
                     name="taxId"
                     value={formData.taxId}
@@ -200,7 +202,7 @@ const PaymentTest: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <label className="block text-sm font-medium mb-2">{t('paymentTest.email') || 'Email'}</label>
                   <Input
                     name="email"
                     type="email"
@@ -210,7 +212,7 @@ const PaymentTest: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Total Días</label>
+                  <label className="block text-sm font-medium mb-2">{t('paymentTest.totalDays') || 'Total Days'}</label>
                   <Input
                     name="totalDays"
                     type="number"
@@ -225,7 +227,7 @@ const PaymentTest: React.FC = () => {
 
             {/* Test Scenarios */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Escenarios de Prueba</h2>
+              <h2 className="text-xl font-semibold">{t('paymentTest.testScenarios') || 'Test Scenarios'}</h2>
               <div className="grid gap-4">
                 {TEST_SCENARIOS.map(scenario => (
                   <Card key={scenario.cardNumber} className={`p-4 border cursor-pointer ${scenario.color}`}>
@@ -251,12 +253,12 @@ const PaymentTest: React.FC = () => {
                         <div className="space-y-4 pt-4 border-t border-border/20">
                           {/* Card Number Info */}
                           <div className="space-y-2">
-                            <p className="text-sm font-mono">Tarjeta: {scenario.cardNumber}</p>
+                            <p className="text-sm font-mono">Card: {scenario.cardNumber}</p>
                             <p className="text-xs opacity-60">
-                              Usa cualquier fecha futura (ej: 12/26) y CVC (ej: 123)
+                              Use any future date (e.g., 12/26) and CVC (e.g., 123)
                             </p>
                             <p className="text-sm">
-                              <strong>Resultado esperado:</strong> {scenario.expectedResult}
+                              <strong>{t('paymentTest.expectedResult') || 'Expected Result'}:</strong> {scenario.expectedResult}
                             </p>
                           </div>
 
@@ -289,10 +291,10 @@ const PaymentTest: React.FC = () => {
                             {isLoading ? (
                               <>
                                 <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                                Procesando...
+                                {t('payment.processing') || 'Processing...'}
                               </>
                             ) : (
-                              'Probar Escenario'
+                              t('paymentTest.confirmPayment') || 'Confirm Payment'
                             )}
                           </Button>
                         </div>
@@ -305,19 +307,25 @@ const PaymentTest: React.FC = () => {
 
             {/* Instructions */}
             <Card className="p-6 bg-primary/5 border-primary/20">
-              <h3 className="font-semibold mb-3">Instrucciones de Testing</h3>
+              <h3 className="font-semibold mb-3">{t('paymentTest.testInstructions') || 'Testing Instructions'}</h3>
               <ul className="space-y-2 text-sm opacity-80">
-                <li>✓ Cada tarjeta simulará un resultado diferente</li>
-                <li>✓ Serás redirigido a Stripe para confirmar la prueba</li>
-                <li>✓ Verifica los logs en Vercel para debugging detallado</li>
-                <li>✓ Comprueba que la página de éxito muestra los datos correctamente</li>
-                <li>✓ Para pago rechazado, verifica que vuelves a la home</li>
+                {(t('paymentTest.instructions') as string[])?.map((instruction, idx) => (
+                  <li key={idx}>{instruction}</li>
+                )) || (
+                  <>
+                    <li>✓ Each card will simulate a different result</li>
+                    <li>✓ You will be redirected to Stripe to confirm the test</li>
+                    <li>✓ Check Vercel logs for detailed debugging</li>
+                    <li>✓ Verify that the success page displays data correctly</li>
+                    <li>✓ For declined payment, verify that you return to home</li>
+                  </>
+                )}
               </ul>
             </Card>
 
             {/* Back Button */}
             <Button variant="ghost" onClick={() => navigate('/')} className="w-full">
-              Volver a Home
+              {t('paymentTest.backHome') || 'Back to Home'}
             </Button>
           </div>
         </main>

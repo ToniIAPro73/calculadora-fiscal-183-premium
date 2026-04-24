@@ -228,7 +228,7 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
   const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
   doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
   doc.setLineWidth(0.2);
-  doc.line(margin, pageHeight - 22, pageWidth - margin, pageHeight - 22);
+  doc.line(margin, pageHeight - 31, pageWidth - margin, pageHeight - 31);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);

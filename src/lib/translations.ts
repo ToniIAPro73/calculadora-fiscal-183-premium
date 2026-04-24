@@ -115,15 +115,12 @@ export const translations = {
       privacy: "Privacy Policy",
       terms: "Terms of Service",
       support: "Support",
+      contact: "Contact",
       contactEmail: "Email",
       website: "Website",
       copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
       rights: "All rights reserved. Premium tax calculator for digital nomads.",
       disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
-    },
-    authority: {
-      spanishTaxAuthority: "Spanish Tax Authority",
-      euRegulations: "EU Regulations",
     },
     calculator: {
       totalDays: "Total Days",
@@ -324,15 +321,12 @@ export const translations = {
       privacy: "Política de Privacidad",
       terms: "Términos de Servicio",
       support: "Soporte",
+      contact: "Contacto",
       contactEmail: "Correo",
       website: "Sitio Web",
       copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
       rights: "Todos los derechos reservados. Calculadora fiscal premium para nómadas digitales.",
       disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
-    },
-    authority: {
-      spanishTaxAuthority: "Agencia Tributaria Española",
-      euRegulations: "Regulaciones de la UE",
     },
     calculator: {
       totalDays: "Días Totales",

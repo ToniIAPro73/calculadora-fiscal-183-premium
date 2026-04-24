@@ -1,3 +1,5 @@
+import { sql } from '@neondatabase/serverless';
+
 interface DraftReportPayload {
   reportKey: string;
   source: string;
@@ -16,65 +18,129 @@ interface StripeSessionPayload {
   clientReferenceId: string;
 }
 
-// In-memory storage for development (will be replaced with database when DATABASE_URL is configured)
-const reportsMap = new Map<string, any>();
-
-async function tryDatabase(fn: () => Promise<any>): Promise<any> {
-  const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) {
-    return null;
-  }
-
-  try {
-    const { sql } = await import('@neondatabase/serverless');
-    return await fn();
-  } catch (error) {
-    console.warn('Database operation failed, falling back to in-memory storage:', error);
-    return null;
-  }
-}
-
 export async function createDraftReport(payload: DraftReportPayload): Promise<void> {
-  reportsMap.set(payload.reportKey, {
-    reportKey: payload.reportKey,
-    stripeSessionId: null,
-    clientReferenceId: null,
-    name: payload.name,
-    taxId: payload.taxId,
-    documentType: payload.documentType,
-    totalDays: payload.totalDays,
-    statusLabel: payload.statusLabel,
-    ranges: payload.ranges,
-    paymentStatus: 'pending',
-  });
+  try {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      console.warn('DATABASE_URL not configured, skipping database write');
+      return;
+    }
 
-  console.log('Draft report created:', payload.reportKey);
+    const db = sql(databaseUrl);
+    const rangesJson = JSON.stringify(payload.ranges);
+
+    await db`
+      INSERT INTO reports (
+        report_key, source, product_type, name, tax_id,
+        document_type, total_days, status_label, ranges, payment_status
+      ) VALUES (
+        ${payload.reportKey}, ${payload.source}, ${payload.productType},
+        ${payload.name}, ${payload.taxId}, ${payload.documentType},
+        ${payload.totalDays}, ${payload.statusLabel}, ${rangesJson}, 'pending'
+      )
+      ON CONFLICT (report_key) DO UPDATE SET
+        updated_at = NOW()
+    `;
+
+    console.log('Draft report created in database:', payload.reportKey);
+  } catch (error) {
+    console.error('Error creating draft report:', error);
+  }
 }
 
 export async function attachStripeSession(payload: StripeSessionPayload): Promise<void> {
-  const report = reportsMap.get(payload.reportKey);
-  if (report) {
-    report.stripeSessionId = payload.stripeSessionId;
-    report.clientReferenceId = payload.clientReferenceId;
-  }
+  try {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      console.warn('DATABASE_URL not configured, skipping database write');
+      return;
+    }
 
-  console.log('Stripe session attached:', payload.reportKey);
+    const db = sql(databaseUrl);
+    await db`
+      UPDATE reports
+      SET stripe_session_id = ${payload.stripeSessionId},
+          client_reference_id = ${payload.clientReferenceId},
+          updated_at = NOW()
+      WHERE report_key = ${payload.reportKey}
+    `;
+
+    console.log('Stripe session attached in database:', payload.reportKey);
+  } catch (error) {
+    console.error('Error attaching Stripe session:', error);
+  }
 }
 
 export async function getReportByStripeSessionId(sessionId: string): Promise<any> {
-  for (const report of reportsMap.values()) {
-    if (report.stripeSessionId === sessionId) {
-      return report;
+  try {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      return null;
     }
+
+    const db = sql(databaseUrl);
+    const result = await db`
+      SELECT * FROM reports
+      WHERE stripe_session_id = ${sessionId}
+      LIMIT 1
+    `;
+
+    if (!result || result.length === 0) {
+      return null;
+    }
+
+    const row = result[0];
+    return {
+      reportKey: row.report_key,
+      name: row.name,
+      taxId: row.tax_id,
+      documentType: row.document_type,
+      totalDays: row.total_days,
+      statusLabel: row.status_label,
+      ranges: row.ranges ? JSON.parse(row.ranges) : [],
+    };
+  } catch (error) {
+    console.error('Error getting report by Stripe session ID:', error);
+    return null;
   }
-  return null;
 }
 
 export async function getReportByReportKey(reportKey: string | null): Promise<any> {
-  if (!reportKey) {
+  try {
+    if (!reportKey) {
+      return null;
+    }
+
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      return null;
+    }
+
+    const db = sql(databaseUrl);
+    const result = await db`
+      SELECT * FROM reports
+      WHERE report_key = ${reportKey}
+      LIMIT 1
+    `;
+
+    if (!result || result.length === 0) {
+      return null;
+    }
+
+    const row = result[0];
+    return {
+      reportKey: row.report_key,
+      name: row.name,
+      taxId: row.tax_id,
+      documentType: row.document_type,
+      totalDays: row.total_days,
+      statusLabel: row.status_label,
+      ranges: row.ranges ? JSON.parse(row.ranges) : [],
+    };
+  } catch (error) {
+    console.error('Error getting report by key:', error);
     return null;
   }
-  return reportsMap.get(reportKey) || null;
 }
 
 export async function updateReportPaymentStatus(data: {
@@ -84,24 +150,37 @@ export async function updateReportPaymentStatus(data: {
   paymentStatus: 'paid' | 'completed' | 'expired' | 'failed';
   customerEmail?: string | null;
 }): Promise<any> {
-  let report = null;
-
-  if (data.reportKey) {
-    report = reportsMap.get(data.reportKey);
-  } else if (data.stripeSessionId) {
-    for (const r of reportsMap.values()) {
-      if (r.stripeSessionId === data.stripeSessionId) {
-        report = r;
-        break;
-      }
+  try {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl) {
+      console.warn('DATABASE_URL not configured, skipping database write');
+      return;
     }
-  }
 
-  if (report) {
-    report.paymentStatus = data.paymentStatus;
-    report.stripePaymentIntentId = data.stripePaymentIntentId;
-    report.customerEmail = data.customerEmail;
-  }
+    const db = sql(databaseUrl);
 
-  console.log('Report payment status updated:', data);
+    if (data.reportKey) {
+      await db`
+        UPDATE reports
+        SET payment_status = ${data.paymentStatus},
+            stripe_payment_intent_id = ${data.stripePaymentIntentId || null},
+            customer_email = ${data.customerEmail || null},
+            updated_at = NOW()
+        WHERE report_key = ${data.reportKey}
+      `;
+    } else if (data.stripeSessionId) {
+      await db`
+        UPDATE reports
+        SET payment_status = ${data.paymentStatus},
+            stripe_payment_intent_id = ${data.stripePaymentIntentId || null},
+            customer_email = ${data.customerEmail || null},
+            updated_at = NOW()
+        WHERE stripe_session_id = ${data.stripeSessionId}
+      `;
+    }
+
+    console.log('Report payment status updated in database:', data);
+  } catch (error) {
+    console.error('Error updating report payment status:', error);
+  }
 }

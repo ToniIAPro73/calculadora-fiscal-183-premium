@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
               <img
                 src={logo}
                 alt="TaxNomad"
-                className="w-8 h-8 rounded"
+                className="w-12 h-12 rounded"
               />
               <div>
                 <p className="font-serif text-lg">TaxNomad</p>

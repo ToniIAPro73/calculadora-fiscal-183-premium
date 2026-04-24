@@ -164,7 +164,7 @@ const TaxNomadCalculator: React.FC = () => {
       <footer className="border-t border-border py-16 mt-20 opacity-60">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
            <div className="flex items-center gap-4">
-              <img src={logo} alt="TaxNomad" className="w-8 h-8 rounded" />
+              <img src={logo} alt="TaxNomad" className="w-12 h-12 rounded" />
               <span className="font-light text-xs tracking-widest uppercase">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">

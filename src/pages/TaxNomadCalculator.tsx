@@ -11,7 +11,7 @@ import DataAuthoritySection from '@/components/DataAuthoritySection';
 import UserDetailsModal from '@/components/UserDetailsModal';
 import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
-import { DateRange, mergeDateRanges, calculateUniqueDays } from '@/lib/dateRangeMerger';
+import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
@@ -38,6 +38,18 @@ const TaxNomadCalculator: React.FC = () => {
       setSearchParams({}, { replace: true });
     }
   }, []);
+
+  useEffect(() => {
+    // Domain validation: enforce no future dates even if client-side is bypassed
+    if (selectedRanges.length > 0) {
+      const validation = validateDateRanges(selectedRanges);
+      if (!validation.valid) {
+        toast.error(validation.error || t('toast.futureDate'));
+        // Clear invalid ranges to protect report integrity
+        setSelectedRanges([]);
+      }
+    }
+  }, [selectedRanges, t]);
   
   const handleAddRange = (range: DateRange) => {
     setSelectedRanges(prev => [...prev, range]);

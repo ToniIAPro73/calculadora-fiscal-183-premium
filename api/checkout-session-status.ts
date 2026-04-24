@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
-import { getReportByStripeSessionId, getReportByReportKey } from './_lib/report-store';
+import { getReportByStripeSessionId, getReportByReportKey } from './_lib/report-store.js';
 
 interface SessionStatusResponse {
   id: string;

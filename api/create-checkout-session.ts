@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import Stripe from 'stripe';
-import { createDraftReport, attachStripeSession } from './_lib/report-store';
+import { createDraftReport, attachStripeSession } from './_lib/report-store.js';
 
 interface CreateSessionRequest {
   name: string;

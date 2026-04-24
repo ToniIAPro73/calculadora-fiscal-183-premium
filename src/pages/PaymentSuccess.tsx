@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/contexts/i18nContext';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -110,12 +109,11 @@ const PaymentSuccess: React.FC = () => {
         <div className="min-h-screen bg-background flex flex-col">
           <Header />
           <main className="flex-1 flex items-center justify-center px-4">
-            <div className="text-center space-y-4">
-              <Loader2 className="w-12 h-12 animate-spin mx-auto text-primary" />
-              <p className="text-lg opacity-60">{t('payment.verifying') || 'Verifying payment...'}</p>
+            <div className="text-center space-y-3">
+              <Loader2 className="w-10 h-10 animate-spin mx-auto text-primary" />
+              <p className="text-base opacity-60">{t('payment.verifying') || 'Verifying payment...'}</p>
             </div>
           </main>
-          <Footer />
         </div>
       </>
     );
@@ -132,113 +130,87 @@ const PaymentSuccess: React.FC = () => {
       <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
         <Header />
 
-        <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-16">
+        <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-6 flex items-center">
           {isVerified && (
             <>
               {/* Success State */}
-              <div className="text-center space-y-8">
+              <div className="text-center space-y-4">
                 {/* Success Icon */}
-                <div className="flex justify-center">
-                  <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl"></div>
-                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/10 border border-primary/20">
-                      <CheckCircle2 className="w-20 h-20 text-primary" />
+                <div className="flex justify-center pt-4 pb-2">
+                  <div className="relative w-24 h-24">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full blur-xl"></div>
+                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/20 border-2 border-primary">
+                      <CheckCircle2 className="w-14 h-14 text-primary fill-primary" />
                     </div>
                   </div>
                 </div>
 
                 {/* Success Message */}
-                <div className="space-y-2">
-                  <h1 className="text-5xl font-light tracking-tighter font-serif">
+                <div className="space-y-1">
+                  <h1 className="text-3xl font-light tracking-tighter font-serif">
                     {t('payment.successTitle') || 'Payment Confirmed'}
                   </h1>
-                  <p className="text-xl opacity-60 max-w-lg mx-auto">
+                  <p className="text-sm opacity-60 max-w-lg mx-auto">
                     {t('payment.successMessage') ||
                       'Your premium tax report is ready for download. Your payment has been processed securely.'}
                   </p>
                 </div>
 
                 {/* Session Details */}
-                <Card className="p-8 rounded-3xl border border-white/5 glass">
-                  <div className="space-y-6">
+                <Card className="p-4 rounded-2xl border border-white/5 glass text-sm">
+                  <div className="space-y-3">
                     {/* Report Info */}
                     <div>
-                      <h2 className="text-sm font-bold uppercase tracking-widest opacity-60 mb-4">
+                      <h2 className="text-xs font-bold uppercase tracking-widest opacity-60 mb-2">
                         {t('payment.reportDetails') || 'Report Details'}
                       </h2>
-                      <div className="space-y-3">
-                        <div className="flex justify-between items-center pb-3 border-b border-border/10">
+                      <div className="space-y-2 text-xs">
+                        <div className="flex justify-between items-center pb-2 border-b border-border/10">
                           <span className="opacity-60">{t('labels.name') || 'Name'}</span>
                           <span className="font-semibold">{session?.report_payload.name}</span>
                         </div>
-                        <div className="flex justify-between items-center pb-3 border-b border-border/10">
+                        <div className="flex justify-between items-center pb-2 border-b border-border/10">
                           <span className="opacity-60">{t('labels.taxId') || 'Tax ID'}</span>
                           <span className="font-semibold">{session?.report_payload.taxId}</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="opacity-60">{t('calculator.totalDays') || 'Total Days'}</span>
-                          <span className="text-lg font-bold text-primary">
+                          <span className="font-bold text-primary">
                             {session?.report_payload.totalDays}
                           </span>
                         </div>
                       </div>
                     </div>
-
-                    {/* Session ID */}
-                    <div className="p-4 rounded-lg bg-muted/30 border border-border/10">
-                      <p className="text-xs opacity-50 uppercase tracking-widest mb-2">
-                        {t('payment.sessionId') || 'Session ID'}
-                      </p>
-                      <p className="text-sm font-mono break-all">{session?.id}</p>
-                    </div>
                   </div>
                 </Card>
 
                 {/* Download Button */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-2 justify-center pt-1">
                   <Button
                     onClick={handleDownloadReport}
                     disabled={isGeneratingPdf}
-                    className="h-14 rounded-2xl px-8 gap-3 text-sm tracking-widest font-bold"
+                    className="h-10 rounded-lg px-6 gap-2 text-xs tracking-widest font-bold"
                   >
                     {isGeneratingPdf ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
                         {t('payment.generating') || 'Generating...'}
                       </>
                     ) : (
                       <>
-                        <Download className="w-5 h-5" />
-                        {t('actions.downloadReport') || 'Download PDF Report'}
+                        <Download className="w-4 h-4" />
+                        {t('actions.downloadReport') || 'Download PDF'}
                       </>
                     )}
                   </Button>
                   <Button
                     variant="ghost"
                     onClick={() => navigate('/')}
-                    className="h-14 rounded-2xl px-8 gap-3 opacity-60 hover:opacity-100"
+                    className="h-10 rounded-lg px-6 gap-2 text-xs opacity-60 hover:opacity-100"
                   >
-                    <Home className="w-5 h-5" />
+                    <Home className="w-4 h-4" />
                     {t('actions.backHome') || 'Back Home'}
                   </Button>
-                </div>
-
-                {/* Info Cards */}
-                <div className="grid grid-cols-1 gap-4">
-                  <Card className="p-6 bg-primary/5 border border-primary/10">
-                    <div className="flex gap-3">
-                      <FileText className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <div className="text-left">
-                        <p className="font-semibold text-sm mb-1">
-                          {t('payment.pdfReady') || 'Your PDF is Ready'}
-                        </p>
-                        <p className="text-xs opacity-70">
-                          {t('payment.pdfNote') ||
-                            'Download your report anytime. This page will remain accessible for 30 days.'}
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
                 </div>
               </div>
             </>
@@ -247,27 +219,27 @@ const PaymentSuccess: React.FC = () => {
           {isPending && (
             <>
               {/* Pending State */}
-              <div className="text-center space-y-8">
+              <div className="text-center space-y-4 py-8">
                 <div className="flex justify-center">
-                  <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full blur-2xl animate-pulse"></div>
+                  <div className="relative w-20 h-20">
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full blur-lg animate-pulse"></div>
                     <div className="absolute inset-0 flex items-center justify-center rounded-full bg-amber-500/10 border border-amber-500/20">
-                      <Clock className="w-20 h-20 text-amber-600" />
+                      <Clock className="w-10 h-10 text-amber-600" />
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-5xl font-light tracking-tighter font-serif">
+                  <h1 className="text-3xl font-light tracking-tighter font-serif">
                     {t('payment.pendingTitle') || 'Payment Pending'}
                   </h1>
-                  <p className="text-xl opacity-60 max-w-lg mx-auto">
+                  <p className="text-sm opacity-60 max-w-lg mx-auto">
                     {t('payment.pendingMessage') ||
                       'Your payment is being processed. This page will update automatically.'}
                   </p>
                 </div>
 
-                <Button onClick={() => navigate('/')} variant="ghost" className="gap-2">
+                <Button onClick={() => navigate('/')} variant="ghost" className="gap-2 text-xs h-9">
                   <Home className="w-4 h-4" />
                   {t('actions.backHome') || 'Back Home'}
                 </Button>
@@ -278,24 +250,24 @@ const PaymentSuccess: React.FC = () => {
           {error && (
             <>
               {/* Error State */}
-              <div className="text-center space-y-8">
+              <div className="text-center space-y-4 py-8">
                 <div className="flex justify-center">
-                  <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-rose-500/20 rounded-full blur-2xl"></div>
+                  <div className="relative w-20 h-20">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-rose-500/20 rounded-full blur-lg"></div>
                     <div className="absolute inset-0 flex items-center justify-center rounded-full bg-red-500/10 border border-red-500/20">
-                      <AlertCircle className="w-20 h-20 text-red-600" />
+                      <AlertCircle className="w-10 h-10 text-red-600" />
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-5xl font-light tracking-tighter font-serif">
+                  <h1 className="text-3xl font-light tracking-tighter font-serif">
                     {t('payment.errorTitle') || 'Verification Failed'}
                   </h1>
-                  <p className="text-xl opacity-60 max-w-lg mx-auto">{error}</p>
+                  <p className="text-sm opacity-60 max-w-lg mx-auto">{error}</p>
                 </div>
 
-                <Button onClick={() => navigate('/')} className="gap-2">
+                <Button onClick={() => navigate('/')} className="gap-2 text-xs h-9">
                   <Home className="w-4 h-4" />
                   {t('actions.backHome') || 'Back Home'}
                 </Button>
@@ -303,8 +275,6 @@ const PaymentSuccess: React.FC = () => {
             </>
           )}
         </main>
-
-        <Footer />
       </div>
     </>
   );

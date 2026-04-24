@@ -1,4 +1,11 @@
-interface DraftReportPayload {
+import { neon } from '@neondatabase/serverless';
+import type { NeonQueryFunction } from '@neondatabase/serverless';
+
+const databaseUrl = process.env.DATABASE_URL;
+let schemaReadyPromise: Promise<any> | null = null;
+let sqlInstance: NeonQueryFunction<false, false> | null = null;
+
+interface DraftReport {
   reportKey: string;
   source: string;
   productType: string;

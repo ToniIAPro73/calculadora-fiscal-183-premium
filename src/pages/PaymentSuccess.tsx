@@ -77,7 +77,16 @@ const PaymentSuccess: React.FC = () => {
   }, [sessionId, t]);
 
   const handleDownloadReport = async () => {
-    if (!session) return;
+    if (!session) {
+      toast.error('Session data not available');
+      return;
+    }
+
+    if (!session.report_payload.name || !session.report_payload.taxId) {
+      console.error('Missing report data:', session.report_payload);
+      toast.error('Report data is incomplete. Please refresh the page.');
+      return;
+    }
 
     setIsGeneratingPdf(true);
     try {
@@ -136,11 +145,11 @@ const PaymentSuccess: React.FC = () => {
               {/* Success State */}
               <div className="text-center space-y-4">
                 {/* Success Icon */}
-                <div className="flex justify-center pt-4 pb-2">
-                  <div className="relative w-24 h-24">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full blur-xl"></div>
+                <div className="flex justify-center">
+                  <div className="relative w-32 h-32">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full blur-2xl"></div>
                     <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/20 border-2 border-primary">
-                      <CheckCircle2 className="w-14 h-14 text-primary fill-primary" />
+                      <CheckCircle2 className="w-20 h-20 text-primary fill-primary" />
                     </div>
                   </div>
                 </div>

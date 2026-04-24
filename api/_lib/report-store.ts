@@ -1,4 +1,5 @@
-import { neon, NeonQueryFunction } from '@neondatabase/serverless';
+import { neon } from '@neondatabase/serverless';
+import type { NeonQueryFunction } from '@neondatabase/serverless';
 
 const databaseUrl = process.env.DATABASE_URL;
 let schemaReadyPromise: Promise<any> | null = null;

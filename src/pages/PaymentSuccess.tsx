@@ -140,9 +140,9 @@ const PaymentSuccess: React.FC = () => {
                 {/* Success Icon */}
                 <div className="flex justify-center">
                   <div className="relative w-32 h-32">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl"></div>
-                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/10 border border-primary/20">
-                      <CheckCircle2 className="w-20 h-20 text-primary" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/20 rounded-full blur-2xl"></div>
+                    <div className="absolute inset-0 flex items-center justify-center rounded-full bg-primary/20 border-2 border-primary">
+                      <CheckCircle2 className="w-20 h-20 text-primary fill-primary" />
                     </div>
                   </div>
                 </div>

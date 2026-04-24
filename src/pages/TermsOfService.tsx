@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MinimalFooter from '@/components/MinimalFooter';
 import { Scale, CreditCard, AlertCircle, CheckCircle2, Globe, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '@/contexts/i18nContext';
 
@@ -229,7 +229,7 @@ const TermsOfService = () => {
             </section>
           </div>
         </main>
-        <Footer />
+        <MinimalFooter />
       </div>
     </>
   );

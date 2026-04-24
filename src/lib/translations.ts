@@ -104,9 +104,19 @@ export const translations = {
       description: "Calculate your days of presence in Spain and the EU to determine tax residency status. Track multiple date ranges and stay compliant with the 183-day rule.",
     },
     footer: {
-      copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
+      tagline: "Master your fiscal residency with our premium audit-ready calculator for 2026",
+      product: "Product",
+      calculator: "Calculator",
+      authority: "Tax Authority",
+      legal: "Legal",
       privacy: "Privacy Policy",
-      terms: "Terms of Service"
+      terms: "Terms of Service",
+      support: "Support",
+      contactEmail: "Email",
+      website: "Website",
+      copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
+      rights: "All rights reserved. Premium tax calculator for digital nomads.",
+      disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
     },
     calculator: {
       totalDays: "Total Days",
@@ -158,6 +168,37 @@ export const translations = {
       next: "Next",
       finish: "Start Calculating",
       skip: "Skip tutorial"
+    },
+    paymentTest: {
+      title: "Payment Testing",
+      subtitle: "Test different payment scenarios using Stripe test cards",
+      testData: "Test Data",
+      name: "Name",
+      taxId: "Tax ID",
+      email: "Email",
+      totalDays: "Total Days",
+      testScenarios: "Test Scenarios",
+      successScenario: "Successful Payment",
+      successDesc: "Simulates a successfully completed payment",
+      declinedScenario: "Card Declined",
+      declinedDesc: "Simulates a card rejected by the bank",
+      threedsecureScenario: "3D Secure Required",
+      threedsecureDesc: "Requires additional authentication (3D Secure)",
+      expiredScenario: "Expiration Required",
+      expiredDesc: "Expired card - use past date (e.g., 01/23)",
+      invalidcvcScenario: "Invalid CVC",
+      invalidcvcDesc: "Valid card but incorrect CVC",
+      expectedResult: "Expected Result",
+      confirmPayment: "Confirm Payment",
+      testInstructions: "Testing Instructions",
+      instructions: [
+        "✓ Each card will simulate a different result",
+        "✓ You will be redirected to Stripe to confirm the test",
+        "✓ Check Vercel logs for detailed debugging",
+        "✓ Verify that the success page displays data correctly",
+        "✓ For declined payment, verify that you return to home"
+      ],
+      backHome: "Back to Home"
     }
   },
   es: {
@@ -264,9 +305,19 @@ export const translations = {
       description: "Calcula tus días de presencia en España y la UE para determinar tu estado de residencia fiscal. Rastrea múltiples rangos de fechas y cumple con la regla de los 183 días.",
     },
     footer: {
-      copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
+      tagline: "Domina tu residencia fiscal con nuestra calculadora premium lista para auditoría 2026",
+      product: "Producto",
+      calculator: "Calculadora",
+      authority: "Autoridad Fiscal",
+      legal: "Legal",
       privacy: "Política de Privacidad",
-      terms: "Términos de Servicio"
+      terms: "Términos de Servicio",
+      support: "Soporte",
+      contactEmail: "Correo",
+      website: "Sitio Web",
+      copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
+      rights: "Todos los derechos reservados. Calculadora fiscal premium para nómadas digitales.",
+      disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
     },
     calculator: {
       totalDays: "Días Totales",
@@ -318,6 +369,37 @@ export const translations = {
       next: "Siguiente",
       finish: "Empezar a Calcular",
       skip: "Saltar tutorial"
+    },
+    paymentTest: {
+      title: "Prueba de Pagos",
+      subtitle: "Prueba diferentes escenarios de pago usando tarjetas de prueba de Stripe",
+      testData: "Datos de Prueba",
+      name: "Nombre",
+      taxId: "ID Fiscal",
+      email: "Correo",
+      totalDays: "Días Totales",
+      testScenarios: "Escenarios de Prueba",
+      successScenario: "Pago Exitoso",
+      successDesc: "Simula un pago completado correctamente",
+      declinedScenario: "Tarjeta Rechazada",
+      declinedDesc: "Simula una tarjeta rechazada por el banco",
+      threedsecureScenario: "3D Secure Requerido",
+      threedsecureDesc: "Requiere autenticación adicional (3D Secure)",
+      expiredScenario: "Expiración Requerida",
+      expiredDesc: "Tarjeta expirada - usa fecha pasada (ej: 01/23)",
+      invalidcvcScenario: "CVC Inválido",
+      invalidcvcDesc: "Tarjeta válida pero CVC incorrecto",
+      expectedResult: "Resultado esperado",
+      confirmPayment: "Confirmar Pago",
+      testInstructions: "Instrucciones de Testing",
+      instructions: [
+        "✓ Cada tarjeta simulará un resultado diferente",
+        "✓ Serás redirigido a Stripe para confirmar la prueba",
+        "✓ Verifica los logs en Vercel para debugging detallado",
+        "✓ Comprueba que la página de éxito muestra los datos correctamente",
+        "✓ Para pago rechazado, verifica que vuelves a la home"
+      ],
+      backHome: "Volver a Home"
     }
   }
 };

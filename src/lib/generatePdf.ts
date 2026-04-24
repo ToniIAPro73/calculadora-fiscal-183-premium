@@ -22,6 +22,20 @@ const pdfLabels = {
     fiscalYear: 'EJERCICIO FISCAL',
     reportReference: 'REFERENCIA INFORME',
     generatedDate: 'FECHA GENERACIÓN',
+    certificateTitle: 'CERTIFICADO DE PRESENCIA',
+    auditSubtitle: 'AUDITORÍA TÉCNICA DE DÍAS FÍSICOS - EJERCICIO FISCAL',
+    taxpayerSection: 'IDENTIFICACIÓN DEL CONTRIBUYENTE',
+    reportHolder: 'TITULAR DEL INFORME',
+    identification: 'IDENTIFICACIÓN',
+    presenceSummary: 'RESUMEN EJECUTIVO DE PERMANENCIA',
+    daysComputed: 'DÍAS COMPUTADOS',
+    legalLimit: 'LÍMITE LEGAL',
+    availableBalance: 'SALDO DISPONIBLE',
+    days183Rule: 'Regla 183 días IRPF',
+    nonResidenceNote: 'Para no residencia',
+    taxExposureIndicator: 'INDICADOR VISUAL DE EXPOSICIÓN FISCAL',
+    periodBreakdown: 'DESGLOSE CRONOLÓGICO DE PERIODOS',
+    legalNotes: 'NOTAS LEGALES Y METODOLOGÍA',
   },
   en: {
     statusLimitExceeded: 'LIMIT EXCEEDED',
@@ -41,6 +55,20 @@ const pdfLabels = {
     fiscalYear: 'FISCAL YEAR',
     reportReference: 'REFERENCE',
     generatedDate: 'GENERATED DATE',
+    certificateTitle: 'PRESENCE CERTIFICATE',
+    auditSubtitle: 'TECHNICAL AUDIT OF PHYSICAL DAYS - FISCAL YEAR',
+    taxpayerSection: 'TAXPAYER IDENTIFICATION',
+    reportHolder: 'REPORT HOLDER',
+    identification: 'IDENTIFICATION',
+    presenceSummary: 'PRESENCE SUMMARY EXECUTIVE',
+    daysComputed: 'DAYS COMPUTED',
+    legalLimit: 'LEGAL LIMIT',
+    availableBalance: 'AVAILABLE BALANCE',
+    days183Rule: '183-day IRPF Rule',
+    nonResidenceNote: 'For non-residency',
+    taxExposureIndicator: 'TAX EXPOSURE VISUAL INDICATOR',
+    periodBreakdown: 'CHRONOLOGICAL BREAKDOWN OF PERIODS',
+    legalNotes: 'LEGAL NOTES AND METHODOLOGY',
   },
 };
 
@@ -292,28 +320,28 @@ export async function generateTaxReport({
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(20);
-  doc.text('CERTIFICADO DE PRESENCIA', M, y);
+  doc.text(labels.certificateTitle, M, y);
   y += 7;
   doc.setFontSize(10);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(C.slate600[0], C.slate600[1], C.slate600[2]);
-  doc.text('AUDITORÍA TÉCNICA DE DÍAS FÍSICOS - EJERCICIO FISCAL 2026', M, y);
+  doc.text(`${labels.auditSubtitle} ${fiscalYear}`, M, y);
   
   y += 15;
 
   // Taxpayer Card
-  drawSectionHeader(doc, 'IDENTIFICACIÓN DEL CONTRIBUYENTE', M, y);
+  drawSectionHeader(doc, labels.taxpayerSection, M, y);
   y += 6;
-  
+
   doc.setFillColor(C.white[0], C.white[1], C.white[2]);
   doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
   doc.roundedRect(M, y, CW, 25, 2, 2, 'FD');
-  
+
   y += 10;
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
-  doc.text('TITULAR DEL INFORME', M + 10, y);
-  doc.text(`IDENTIFICACIÓN (${identifierLabel})`, M + (CW * 0.6), y);
+  doc.text(labels.reportHolder, M + 10, y);
+  doc.text(`${labels.identification} (${identifierLabel})`, M + (CW * 0.6), y);
   
   y += 6;
   doc.setFontSize(11);
@@ -325,7 +353,7 @@ export async function generateTaxReport({
   y += 20;
 
   // Presence MetricsSection
-  drawSectionHeader(doc, 'RESUMEN EJECUTIVO DE PERMANENCIA', M, y);
+  drawSectionHeader(doc, labels.presenceSummary, M, y);
   y += 6;
 
   // Main Metrics Grid
@@ -336,12 +364,12 @@ export async function generateTaxReport({
   doc.setFillColor(status.bg[0], status.bg[1], status.bg[2]);
   doc.setDrawColor(status.color[0], status.color[1], status.color[2]);
   doc.roundedRect(M, gridY, colW, 35, 3, 3, 'FD');
-  
+
   doc.setTextColor(status.color[0], status.color[1], status.color[2]);
   doc.setFontSize(28);
   doc.text(String(totalDays), M + colW / 2, gridY + 18, { align: 'center' });
   doc.setFontSize(8);
-  doc.text('DÍAS COMPUTADOS', M + colW / 2, gridY + 26, { align: 'center' });
+  doc.text(labels.daysComputed, M + colW / 2, gridY + 26, { align: 'center' });
   doc.setFontSize(7);
   doc.setFont('helvetica', 'bold');
   doc.text(status.badge, M + colW / 2, gridY + 31, { align: 'center' });
@@ -355,20 +383,22 @@ export async function generateTaxReport({
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
-  doc.text('LÍMITE LEGAL', M + colW + 10, gridY + 8);
-  doc.text('SALDO DISPONIBLE', M + 2 * colW + 15, gridY + 8);
+  doc.text(labels.legalLimit, M + colW + 10, gridY + 8);
+  doc.text(labels.availableBalance, M + 2 * colW + 15, gridY + 8);
 
   doc.setFontSize(16);
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
   doc.setFont('helvetica', 'bold');
-  doc.text('183 DÍAS', M + colW + 10, gridY + 18);
-  doc.text(`${remaining} DÍAS`, M + 2 * colW + 15, gridY + 18);
-  
+  const limit183Text = language === 'en' ? '183 DAYS' : '183 DÍAS';
+  const remainingText = language === 'en' ? 'DAYS' : 'DÍAS';
+  doc.text(limit183Text, M + colW + 10, gridY + 18);
+  doc.text(`${remaining} ${remainingText}`, M + 2 * colW + 15, gridY + 18);
+
   doc.setFontSize(7);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
-  doc.text('Regla 183 días IRPF', M + colW + 10, gridY + 24);
-  doc.text('Para no residencia', M + 2 * colW + 15, gridY + 24);
+  doc.text(labels.days183Rule, M + colW + 10, gridY + 24);
+  doc.text(labels.nonResidenceNote, M + 2 * colW + 15, gridY + 24);
 
   y += 45;
 
@@ -376,24 +406,22 @@ export async function generateTaxReport({
   doc.setFontSize(9);
   doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
   doc.setFont('helvetica', 'bold');
-  const visualIndicatorText = language === 'en' ? 'TAX EXPOSURE VISUAL INDICATOR' : 'INDICADOR VISUAL DE EXPOSICIÓN FISCAL';
-  doc.text(visualIndicatorText, M, y);
+  doc.text(labels.taxExposureIndicator, M, y);
   y += 8;
   drawProgressBar(doc, M, y, CW, totalDays, language);
 
   y += 20;
 
   // Breakdown Table
-  const breakdownText = language === 'en' ? 'CHRONOLOGICAL BREAKDOWN OF PERIODS' : 'DESGLOSE CRONOLÓGICO DE PERIODOS';
-  drawSectionHeader(doc, breakdownText, M, y);
+  drawSectionHeader(doc, labels.periodBreakdown, M, y);
   y += 6;
 
   y = drawDetailedTable(doc, M, y, CW, sortedRanges, language);
-  
+
   y += 15;
 
   // Legal Framework
-  drawSectionHeader(doc, 'NOTAS LEGALES Y METODOLOGÍA', M, y);
+  drawSectionHeader(doc, labels.legalNotes, M, y);
   y += 6;
 
   doc.setFontSize(8.5);

@@ -36,8 +36,43 @@ const pdfLabels = {
     taxExposureIndicator: 'INDICADOR VISUAL DE EXPOSICIÓN FISCAL',
     periodBreakdown: 'DESGLOSE CRONOLÓGICO DE PERIODOS',
     legalNotes: 'NOTAS LEGALES Y METODOLOGÍA',
+    legalCompliance: 'CUMPLIMIENTO LEGAL',
+    legalText: 'Este informe técnico detalla los periodos de estancia física en territorio español calculados a efectos de residencia fiscal. De acuerdo con el Artículo 9.1.a) de la Ley 35/2006, de 28 de noviembre, del Impuesto sobre la Renta de las Personas Físicas (IRPF), se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando permanezca en el mismo más de 183 días durante el año natural. TaxNomad aplica un criterio de "día natural de presencia", consolidando periodos solapados para garantizar la integridad del cómputo y evitar la duplicidad de días. Este documento sirve como soporte probatorio preliminar, pero no sustituye el asesoramiento fiscal profesional.',
   },
   en: {
+    statusLimitExceeded: 'LIMIT EXCEEDED',
+    statusExceededBadge: 'STATUS: NOT SAFE',
+    statusExceededDesc: 'Tax Resident in Spain',
+    statusApproaching: 'CRITICAL ATTENTION',
+    statusApproachingBadge: 'STATUS: CAUTION',
+    statusApproachingDesc: 'Approaching 183-day limit',
+    statusCompliant: 'LEGAL COMPLIANCE',
+    statusCompliantBadge: 'STATUS: SAFE',
+    statusCompliantDesc: 'Non-resident (via permanence)',
+    limit183: '183 LIMIT',
+    startDate: 'START DATE',
+    endDate: 'END DATE',
+    grossDays: 'GROSS DAYS',
+    overlapAdjustment: 'OVERLAP ADJ',
+    fiscalYear: 'FISCAL YEAR',
+    reportReference: 'REFERENCE',
+    generatedDate: 'GENERATED DATE',
+    certificateTitle: 'PRESENCE CERTIFICATE',
+    auditSubtitle: 'TECHNICAL AUDIT OF PHYSICAL DAYS - FISCAL YEAR',
+    taxpayerSection: 'TAXPAYER IDENTIFICATION',
+    reportHolder: 'REPORT HOLDER',
+    identification: 'IDENTIFICATION',
+    presenceSummary: 'PRESENCE SUMMARY EXECUTIVE',
+    daysComputed: 'DAYS COMPUTED',
+    legalLimit: 'LEGAL LIMIT',
+    availableBalance: 'AVAILABLE BALANCE',
+    days183Rule: '183-day IRPF Rule',
+    nonResidenceNote: 'For non-residency',
+    taxExposureIndicator: 'TAX EXPOSURE VISUAL INDICATOR',
+    periodBreakdown: 'CHRONOLOGICAL BREAKDOWN OF PERIODS',
+    legalNotes: 'LEGAL NOTES AND METHODOLOGY',
+    legalCompliance: 'LEGAL COMPLIANCE',
+    legalText: 'This technical report details the periods of physical presence in Spanish territory calculated for tax residency purposes. In accordance with Article 9.1.a) of Law 35/2006, of November 28, on the Personal Income Tax (IRPF), a taxpayer will be considered to have their habitual residence in Spanish territory when they remain there more than 183 days during the calendar year. TaxNomad applies a "natural day of presence" criterion, consolidating overlapping periods to ensure the integrity of the count and avoid duplication of days. This document serves as preliminary evidence support but does not replace professional tax advice.
     statusLimitExceeded: 'LIMIT EXCEEDED',
     statusExceededBadge: 'STATUS: NOT SAFE',
     statusExceededDesc: 'Tax Resident in Spain',
@@ -150,16 +185,18 @@ function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalD
 
 function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, ranges: any[], language: string = 'es') {
   const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
+  const dateLocale = language === 'en' ? enUS : es;
+  const dateFormat = language === 'en' ? 'MMM dd, yyyy' : "dd 'de' MMM, yyyy";
   const colWidths = [width * 0.3, width * 0.3, width * 0.2, width * 0.2];
   const headers = [labels.startDate, labels.endDate, labels.grossDays, labels.overlapAdjustment];
-  
+
   // Header
   doc.setFillColor(C.dark[0], C.dark[1], C.dark[2]);
   doc.roundedRect(x, y, width, 10, 2, 2, 'F');
   doc.setTextColor(C.white[0], C.white[1], C.white[2]);
   doc.setFontSize(8);
   doc.setFont('helvetica', 'bold');
-  
+
   let currentX = x;
   headers.forEach((h, i) => {
     doc.text(h, currentX + 6, y + 6.5);
@@ -176,16 +213,17 @@ function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, rang
       doc.setFillColor(C.slate50[0], C.slate50[1], C.slate50[2]);
       doc.rect(x, currentY, width, 9, 'F');
     }
-    
+
     // Bottom border for each row
     doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
     doc.setLineWidth(0.1);
     doc.line(x, currentY + 9, x + width, currentY + 9);
 
     const overlap = calculateOverlapDays(range, ranges, i);
-    const startStr = format(range.start, "dd 'de' MMM, yyyy", { locale: es });
-    const endStr = format(range.end, "dd 'de' MMM, yyyy", { locale: es });
-    
+    const startStr = format(range.start, dateFormat, { locale: dateLocale });
+    const endStr = format(range.end, dateFormat, { locale: dateLocale });
+    const overlapText = language === 'en' ? 'days' : 'días';
+
     currentX = x;
     doc.setFontSize(8);
     doc.text(startStr, currentX + 6, currentY + 6);
@@ -194,11 +232,11 @@ function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, rang
     currentX += colWidths[1];
     doc.text(String(range.days), currentX + 6, currentY + 6);
     currentX += colWidths[2];
-    
+
     if (overlap > 0) {
       doc.setTextColor(C.danger[0], C.danger[1], C.danger[2]);
       doc.setFont('helvetica', 'bold');
-      doc.text(`-${overlap} días`, currentX + 6, currentY + 6);
+      doc.text(`-${overlap} ${overlapText}`, currentX + 6, currentY + 6);
       doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
       doc.setFont('helvetica', 'normal');
     } else {
@@ -206,7 +244,7 @@ function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, rang
       doc.text('0', currentX + 6, currentY + 6);
       doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
     }
-    
+
     currentY += 9;
   });
 
@@ -217,7 +255,7 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
   const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
   doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
   doc.setLineWidth(0.2);
-  doc.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+  doc.line(margin, pageHeight - 22, pageWidth - margin, pageHeight - 22);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7);
@@ -227,14 +265,18 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
     ? 'Generated by TaxNomad Premium Analytics · Tax Compliance for Expatriates · rule183.com'
     : 'Generado por TaxNomad Premium Analytics · Cumplimiento Fiscal Expatriados · rule183.com';
 
-  doc.text(generatedByText, margin, pageHeight - 14);
-  doc.text(`Software de Auditoría: ${fileOwnerLine}`, margin, pageHeight - 10);
+  const auditSoftwareText = language === 'en'
+    ? `Audit Software: ${fileOwnerLine}`
+    : `Software de Auditoría: ${fileOwnerLine}`;
+
+  doc.text(generatedByText, margin, pageHeight - 16);
+  doc.text(auditSoftwareText, margin, pageHeight - 11);
 
   doc.setFont('helvetica', 'bold');
   const reportIdText = language === 'en' ? 'REPORT ID' : 'ID DE INFORME';
   const pageText = language === 'en' ? 'Page 1 of 1' : 'Página 1 de 1';
-  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin, pageHeight - 14, { align: 'right' });
-  doc.text(pageText, pageWidth - margin, pageHeight - 10, { align: 'right' });
+  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 5, pageHeight - 16, { align: 'right' });
+  doc.text(pageText, pageWidth - margin - 5, pageHeight - 11, { align: 'right' });
 }
 
 export async function generateTaxReport({
@@ -428,12 +470,11 @@ export async function generateTaxReport({
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(C.slate600[0], C.slate600[1], C.slate600[2]);
   doc.setFont('helvetica', 'bold');
-  doc.text(status.title, M, y);
+  doc.text(labels.legalCompliance, M, y);
   y += 5;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  const legalText = `Este informe técnico detalla los periodos de estancia física en territorio español calculados a efectos de residencia fiscal. De acuerdo con el Artículo 9.1.a) de la Ley 35/2006, de 28 de noviembre, del Impuesto sobre la Renta de las Personas Físicas (IRPF), se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando permanezca en el mismo más de 183 días durante el año natural. TaxNomad aplica un criterio de "día natural de presencia", consolidando periodos solapados para garantizar la integridad del cómputo y evitar la duplicidad de días. Este documento sirve como soporte probatorio preliminar, pero no sustituye el asesoramiento fiscal profesional.`;
-  const legalLines = doc.splitTextToSize(legalText, CW);
+  const legalLines = doc.splitTextToSize(labels.legalText, CW);
   doc.text(legalLines, M, y);
 
   drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, fiscalYear);

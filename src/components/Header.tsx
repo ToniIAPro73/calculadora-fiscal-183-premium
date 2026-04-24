@@ -1,11 +1,10 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useTheme } from '@/contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Globe, Sun, Moon } from 'lucide-react';
-import logoDark from '@/assets/logo-calculadora-183-clean-512.png';
-import logoLight from '@/assets/logo-calculadora-183-clean-light-512.png';
+import logo from '@/assets/logo.png';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -16,7 +15,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer">
           <img
-            src={theme === 'dark' ? logoDark : logoLight}
+            src={logo}
             alt="TaxNomad"
             className="w-10 h-10 rounded-lg"
           />

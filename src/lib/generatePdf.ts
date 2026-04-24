@@ -452,9 +452,9 @@ export async function generateTaxReport({
   pageY += 5;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  const textWidth = CW - 5; // Leave right margin for justified text
+  const textWidth = CW - 10; // Leave right margin for justified text
   const legalLines = doc.splitTextToSize(labels.legalText, textWidth);
-  doc.text(legalLines, M, pageY, { align: 'justify' });
+  doc.text(legalLines, M, pageY, { align: 'justify', maxWidth: textWidth });
 
   // Draw footer on page 2
   drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, 2, 2);

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Plus } from 'lucide-react';
-import { format, differenceInDays } from 'date-fns';
+import { Calendar as CalendarIcon, Plus, AlertCircle } from 'lucide-react';
+import { format, differenceInDays, startOfDay } from 'date-fns';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import { DateRange } from '@/lib/dateRangeMerger';
+import { validateDateRange, isDateInFuture } from '@/lib/dateValidation';
+import { toast } from 'sonner';
 
 interface DateRangeSelectorProps {
   onAddRange: (range: DateRange) => void;
@@ -17,17 +19,28 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
   const { t } = useLanguage();
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
+  const today = startOfDay(new Date());
 
   const handleAddRange = () => {
     if (startDate && endDate) {
+      const validation = validateDateRange(startDate, endDate);
+
+      if (!validation.valid) {
+        toast.error(validation.error || t('toast.invalidDateRange') || 'Invalid date range');
+        return;
+      }
+
       const days = differenceInDays(endDate, startDate) + 1;
       onAddRange({ start: startDate, end: endDate, days });
       setStartDate(undefined);
       setEndDate(undefined);
+      toast.success(t('toast.rangeAdded'));
     }
   };
 
-  const isInvalid = !startDate || !endDate || endDate < startDate;
+  const isInvalid = !startDate || !endDate || endDate < startDate || isDateInFuture(startDate) || isDateInFuture(endDate);
+
+  const disableFutureDate = (date: Date) => isDateInFuture(date);
 
   return (
     <Card className="glass border-none rounded-[32px] overflow-hidden">
@@ -50,7 +63,7 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 glass border-border/50">
-                <Calendar mode="single" selected={startDate} onSelect={setStartDate} initialFocus />
+                <Calendar mode="single" selected={startDate} onSelect={setStartDate} disabled={disableFutureDate} initialFocus />
               </PopoverContent>
             </Popover>
           </div>
@@ -65,7 +78,7 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 glass border-border/50">
-                <Calendar mode="single" selected={endDate} onSelect={setEndDate} disabled={(date) => !!startDate && date < startDate} initialFocus />
+                <Calendar mode="single" selected={endDate} onSelect={setEndDate} disabled={(date) => isDateInFuture(date) || (!!startDate && date < startDate)} initialFocus />
               </PopoverContent>
             </Popover>
           </div>

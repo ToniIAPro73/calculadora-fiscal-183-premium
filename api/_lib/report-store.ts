@@ -56,12 +56,13 @@ async function ensureSchema() {
         paid_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      );
-
-      CREATE INDEX IF NOT EXISTS idx_stripe_session_id ON premium_reports(stripe_session_id);
-      CREATE INDEX IF NOT EXISTS idx_payment_status ON premium_reports(payment_status);
-      CREATE INDEX IF NOT EXISTS idx_created_at ON premium_reports(created_at);
+      )
     `);
+
+    await sql(`CREATE INDEX IF NOT EXISTS idx_stripe_session_id ON premium_reports(stripe_session_id)`);
+    await sql(`CREATE INDEX IF NOT EXISTS idx_payment_status ON premium_reports(payment_status)`);
+    await sql(`CREATE INDEX IF NOT EXISTS idx_created_at ON premium_reports(created_at)`);
+
     schemaReady = true;
   } catch (error) {
     console.error('Error creating schema:', error);

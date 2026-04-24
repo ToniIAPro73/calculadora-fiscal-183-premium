@@ -78,7 +78,16 @@ const PaymentSuccess: React.FC = () => {
   }, [sessionId, t]);
 
   const handleDownloadReport = async () => {
-    if (!session) return;
+    if (!session) {
+      toast.error('Session data not available');
+      return;
+    }
+
+    if (!session.report_payload.name || !session.report_payload.taxId) {
+      console.error('Missing report data:', session.report_payload);
+      toast.error('Report data is incomplete. Please refresh the page.');
+      return;
+    }
 
     setIsGeneratingPdf(true);
     try {

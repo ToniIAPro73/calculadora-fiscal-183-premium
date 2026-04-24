@@ -38,6 +38,8 @@ const pdfLabels = {
     legalNotes: 'NOTAS LEGALES Y METODOLOGÍA',
     legalCompliance: 'CUMPLIMIENTO LEGAL',
     legalText: 'Este informe técnico detalla los periodos de estancia física en territorio español calculados a efectos de residencia fiscal. De acuerdo con el Artículo 9.1.a) de la Ley 35/2006, de 28 de noviembre, del Impuesto sobre la Renta de las Personas Físicas (IRPF), se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando permanezca en el mismo más de 183 días durante el año natural. TaxNomad aplica un criterio de "día natural de presencia", consolidando periodos solapados para garantizar la integridad del cómputo y evitar la duplicidad de días. Este documento sirve como soporte probatorio preliminar, pero no sustituye el asesoramiento fiscal profesional.',
+    advancedTaxResidencyAnalysis: 'ANÁLISIS DE RESIDENCIA FISCAL AVANZADO',
+    testVersion: 'VERSIÓN DE PRUEBA',
   },
   en: {
     statusLimitExceeded: 'LIMIT EXCEEDED',
@@ -73,6 +75,8 @@ const pdfLabels = {
     legalNotes: 'LEGAL NOTES AND METHODOLOGY',
     legalCompliance: 'LEGAL COMPLIANCE',
     legalText: `This technical report details the periods of physical presence in Spanish territory calculated for tax residency purposes. In accordance with Article 9.1.a) of Law 35/2006, of November 28, on the Personal Income Tax (IRPF), a taxpayer will be considered to have their habitual residence in Spanish territory when they remain there more than 183 days during the calendar year. TaxNomad applies a "natural day of presence" criterion, consolidating overlapping periods to ensure the integrity of the count and avoid duplication of days. This document serves as preliminary evidence support but does not replace professional tax advice.`,
+    advancedTaxResidencyAnalysis: 'ADVANCED TAX RESIDENCY ANALYSIS',
+    testVersion: 'TEST VERSION',
   },
 };
 
@@ -238,14 +242,14 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
     ? `Audit Software: ${fileOwnerLine}`
     : `Software de Auditoría: ${fileOwnerLine}`;
 
-  doc.text(generatedByText, margin, pageHeight - 16);
-  doc.text(auditSoftwareText, margin, pageHeight - 11);
+  doc.text(generatedByText, margin, pageHeight - 20);
+  doc.text(auditSoftwareText, margin, pageHeight - 14);
 
   doc.setFont('helvetica', 'bold');
   const reportIdText = language === 'en' ? 'REPORT ID' : 'ID DE INFORME';
   const pageText = language === 'en' ? 'Page 1 of 1' : 'Página 1 de 1';
-  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 5, pageHeight - 16, { align: 'right' });
-  doc.text(pageText, pageWidth - margin - 5, pageHeight - 11, { align: 'right' });
+  doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 10, pageHeight - 20, { align: 'right' });
+  doc.text(pageText, pageWidth - margin - 10, pageHeight - 14, { align: 'right' });
 }
 
 export async function generateTaxReport({
@@ -302,7 +306,7 @@ export async function generateTaxReport({
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
-  doc.text('ANÁLISIS DE RESIDENCIA FISCAL AVANZADO', M, 24);
+  doc.text(labels.advancedTaxResidencyAnalysis, M, 24);
 
   // Example Mode Badge (Top Right)
   if (exampleMode) {
@@ -311,7 +315,7 @@ export async function generateTaxReport({
     doc.setTextColor(C.white[0], C.white[1], C.white[2]);
     doc.setFontSize(7);
     doc.setFont('helvetica', 'bold');
-    doc.text('VERSIÓN DE PRUEBA', W - M - 17.5, 12.2, { align: 'center' });
+    doc.text(labels.testVersion, W - M - 17.5, 12.2, { align: 'center' });
   }
 
   // Ref & Date Header (Right Column, below badge)

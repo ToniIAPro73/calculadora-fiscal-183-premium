@@ -453,7 +453,7 @@ export async function generateTaxReport({
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   const legalLines = doc.splitTextToSize(labels.legalText, CW);
-  doc.text(legalLines, M, pageY);
+  doc.text(legalLines, M, pageY, { align: 'justify' });
 
   // Draw footer on page 2
   drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, 2, 2);

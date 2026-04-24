@@ -104,9 +104,19 @@ export const translations = {
       description: "Calculate your days of presence in Spain and the EU to determine tax residency status. Track multiple date ranges and stay compliant with the 183-day rule.",
     },
     footer: {
-      copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
+      tagline: "Master your fiscal residency with our premium audit-ready calculator for 2026",
+      product: "Product",
+      calculator: "Calculator",
+      authority: "Tax Authority",
+      legal: "Legal",
       privacy: "Privacy Policy",
-      terms: "Terms of Service"
+      terms: "Terms of Service",
+      support: "Support",
+      contactEmail: "Email",
+      website: "Website",
+      copyright: "© 2026 183-Day Tax Nomad Calculator. All rights reserved.",
+      rights: "All rights reserved. Premium tax calculator for digital nomads.",
+      disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
     },
     calculator: {
       totalDays: "Total Days",
@@ -264,9 +274,19 @@ export const translations = {
       description: "Calcula tus días de presencia en España y la UE para determinar tu estado de residencia fiscal. Rastrea múltiples rangos de fechas y cumple con la regla de los 183 días.",
     },
     footer: {
-      copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
+      tagline: "Domina tu residencia fiscal con nuestra calculadora premium lista para auditoría 2026",
+      product: "Producto",
+      calculator: "Calculadora",
+      authority: "Autoridad Fiscal",
+      legal: "Legal",
       privacy: "Política de Privacidad",
-      terms: "Términos de Servicio"
+      terms: "Términos de Servicio",
+      support: "Soporte",
+      contactEmail: "Correo",
+      website: "Sitio Web",
+      copyright: "© 2026 Calculadora Nómada Fiscal 183 Días. Todos los derechos reservados.",
+      rights: "Todos los derechos reservados. Calculadora fiscal premium para nómadas digitales.",
+      disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
     },
     calculator: {
       totalDays: "Días Totales",

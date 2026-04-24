@@ -68,14 +68,14 @@ const Footer: React.FC = () => {
             <div className="space-y-3 text-sm">
               <div className="font-light">
                 <p className="text-xs opacity-50 mb-1">{t('footer.contactEmail') || 'Email'}</p>
-                <a href="mailto:support@taxnomad.app" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
-                  support@taxnomad.app
+                <a href="mailto:hola@regla183.com" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
+                  hola@regla183.com
                 </a>
               </div>
               <div className="font-light">
                 <p className="text-xs opacity-50 mb-1">{t('footer.website') || 'Website'}</p>
-                <a href="https://taxnomad.app" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
-                  taxnomad.app
+                <a href="https://regla183.com" className="opacity-60 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
+                  regla183.com
                 </a>
               </div>
             </div>

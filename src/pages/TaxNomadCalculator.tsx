@@ -161,16 +161,16 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="border-t border-border py-16 mt-20 opacity-60">
+      <footer className="border-t border-border/20 py-16 mt-20">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
            <div className="flex items-center gap-4">
-              <img src={logo} alt="TaxNomad" className="w-8 h-8 rounded" />
-              <span className="font-light text-xs tracking-widest uppercase">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
+              <img src={logo} alt="TaxNomad" className="w-16 h-16 rounded" />
+              <span className="font-light text-xs tracking-widest uppercase opacity-85">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em]">
-              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer">{t('footer.terms')}</Link>
-              <a href="mailto:hola@regla183.com" className="hover:text-primary transition-colors cursor-pointer">{t('footer.contact') || 'Contact'}</a>
+           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] opacity-85">
+              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.privacy')}</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.terms')}</Link>
+              <a href="mailto:hola@regla183.com" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
            </div>
         </div>
       </footer>

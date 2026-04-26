@@ -389,12 +389,16 @@
   }
 
   .taxnomad-modal {
-    max-height: min(760px, calc(100dvh - 2rem));
+    display: flex;
+    flex-direction: column;
+    width: min(92vw, 42rem);
+    max-height: calc(100dvh - 1.5rem);
   }
 
   .taxnomad-modal__body {
-    max-height: calc(100dvh - 20rem);
-    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: visible;
   }
 
   /* Legal footer */
@@ -408,11 +412,8 @@
 
   @media (max-width: 640px) {
     .taxnomad-modal {
-      max-height: calc(100dvh - 1.5rem);
-    }
-
-    .taxnomad-modal__body {
-      max-height: calc(100dvh - 17rem);
+      width: min(94vw, 42rem);
+      max-height: calc(100dvh - 1rem);
     }
   }
 

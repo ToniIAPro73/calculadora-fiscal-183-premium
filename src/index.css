@@ -56,99 +56,9 @@
 @import "tailwindcss";
 
 /* ==========================================================
-   APP TOKENS — Evaluación Fiscal 183
-   Acento propio dentro del marco Anclora Premium
+   BODY BASE — font + background
    ========================================================== */
 @layer base {
-  :root {
-    /* Acento 183: cobre fiscal con glow sutil */
-    --app-accent:        #CD7F32;
-    --app-accent-glow:   rgba(205, 127, 50, 0.18);
-    --app-accent-subtle: rgba(205, 127, 50, 0.08);
-    --app-emerald:       #20b4a0;
-    --app-emerald-glow:  rgba(32, 180, 160, 0.12);
-
-    /* Canvas Premium */
-    --app-canvas:        #1a1525;
-    --app-canvas-deep:   #0f1419;
-    --app-canvas-raised: #1f1b2e;
-    --app-canvas-panel:  rgba(31, 27, 46, 0.92);
-
-    /* Texto */
-    --app-text-primary:   #f0ede8;
-    --app-text-secondary: rgba(240, 237, 232, 0.65);
-    --app-text-muted:     rgba(240, 237, 232, 0.38);
-    --app-text-accent:    #CD7F32;
-
-    /* Bordes */
-    --app-border:        rgba(255, 255, 255, 0.08);
-    --app-border-strong: rgba(205, 127, 50, 0.22);
-
-    /* shadcn/radix compat — dark canvas siempre */
-    --background:         26 13% 9%;
-    --foreground:         38 20% 92%;
-    --card:               26 13% 11%;
-    --card-foreground:    38 20% 92%;
-    --popover:            26 13% 11%;
-    --popover-foreground: 38 20% 92%;
-    --primary:            30 57% 50%;
-    --primary-foreground: 38 20% 98%;
-    --secondary:          170 62% 42%;
-    --secondary-foreground: 0 0% 100%;
-    --muted:              26 13% 16%;
-    --muted-foreground:   38 10% 58%;
-    --accent:             30 57% 50%;
-    --accent-foreground:  38 20% 98%;
-    --destructive:        0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border:             26 13% 20%;
-    --input:              26 13% 20%;
-    --ring:               30 57% 50%;
-    --radius:             1.5rem;
-  }
-
-  /* ── LIGHT MODE overrides ── */
-  .light {
-    --app-accent:        #b86e1c;
-    --app-accent-glow:   rgba(184, 110, 28, 0.12);
-    --app-accent-subtle: rgba(184, 110, 28, 0.06);
-    --app-emerald:       #178a78;
-    --app-emerald-glow:  rgba(23, 138, 120, 0.08);
-
-    --app-canvas:        #f5f2ee;
-    --app-canvas-deep:   #ede9e2;
-    --app-canvas-raised: #ffffff;
-    --app-canvas-panel:  rgba(255, 255, 255, 0.94);
-
-    --app-text-primary:   #1a1525;
-    --app-text-secondary: rgba(26, 21, 37, 0.68);
-    --app-text-muted:     rgba(26, 21, 37, 0.42);
-    --app-text-accent:    #b86e1c;
-
-    --app-border:        rgba(0, 0, 0, 0.09);
-    --app-border-strong: rgba(184, 110, 28, 0.28);
-
-    --background:         40 20% 95%;
-    --foreground:         26 20% 12%;
-    --card:               0 0% 100%;
-    --card-foreground:    26 20% 12%;
-    --popover:            0 0% 100%;
-    --popover-foreground: 26 20% 12%;
-    --primary:            28 75% 44%;
-    --primary-foreground: 0 0% 100%;
-    --secondary:          170 62% 36%;
-    --secondary-foreground: 0 0% 100%;
-    --muted:              40 15% 90%;
-    --muted-foreground:   26 10% 46%;
-    --accent:             28 75% 44%;
-    --accent-foreground:  0 0% 100%;
-    --destructive:        0 84% 58%;
-    --destructive-foreground: 0 0% 100%;
-    --border:             40 10% 85%;
-    --input:              40 10% 85%;
-    --ring:               28 75% 44%;
-  }
-
   body {
     font-family: 'Inter', 'DM Sans', sans-serif;
     background:
@@ -486,6 +396,45 @@
     margin-top: auto;
   }
 
+  .light .anclora-legal-footer {
+    background: rgba(237, 233, 226, 0.72);
+    border-top-color: var(--app-border);
+  }
+
+  .light .anclora-metric-tile {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .light .anclora-metric-tile:hover {
+    background: rgba(184, 110, 28, 0.06);
+    border-color: var(--app-border-strong);
+  }
+
+  .light .anclora-support-card {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  .light .anclora-support-card:hover {
+    background: rgba(184, 110, 28, 0.05);
+  }
+
+  .light .anclora-hero-aside {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .light .anclora-pill {
+    background: rgba(184, 110, 28, 0.08);
+    border-color: rgba(184, 110, 28, 0.28);
+  }
+
+  .light .anclora-pill--subtle {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
   /* ==========================================================
      PREMIUM MOTION CONTRACT — Lifts sin sweeps
      ========================================================== */
@@ -576,36 +525,88 @@
 
   /* ==========================================================
      LIGHT MODE — popover/card overrides
+     Radix portals render at body root — use :root.light scope
      ========================================================== */
 
-  .light [data-radix-popper-content-wrapper] > [data-radix-popover-content] {
+  /* Calendar popover */
+  :root.light [data-radix-popper-content-wrapper] > *,
+  .light [data-radix-popper-content-wrapper] > * {
     background: #ffffff !important;
-    border-color: var(--app-border) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
+    color: #1a1525 !important;
   }
 
+  :root.light .rdp-day,
   .light .rdp-day {
     color: rgba(26, 21, 37, 0.72) !important;
   }
 
+  :root.light .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected),
+  .light .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected) {
+    background: rgba(184, 110, 28, 0.1) !important;
+    color: #1a1525 !important;
+  }
+
+  :root.light .rdp-day_selected,
+  .light .rdp-day_selected {
+    background: #b86e1c !important;
+    color: #ffffff !important;
+  }
+
+  :root.light .rdp-day_today:not(.rdp-day_selected),
+  .light .rdp-day_today:not(.rdp-day_selected) {
+    border-color: rgba(184, 110, 28, 0.45) !important;
+    color: #b86e1c !important;
+  }
+
+  :root.light .rdp-caption_label,
+  .light .rdp-caption_label {
+    color: #1a1525 !important;
+  }
+
+  :root.light .rdp-head_cell,
+  .light .rdp-head_cell {
+    color: rgba(26, 21, 37, 0.45) !important;
+  }
+
+  :root.light .rdp-nav_button,
   .light .rdp-nav_button {
     background: rgba(0, 0, 0, 0.04) !important;
     border-color: rgba(0, 0, 0, 0.1) !important;
     color: rgba(26, 21, 37, 0.6) !important;
   }
 
+  :root.light .rdp-nav_button:hover,
+  .light .rdp-nav_button:hover {
+    background: rgba(184, 110, 28, 0.1) !important;
+    border-color: rgba(184, 110, 28, 0.3) !important;
+    color: #b86e1c !important;
+  }
+
+  /* Select dropdowns */
+  :root.light [data-radix-select-content],
   .light [data-radix-select-content] {
     background: #ffffff !important;
     border-color: rgba(0, 0, 0, 0.1) !important;
     color: #1a1525 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
   }
 
+  :root.light [data-radix-select-item],
   .light [data-radix-select-item] {
     color: rgba(26, 21, 37, 0.8) !important;
   }
 
+  :root.light [data-radix-select-item][data-highlighted],
   .light [data-radix-select-item][data-highlighted] {
     background: rgba(184, 110, 28, 0.08) !important;
     color: #1a1525 !important;
+  }
+
+  :root.light [data-radix-select-item][data-state="checked"],
+  .light [data-radix-select-item][data-state="checked"] {
+    color: #b86e1c !important;
   }
 
   /* ==========================================================
@@ -663,4 +664,147 @@
     border-color: var(--app-border-strong);
     color: var(--app-text-accent);
   }
+}
+
+/* ==========================================================
+   FISCAL 183 — TOKEN OVERRIDES (unlayered, beats DS semantic.css)
+   These must be plain unlayered CSS placed after all @layer blocks
+   so they win over the DS unlayered :root declarations.
+   ========================================================== */
+
+:root {
+  /* DS base — dark canvas fiscal */
+  --bg:                 #1a1525;
+  --bg-raised:          #1f1b2e;
+  --bg-strong:          #26213a;
+  --fg1:                #f0ede8;
+  --fg2:                rgba(240, 237, 232, 0.65);
+  --fg3:                #CD7F32;
+  --accent:             #CD7F32;
+  --line-soft:          rgba(255, 255, 255, 0.05);
+  --line-strong:        rgba(205, 127, 50, 0.22);
+
+  /* DS semantic aliases (explicit, no cascade from --bg) */
+  --surface-canvas:       #1a1525;
+  --surface-subtle:       rgba(31, 27, 46, 0.54);
+  --surface-panel:        rgba(31, 27, 46, 0.82);
+  --surface-panel-strong: rgba(38, 33, 55, 0.94);
+  --surface-elevated:     rgba(44, 39, 62, 0.98);
+  --border-default:       rgba(255, 255, 255, 0.08);
+  --border-subtle:        rgba(255, 255, 255, 0.05);
+  --border-strong:        rgba(205, 127, 50, 0.22);
+  --text-primary:         #f0ede8;
+  --text-secondary:       rgba(240, 237, 232, 0.65);
+  --text-muted:           rgba(240, 237, 232, 0.38);
+  --text-eyebrow:         #CD7F32;
+  --text-link:            #CD7F32;
+
+  /* App accent — cobre fiscal */
+  --app-accent:        #CD7F32;
+  --app-accent-glow:   rgba(205, 127, 50, 0.18);
+  --app-accent-subtle: rgba(205, 127, 50, 0.08);
+  --app-emerald:       #20b4a0;
+  --app-emerald-glow:  rgba(32, 180, 160, 0.12);
+
+  /* App canvas */
+  --app-canvas:        #1a1525;
+  --app-canvas-deep:   #0f1419;
+  --app-canvas-raised: #1f1b2e;
+  --app-canvas-panel:  rgba(31, 27, 46, 0.92);
+
+  /* App text */
+  --app-text-primary:   #f0ede8;
+  --app-text-secondary: rgba(240, 237, 232, 0.65);
+  --app-text-muted:     rgba(240, 237, 232, 0.38);
+  --app-text-accent:    #CD7F32;
+
+  /* App borders */
+  --app-border:        rgba(255, 255, 255, 0.08);
+  --app-border-strong: rgba(205, 127, 50, 0.22);
+
+  /* shadcn/radix compat (HSL format) */
+  --background:         26 13% 9%;
+  --foreground:         38 20% 92%;
+  --card:               26 13% 11%;
+  --card-foreground:    38 20% 92%;
+  --popover:            26 13% 11%;
+  --popover-foreground: 38 20% 92%;
+  --primary:            30 57% 50%;
+  --primary-foreground: 38 20% 98%;
+  --secondary:          170 62% 42%;
+  --secondary-foreground: 0 0% 100%;
+  --muted:              26 13% 16%;
+  --muted-foreground:   38 10% 58%;
+  --destructive:        0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border:             26 13% 20%;
+  --input:              26 13% 20%;
+  --ring:               30 57% 50%;
+  --radius:             1.5rem;
+}
+
+/* Light mode — unlayered, placed after :root, wins on html.light */
+.light {
+  /* DS base — warm stone canvas */
+  --bg:                 #f5f2ee;
+  --bg-raised:          #ffffff;
+  --bg-strong:          #edeae5;
+  --fg1:                #1a1525;
+  --fg2:                rgba(26, 21, 37, 0.68);
+  --fg3:                #b86e1c;
+  --accent:             #b86e1c;
+  --line-soft:          rgba(0, 0, 0, 0.05);
+  --line-strong:        rgba(184, 110, 28, 0.28);
+
+  --surface-canvas:       #f5f2ee;
+  --surface-subtle:       rgba(255, 255, 255, 0.72);
+  --surface-panel:        #ffffff;
+  --surface-panel-strong: #edeae5;
+  --surface-elevated:     #ffffff;
+  --border-default:       rgba(0, 0, 0, 0.09);
+  --border-subtle:        rgba(0, 0, 0, 0.06);
+  --border-strong:        rgba(184, 110, 28, 0.28);
+  --text-primary:         #1a1525;
+  --text-secondary:       rgba(26, 21, 37, 0.68);
+  --text-muted:           rgba(26, 21, 37, 0.42);
+  --text-eyebrow:         #b86e1c;
+  --text-link:            #b86e1c;
+
+  --app-accent:        #b86e1c;
+  --app-accent-glow:   rgba(184, 110, 28, 0.12);
+  --app-accent-subtle: rgba(184, 110, 28, 0.06);
+  --app-emerald:       #178a78;
+  --app-emerald-glow:  rgba(23, 138, 120, 0.08);
+
+  --app-canvas:        #f5f2ee;
+  --app-canvas-deep:   #ede9e2;
+  --app-canvas-raised: #ffffff;
+  --app-canvas-panel:  rgba(255, 255, 255, 0.96);
+
+  --app-text-primary:   #1a1525;
+  --app-text-secondary: rgba(26, 21, 37, 0.68);
+  --app-text-muted:     rgba(26, 21, 37, 0.42);
+  --app-text-accent:    #b86e1c;
+
+  --app-border:        rgba(0, 0, 0, 0.09);
+  --app-border-strong: rgba(184, 110, 28, 0.28);
+
+  /* shadcn/radix compat (HSL format) */
+  --background:         40 20% 95%;
+  --foreground:         26 20% 12%;
+  --card:               0 0% 100%;
+  --card-foreground:    26 20% 12%;
+  --popover:            0 0% 100%;
+  --popover-foreground: 26 20% 12%;
+  --primary:            28 75% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary:          170 62% 36%;
+  --secondary-foreground: 0 0% 100%;
+  --muted:              40 15% 90%;
+  --muted-foreground:   26 10% 46%;
+  --destructive:        0 84% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --border:             40 10% 85%;
+  --input:              40 10% 85%;
+  --ring:               28 75% 44%;
 }

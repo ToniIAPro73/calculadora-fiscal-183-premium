@@ -124,7 +124,7 @@ export const translations = {
       contact: "Contact",
       contactEmail: "Email",
       website: "Website",
-      copyright: "© 2026 Anclora. All rights reserved.",
+      copyright: "© 2026 TaxNomad. All rights reserved.",
       rights: "All rights reserved.",
       disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
     },
@@ -336,7 +336,7 @@ export const translations = {
       contact: "Contacto",
       contactEmail: "Correo",
       website: "Sitio Web",
-      copyright: "© 2026 Anclora. Todos los derechos reservados.",
+      copyright: "© 2026 TaxNomad. Todos los derechos reservados.",
       rights: "Todos los derechos reservados.",
       disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
     },

@@ -1,84 +1,56 @@
 import React from 'react';
-import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/i18nContext';
+import logo from '@/assets/logo.webp';
 
 const Footer: React.FC = () => {
   const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border/20 bg-background/80 backdrop-blur-md mt-24">
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand — Anclora Premium */}
+    <footer className="mt-auto border-t border-[var(--app-border)] bg-[rgba(15,12,22,0.6)] px-4 py-8 backdrop-blur-md sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1280px]">
+        <div className="mb-8 grid grid-cols-1 gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/anclora-group.png"
-                alt="Anclora"
-                className="w-8 h-8 rounded-full object-cover"
+                src={logo}
+                alt="TaxNomad"
+                className="h-10 w-10 rounded-full border border-[var(--app-border)] object-cover"
               />
-              <div>
-                <p className="font-display text-base font-semibold" style={{ fontFamily: 'var(--font-display, DM Sans, sans-serif)' }}>
-                  {language === 'es' ? 'Evaluación Fiscal 183' : 'Fiscal Assessment 183'}
-                </p>
-                <p className="text-xs opacity-60 font-light">Anclora Ecosystem</p>
-              </div>
+              <span className="text-lg font-semibold tracking-[-0.04em] text-[var(--app-text-primary)]">
+                Tax<span className="text-[var(--app-text-accent,#CD7F32)]">Nomad</span>
+              </span>
             </div>
-            <p className="text-sm opacity-75 font-light leading-relaxed">
+            <p className="max-w-sm text-sm leading-7 text-[var(--app-text-secondary,rgba(240,237,232,0.7))]">
               {t('footer.tagline') || (language === 'es'
                 ? 'Herramienta de evaluación de residencia fiscal para 2026.'
                 : 'Fiscal residency assessment tool for 2026.')}
             </p>
           </div>
 
-          {/* Product */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
-              {t('footer.product') || (language === 'es' ? 'Herramienta' : 'Tool')}
-            </h4>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <Link to="/" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {language === 'es' ? 'Calculadora' : 'Calculator'}
-                </Link>
-              </li>
-              <li>
-                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.authority') || 'Agencia Tributaria'}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
+          <div className="flex flex-col gap-3">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--app-text-muted,rgba(240,237,232,0.5))]">
               {t('footer.legal') || 'Legal'}
             </h4>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <Link to="/privacy" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.privacy') || 'Privacidad'}
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.terms') || 'Términos'}
-                </Link>
-              </li>
-            </ul>
+            <Link to="/privacy" className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+              {t('footer.privacy') || 'Privacidad'}
+            </Link>
+            <Link to="/terms" className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+              {t('footer.terms') || 'Términos'}
+            </Link>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
-              {t('footer.support') || (language === 'es' ? 'Contacto' : 'Support')}
+          <div className="flex flex-col gap-3">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--app-text-muted,rgba(240,237,232,0.5))]">
+              {t('footer.contact') || (language === 'es' ? 'Contacto' : 'Contact')}
             </h4>
-            <div className="space-y-3 text-sm font-light">
+            <div className="space-y-3 text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))]">
               <div>
-                <p className="text-xs opacity-60 mb-1">{t('footer.contactEmail') || 'Email'}</p>
-                <a href="mailto:hola@regla183.com" className="opacity-75 hover:opacity-100 transition-opacity hover:text-primary">
+                <p className="mb-1 text-xs uppercase tracking-[0.18em] text-[var(--app-text-muted,rgba(240,237,232,0.5))]">
+                  {t('footer.contactEmail') || 'Email'}
+                </p>
+                <a href="mailto:hola@regla183.com" className="transition-colors duration-200 hover:text-[var(--app-text-primary)]">
                   hola@regla183.com
                 </a>
               </div>
@@ -86,17 +58,14 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="h-[1px] bg-border/10 my-8"></div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs opacity-60 font-light">
-            © {currentYear} Anclora. {language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
+        <div className="flex flex-col gap-4 border-t border-[var(--app-border)] pt-8 text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--app-text-muted,rgba(240,237,232,0.5))] md:flex-row md:items-center md:justify-between">
+          <p>
+            {t('footer.copyright') || `© ${currentYear} TaxNomad. ${language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}`}
           </p>
-          <p className="text-xs opacity-60 font-light text-center md:text-right">
-            {t('footer.disclaimer') || (language === 'es'
-              ? 'Herramienta informativa. Consulta un profesional fiscal para tu situación específica.'
-              : 'For informational purposes only. Consult a tax professional for your specific situation.')}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-end">
+            <a href="/llms.txt" className="transition-colors duration-200 hover:text-[var(--app-text-primary)]">LLMS</a>
+            <a href="/openapi.json" className="transition-colors duration-200 hover:text-[var(--app-text-primary)]">OpenAPI</a>
+          </div>
         </div>
       </div>
     </footer>

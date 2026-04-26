@@ -164,7 +164,7 @@ const PaymentTest: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Payment Testing · Anclora</title>
+        <title>Payment Testing · TaxNomad</title>
       </Helmet>
       <div className="min-h-screen bg-background flex flex-col">
         <Header />

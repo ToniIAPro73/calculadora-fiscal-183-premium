@@ -12,30 +12,20 @@ const Header: React.FC = () => {
   return (
     <header className="app-header">
       <div className="app-header__inner">
-        {/* Brand */}
         <Link to="/" className="app-header__brand">
           <img
             src={logo}
-            alt="Evaluación Fiscal 183"
+            alt="TaxNomad"
             className="h-11 w-11 rounded-full border border-white/10 object-cover shadow-lg"
           />
           <div className="app-header__titles">
-            <p className="app-header__eyebrow">
-              {language === 'es' ? 'ECOSISTEMA ANCLORA' : 'ANCLORA ECOSYSTEM'}
-            </p>
             <h1 className="app-header__name">
-              {language === 'es' ? 'Evaluación Fiscal 183' : 'Fiscal Assessment 183'}
+              TaxNomad
             </h1>
           </div>
         </Link>
 
-        {/* Controls */}
         <div className="app-header__controls">
-          <span className="app-header__tagline hidden xl:block">
-            {language === 'es' ? 'Herramienta de residencia fiscal' : 'Fiscal residency tool'}
-          </span>
-
-          {/* Language toggle */}
           <button
             type="button"
             onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
@@ -49,7 +39,6 @@ const Header: React.FC = () => {
             </span>
           </button>
 
-          {/* Theme toggle */}
           <button
             type="button"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

@@ -130,11 +130,12 @@
 
   .app-header__name {
     font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--app-text-primary);
     white-space: nowrap;
     line-height: 1.2;
+    letter-spacing: -0.04em;
   }
 
   .app-header__controls {
@@ -387,6 +388,15 @@
     backdrop-filter: blur(20px);
   }
 
+  .taxnomad-modal {
+    max-height: min(760px, calc(100dvh - 2rem));
+  }
+
+  .taxnomad-modal__body {
+    max-height: calc(100dvh - 20rem);
+    overflow-y: auto;
+  }
+
   /* Legal footer */
   .anclora-legal-footer {
     border-top: 1px solid var(--app-border);
@@ -394,6 +404,16 @@
     backdrop-filter: blur(12px);
     padding: 2.5rem 1.5rem;
     margin-top: auto;
+  }
+
+  @media (max-width: 640px) {
+    .taxnomad-modal {
+      max-height: calc(100dvh - 1.5rem);
+    }
+
+    .taxnomad-modal__body {
+      max-height: calc(100dvh - 17rem);
+    }
   }
 
   .light .anclora-legal-footer {

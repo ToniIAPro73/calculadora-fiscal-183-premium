@@ -37,7 +37,7 @@ const pdfLabels = {
     periodBreakdown: 'DESGLOSE CRONOLÓGICO DE PERIODOS',
     legalNotes: 'NOTAS LEGALES Y METODOLOGÍA',
     legalCompliance: 'CUMPLIMIENTO LEGAL',
-    legalText: 'Este informe técnico detalla los periodos de estancia física en territorio español calculados a efectos de residencia fiscal. De acuerdo con el Artículo 9.1.a) de la Ley 35/2006, de 28 de noviembre, del Impuesto sobre la Renta de las Personas Físicas (IRPF), se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando permanezca en el mismo más de 183 días durante el año natural. Anclora aplica un criterio de "día natural de presencia", consolidando periodos solapados para garantizar la integridad del cómputo y evitar la duplicidad de días. Este documento sirve como soporte probatorio preliminar, pero no sustituye el asesoramiento fiscal profesional.',
+    legalText: 'Este informe técnico detalla los periodos de estancia física en territorio español calculados a efectos de residencia fiscal. De acuerdo con el Artículo 9.1.a) de la Ley 35/2006, de 28 de noviembre, del Impuesto sobre la Renta de las Personas Físicas (IRPF), se entenderá que el contribuyente tiene su residencia habitual en territorio español cuando permanezca en el mismo más de 183 días durante el año natural. TaxNomad aplica un criterio de "día natural de presencia", consolidando periodos solapados para garantizar la integridad del cómputo y evitar la duplicidad de días. Este documento sirve como soporte probatorio preliminar, pero no sustituye el asesoramiento fiscal profesional.',
     advancedTaxResidencyAnalysis: 'ANÁLISIS DE RESIDENCIA FISCAL AVANZADO',
     testVersion: 'VERSIÓN DE PRUEBA',
   },
@@ -74,32 +74,34 @@ const pdfLabels = {
     periodBreakdown: 'CHRONOLOGICAL BREAKDOWN OF PERIODS',
     legalNotes: 'LEGAL NOTES AND METHODOLOGY',
     legalCompliance: 'LEGAL COMPLIANCE',
-    legalText: `This technical report details the periods of physical presence in Spanish territory calculated for tax residency purposes. In accordance with Article 9.1.a) of Law 35/2006, of November 28, on the Personal Income Tax (IRPF), a taxpayer will be considered to have their habitual residence in Spanish territory when they remain there more than 183 days during the calendar year. Anclora applies a "natural day of presence" criterion, consolidating overlapping periods to ensure the integrity of the count and avoid duplication of days. This document serves as preliminary evidence support but does not replace professional tax advice.`,
+    legalText: `This technical report details the periods of physical presence in Spanish territory calculated for tax residency purposes. In accordance with Article 9.1.a) of Law 35/2006, of November 28, on the Personal Income Tax (IRPF), a taxpayer will be considered to have their habitual residence in Spanish territory when they remain there more than 183 days during the calendar year. TaxNomad applies a "natural day of presence" criterion, consolidating overlapping periods to ensure the integrity of the count and avoid duplication of days. This document serves as preliminary evidence support but does not replace professional tax advice.`,
     advancedTaxResidencyAnalysis: 'ADVANCED TAX RESIDENCY ANALYSIS',
     testVersion: 'TEST VERSION',
   },
 };
 
 const C = {
-  primary: [16, 185, 129] as [number, number, number], // Emerald-500
-  secondary: [99, 102, 241] as [number, number, number], // Indigo-500
-  dark: [15, 23, 42] as [number, number, number], // Slate-900
-  slate600: [71, 85, 105] as [number, number, number],
-  slate400: [148, 163, 184] as [number, number, number],
-  slate200: [226, 232, 240] as [number, number, number],
-  slate50: [248, 250, 252] as [number, number, number],
+  primary: [205, 127, 50] as [number, number, number],
+  secondary: [240, 194, 123] as [number, number, number],
+  dark: [26, 21, 37] as [number, number, number],
+  slate600: [101, 89, 77] as [number, number, number],
+  slate400: [149, 136, 122] as [number, number, number],
+  slate200: [223, 214, 201] as [number, number, number],
+  slate50: [251, 247, 241] as [number, number, number],
   white: [255, 255, 255] as [number, number, number],
-  success: [22, 163, 74] as [number, number, number],
-  warning: [245, 158, 11] as [number, number, number],
-  danger: [220, 38, 38] as [number, number, number],
-  accentBg: [240, 253, 244] as [number, number, number], // Very light emerald
+  success: [205, 127, 50] as [number, number, number],
+  warning: [227, 153, 71] as [number, number, number],
+  danger: [180, 76, 61] as [number, number, number],
+  accentBg: [245, 233, 219] as [number, number, number],
+  paper: [248, 244, 238] as [number, number, number],
+  panel: [34, 28, 47] as [number, number, number],
 };
 
 function statusInfo(totalDays: number, language: string = 'es') {
   const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
-  if (totalDays > 183) return { color: C.danger, bg: [254, 226, 226] as [number, number, number], title: labels.statusLimitExceeded, badge: labels.statusExceededBadge, desc: labels.statusExceededDesc };
-  if (totalDays > 150) return { color: C.warning, bg: [254, 243, 199] as [number, number, number], title: labels.statusApproaching, badge: labels.statusApproachingBadge, desc: labels.statusApproachingDesc };
-  return { color: C.success, bg: [220, 252, 231] as [number, number, number], title: labels.statusCompliant, badge: labels.statusCompliantBadge, desc: labels.statusCompliantDesc };
+  if (totalDays > 183) return { color: C.danger, bg: [249, 230, 225] as [number, number, number], title: labels.statusLimitExceeded, badge: labels.statusExceededBadge, desc: labels.statusExceededDesc };
+  if (totalDays > 150) return { color: C.warning, bg: [250, 239, 222] as [number, number, number], title: labels.statusApproaching, badge: labels.statusApproachingBadge, desc: labels.statusApproachingDesc };
+  return { color: C.success, bg: [245, 233, 219] as [number, number, number], title: labels.statusCompliant, badge: labels.statusCompliantBadge, desc: labels.statusCompliantDesc };
 }
 
 function normalizeRange(range: any) {
@@ -142,7 +144,7 @@ function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalD
 
   // Fill
   doc.setFillColor(status.color[0], status.color[1], status.color[2]);
-  doc.roundedRect(x, y, Math.max((width * pct) / 100, 6), 6, 3, 3, 'F');
+  doc.roundedRect(x, y, totalDays === 0 ? 0 : Math.max((width * pct) / 100, 6), 6, 3, 3, 'F');
 
   // Marker for 183 days
   doc.setDrawColor(C.dark[0], C.dark[1], C.dark[2]);
@@ -152,7 +154,7 @@ function drawProgressBar(doc: jsPDF, x: number, y: number, width: number, totalD
   
   doc.setFontSize(7);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(C.dark[0], C.dark[1], C.dark[2]);
+  doc.setTextColor(C.primary[0], C.primary[1], C.primary[2]);
   doc.text(labels.limit183, markerX, y - 4, { align: 'center' });
 }
 
@@ -224,8 +226,7 @@ function drawDetailedTable(doc: jsPDF, x: number, y: number, width: number, rang
   return currentY;
 }
 
-function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: number, fileOwnerLine: string, refNum: string, language: string = 'es', currentPage: number = 1, totalPages: number = 1) {
-  const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
+function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: number, contactLine: string, refNum: string, language: string = 'es', currentPage: number = 1, totalPages: number = 1) {
   doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
   doc.setLineWidth(0.2);
   doc.line(margin, pageHeight - 31, pageWidth - margin, pageHeight - 31);
@@ -235,21 +236,27 @@ function drawFooter(doc: jsPDF, pageWidth: number, pageHeight: number, margin: n
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
 
   const generatedByText = language === 'en'
-    ? 'Generated by Anclora Evaluación Fiscal · Tax Compliance for Expatriates · regla183.com'
-    : 'Generado por Anclora Evaluación Fiscal · Cumplimiento Fiscal Expatriados · regla183.com';
-
-  const auditSoftwareText = language === 'en'
-    ? `Audit Software: ${fileOwnerLine}`
-    : `Software de Auditoría: ${fileOwnerLine}`;
+    ? 'Generated by TaxNomad Fiscal Residency Assessment · regla183.com'
+    : 'Generado por TaxNomad Evaluación de Residencia Fiscal · regla183.com';
 
   doc.text(generatedByText, margin, pageHeight - 28);
-  doc.text(auditSoftwareText, margin, pageHeight - 22);
+  doc.text(contactLine, margin, pageHeight - 22);
 
   doc.setFont('helvetica', 'bold');
   const reportIdText = language === 'en' ? 'REPORT ID' : 'ID DE INFORME';
   const pageText = language === 'en' ? `Page ${currentPage} of ${totalPages}` : `Página ${currentPage} de ${totalPages}`;
   doc.text(`${reportIdText}: ${refNum}`, pageWidth - margin - 10, pageHeight - 28, { align: 'right' });
   doc.text(pageText, pageWidth - margin - 10, pageHeight - 22, { align: 'right' });
+}
+
+function paintPageShell(doc: jsPDF, width: number, height: number, topBandHeight: number = 48) {
+  doc.setFillColor(C.paper[0], C.paper[1], C.paper[2]);
+  doc.rect(0, 0, width, height, 'F');
+  doc.setFillColor(C.dark[0], C.dark[1], C.dark[2]);
+  doc.rect(0, 0, width, topBandHeight, 'F');
+  doc.setDrawColor(C.primary[0], C.primary[1], C.primary[2]);
+  doc.setLineWidth(0.6);
+  doc.line(0, topBandHeight, width, topBandHeight);
 }
 
 export async function generateTaxReport({
@@ -287,28 +294,24 @@ export async function generateTaxReport({
     : format(new Date(), "dd 'de' MMMM 'de' yyyy", { locale: es });
   const sortedRanges = [...ranges].map(normalizeRange).sort((a, b) => a.start.getTime() - b.start.getTime());
   const identifierLabel = documentType === 'nie' ? 'NIE' : (language === 'en' ? 'PASSPORT' : 'PASAPORTE');
-  const fileOwnerLine = `${reportOwner.name} (${reportOwner.nif})`;
+  const contactLine = language === 'en'
+    ? `Contact: ${reportOwner.email}`
+    : `Contacto: ${reportOwner.email}`;
+  const topBandHeight = exampleMode ? 48 : 54;
   
-  // Background Shape
-  doc.setFillColor(252, 252, 253);
-  doc.rect(0, 0, W, H, 'F');
-
-  // Header Bar
-  doc.setFillColor(C.dark[0], C.dark[1], C.dark[2]);
-  doc.rect(0, 0, W, 48, 'F');
+  paintPageShell(doc, W, H, topBandHeight);
 
   // App Logo & Subtitle (Left Column)
   doc.setTextColor(C.primary[0], C.primary[1], C.primary[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
-  doc.text('Anclora', M, 18);
+  doc.text('TaxNomad', M, 18);
 
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
   doc.text(labels.advancedTaxResidencyAnalysis, M, 24, { align: 'justify' });
 
-  // Example Mode Badge (Top Right)
   if (exampleMode) {
     doc.setFillColor(C.warning[0], C.warning[1], C.warning[2]);
     doc.roundedRect(W - M - 35, 8, 35, 7, 2, 2, 'F');
@@ -316,6 +319,14 @@ export async function generateTaxReport({
     doc.setFontSize(7);
     doc.setFont('helvetica', 'bold');
     doc.text(labels.testVersion, W - M - 17.5, 12.2, { align: 'center' });
+  } else {
+    doc.setDrawColor(C.primary[0], C.primary[1], C.primary[2]);
+    doc.setFillColor(C.panel[0], C.panel[1], C.panel[2]);
+    doc.roundedRect(W - M - 39, 8, 39, 8, 2, 2, 'FD');
+    doc.setTextColor(C.primary[0], C.primary[1], C.primary[2]);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.text(language === 'en' ? 'PREMIUM REPORT' : 'INFORME PREMIUM', W - M - 19.5, 13, { align: 'center' });
   }
 
   // Ref & Date Header (Right Column, below badge)
@@ -434,10 +445,11 @@ export async function generateTaxReport({
   y = drawDetailedTable(doc, M, y, CW, sortedRanges, language);
 
   // Draw footer on page 1
-  drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, 1, 2);
+  drawFooter(doc, W, H, M, contactLine, refNum, language, 1, 2);
 
   // Add page 2 for legal framework
   doc.addPage();
+  paintPageShell(doc, W, H, 20);
   let pageY = M + 10;
 
   // Legal Framework on Page 2
@@ -447,17 +459,25 @@ export async function generateTaxReport({
   doc.setFontSize(8.5);
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(C.slate600[0], C.slate600[1], C.slate600[2]);
-  doc.setFont('helvetica', 'bold');
-  doc.text(labels.legalCompliance, M, pageY);
-  pageY += 5;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
   const textWidth = CW - 10; // Leave right margin for justified text
   const legalLines = doc.splitTextToSize(labels.legalText, textWidth);
-  doc.text(legalLines, M, pageY, { align: 'justify', maxWidth: textWidth });
+  const legalCardY = pageY + 2;
+  const legalCardHeight = Math.max(82, legalLines.length * 5.2 + 26);
+
+  doc.setFillColor(C.white[0], C.white[1], C.white[2]);
+  doc.setDrawColor(C.slate200[0], C.slate200[1], C.slate200[2]);
+  doc.roundedRect(M, legalCardY, CW, legalCardHeight, 3, 3, 'FD');
+
+  pageY = legalCardY + 10;
+  doc.setFont('helvetica', 'bold');
+  doc.text(labels.legalCompliance, M + 6, pageY);
+  pageY += 7;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.text(legalLines, M + 6, pageY, { align: 'justify', maxWidth: textWidth - 12 });
 
   // Draw footer on page 2
-  drawFooter(doc, W, H, M, fileOwnerLine, refNum, language, 2, 2);
+  drawFooter(doc, W, H, M, contactLine, refNum, language, 2, 2);
 
   return doc;
 }

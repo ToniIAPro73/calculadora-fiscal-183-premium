@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
@@ -12,12 +12,12 @@ import UserDetailsModal from '@/components/UserDetailsModal';
 import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
 import FiscalYearSelector from '@/components/FiscalYearSelector';
+import Footer from '@/components/Footer';
 import { getCurrentYear } from '@/lib/fiscalYear';
 import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, Sparkles, FileCheck2, CalendarRange, BadgeEuro, ScanSearch } from 'lucide-react';
-import logo from '@/assets/logo.webp';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
@@ -267,19 +267,7 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="anclora-legal-footer">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-4 md:flex-row md:px-6">
-           <div className="flex items-center gap-4">
-              <img src={logo} alt="Anclora Advisory" className="h-16 w-16 rounded-full border border-[var(--border-default)]" />
-              <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 Anclora. All rights reserved.'}</span>
-           </div>
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-              <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.terms')}</Link>
-              <a href="mailto:hola@regla183.com" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
-           </div>
-        </div>
-      </footer>
+      <Footer />
 
 
       <UserDetailsModal

@@ -31,7 +31,7 @@ const DialogContent = React.forwardRef<
   <DialogPortal>
     <DialogOverlay />
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="ac-modal-backdrop">
+      <div className="ac-modal-backdrop min-h-full p-4 sm:p-6">
         <DialogPrimitive.Content
           ref={ref}
           className={cn(

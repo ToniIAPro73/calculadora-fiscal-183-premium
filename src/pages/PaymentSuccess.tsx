@@ -98,7 +98,7 @@ const PaymentSuccess: React.FC = () => {
         ranges: session.report_payload.ranges,
       });
 
-      doc.save(`TaxNomad_Report_2026_Premium.pdf`);
+      doc.save(`TaxNomad_Fiscal_183_Report.pdf`);
       toast.success(t('toast.successReport') || 'Report downloaded successfully!');
     } catch (err) {
       const error = err as Error;
@@ -113,7 +113,7 @@ const PaymentSuccess: React.FC = () => {
     return (
       <>
         <Helmet>
-          <title>Payment Processing · TaxNomad</title>
+          <title>Procesando · TaxNomad</title>
         </Helmet>
         <div className="min-h-screen bg-background flex flex-col">
           <Header />
@@ -156,7 +156,7 @@ const PaymentSuccess: React.FC = () => {
 
                 {/* Success Message */}
                 <div className="space-y-1">
-                  <h1 className="text-3xl font-light tracking-tighter font-serif">
+                  <h1 className="text-3xl font-light tracking-tighter font-display">
                     {t('payment.successTitle') || 'Payment Confirmed'}
                   </h1>
                   <p className="text-sm opacity-60 max-w-lg mx-auto">
@@ -239,7 +239,7 @@ const PaymentSuccess: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-light tracking-tighter font-serif">
+                  <h1 className="text-3xl font-light tracking-tighter font-display">
                     {t('payment.pendingTitle') || 'Payment Pending'}
                   </h1>
                   <p className="text-sm opacity-60 max-w-lg mx-auto">
@@ -270,7 +270,7 @@ const PaymentSuccess: React.FC = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-light tracking-tighter font-serif">
+                  <h1 className="text-3xl font-light tracking-tighter font-display">
                     {t('payment.errorTitle') || 'Verification Failed'}
                   </h1>
                   <p className="text-sm opacity-60 max-w-lg mx-auto">{error}</p>

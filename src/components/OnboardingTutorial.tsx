@@ -53,13 +53,13 @@ const OnboardingTutorial: React.FC = () => {
     <>
       {!isOpen ? (
         <div className="mx-auto flex max-w-[88rem] justify-center px-4 pt-3 md:px-6">
-          <Button
-            variant="ghost"
+          <button
+            type="button"
             onClick={() => setIsOpen(true)}
-            className="min-h-[2.5rem] rounded-full border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-panel)_92%,transparent)] px-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-eyebrow)] hover:text-[var(--text-primary)]"
+            className="guided-tour-btn"
           >
             Guided Tour
-          </Button>
+          </button>
         </div>
       ) : null}
 
@@ -94,7 +94,7 @@ const OnboardingTutorial: React.FC = () => {
                 className="space-y-2"
               >
                 <p className="ac-modal__meta">Guided onboarding</p>
-                <h2 className="text-3xl font-serif tracking-tight text-[var(--text-primary)]">
+                <h2 className="text-3xl font-display tracking-tight text-[var(--text-primary)]">
                   {t(`onboarding.step${currentStep + 1}Title`)}
                 </h2>
                 <p className="text-sm font-light leading-relaxed text-[var(--text-secondary)]">

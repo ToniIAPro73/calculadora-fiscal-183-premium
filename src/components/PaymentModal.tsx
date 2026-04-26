@@ -28,7 +28,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   onPaymentSuccess,
   isLoading = false,
 }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleInitiatePayment = async () => {
@@ -75,19 +75,20 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
-        <DialogHeader>
-          <p className="ac-modal__meta">Secure checkout</p>
+      <DialogContent className="taxnomad-modal w-[min(92vw,32rem)] max-w-none overflow-hidden p-0">
+        <DialogHeader className="px-6 pb-4 pt-6 text-center sm:text-center">
+          <p className="ac-modal__meta text-center">Secure checkout</p>
           <DialogTitle>
             {t('payment.title') || 'Complete Your Purchase'}
           </DialogTitle>
-          <DialogDescription>
-            Stripe-secured report delivery within the adopted Anclora ultra premium surface.
+          <DialogDescription className="text-center">
+            {language === 'es'
+              ? 'Entrega segura del informe con pago procesado por Stripe.'
+              : 'Secure report delivery with payment processed by Stripe.'}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="ac-modal__body space-y-6 py-2">
-          {/* Order Summary */}
+        <div className="taxnomad-modal__body ac-modal__body space-y-5 px-6 pb-4">
           <Card className="ac-surface-panel--subtle p-4">
             <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
@@ -106,7 +107,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
           </Card>
 
-          {/* User Info Display */}
           <Card className="ac-surface-panel--subtle p-4">
             <div className="space-y-2 text-sm">
               <div>
@@ -124,7 +124,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             </div>
           </Card>
 
-          {/* Security Info */}
           <div className="flex items-start gap-3 rounded-[20px] border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] p-4">
             <Lock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
             <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
@@ -133,7 +132,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             </p>
           </div>
 
-          {/* VAT Disclaimer */}
           <div className="flex items-start gap-3 rounded-[18px] border border-amber-200/30 bg-amber-50/20 p-3">
             <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
@@ -142,8 +140,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-3 border-t border-[var(--border-subtle)] px-6 pb-6 pt-4">
           <Button
             variant="ghost"
             onClick={onClose}

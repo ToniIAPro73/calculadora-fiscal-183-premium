@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
@@ -12,12 +12,12 @@ import UserDetailsModal from '@/components/UserDetailsModal';
 import PaymentModal from '@/components/PaymentModal';
 import OnboardingTutorial from '@/components/OnboardingTutorial';
 import FiscalYearSelector from '@/components/FiscalYearSelector';
+import Footer from '@/components/Footer';
 import { getCurrentYear } from '@/lib/fiscalYear';
 import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, Sparkles, FileCheck2, CalendarRange, BadgeEuro, ScanSearch } from 'lucide-react';
-import logo from '@/assets/logo.webp';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
 
@@ -101,18 +101,18 @@ const TaxNomadCalculator: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <OnboardingTutorial />
       
-      <main className="anclora-ultra-main">
+      <main className="anclora-premium-main">
         <section className="anclora-hero-shell">
           <div className="anclora-hero-grid">
             <div className="space-y-6">
               <div className="anclora-hero-copy">
                 <div className="anclora-pill">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>{language === 'es' ? 'Calculadora privada lista para auditoría' : 'Private audit-ready residency calculator'}</span>
+                  <span>{language === 'es' ? 'EVALUACIÓN FISCAL' : 'FISCAL ASSESSMENT'}</span>
                 </div>
                 <h1 className="anclora-hero-title">
                   {t('calculator.heroTitlePrefix')} <span>{t('calculator.heroTitleSuffix')}</span>
@@ -124,21 +124,21 @@ const TaxNomadCalculator: React.FC = () => {
 
               <div className="grid gap-4 md:grid-cols-3">
                 <article className="anclora-metric-tile">
-                  <CalendarRange className="h-5 w-5 text-[var(--accent)]" />
+                  <CalendarRange className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Control temporal' : 'Timeline control'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Registra cada estancia sin perder precisión fiscal entre periodos.' : 'Register each stay period without losing fiscal accuracy across periods.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <ScanSearch className="h-5 w-5 text-[var(--accent)]" />
+                  <ScanSearch className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Lectura inmediata' : 'Instant reading'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Detecta enseguida zona segura, presión fiscal y riesgo de exceso.' : 'See safe zone, fiscal pressure, and over-limit risk at a glance.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <BadgeEuro className="h-5 w-5 text-[var(--accent)]" />
+                  <BadgeEuro className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Evidencia preparada' : 'Evidence ready'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Genera un informe limpio para revisión propia, asesoría o compliance.' : 'Generate a polished report for self-review, advisors, or compliance.'}</p>
@@ -149,12 +149,12 @@ const TaxNomadCalculator: React.FC = () => {
 
             <div className="anclora-hero-aside">
               <div className="anclora-pill anclora-pill--subtle">
-                <span>{language === 'es' ? 'Contexto del ejercicio fiscal' : 'Fiscal year context'}</span>
+                <span>{language === 'es' ? 'EJERCICIO FISCAL' : 'FISCAL YEAR'}</span>
               </div>
               <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
-              <p className="text-sm leading-7 text-[var(--text-secondary)]">
+              <p className="text-sm leading-7 text-[var(--app-text-secondary,rgba(240,237,232,0.65))]">
                 {language === 'es'
-                  ? 'Trabaja cada ejercicio por separado, limpia los solapes y conserva una lectura clara del umbral de residencia antes de emitir el informe.'
+                  ? 'Trabaja por ejercicio, elimina solapes y mantén una lectura clara del umbral de residencia antes de emitir el informe.'
                   : 'Work one fiscal year at a time, remove overlaps, and keep a clear reading of your residency threshold before issuing the report.'}
               </p>
             </div>
@@ -167,25 +167,33 @@ const TaxNomadCalculator: React.FC = () => {
           <div className="lg:col-span-8 space-y-12">
             <div className="ac-surface-panel ac-surface-panel--strong">
               <div className="ac-surface-panel__header">
-                <p className="ac-surface-panel__eyebrow">Methodology</p>
-                <h2 className="ac-surface-panel__title">Private residency control workflow</h2>
+                <p className="ac-surface-panel__eyebrow">{language === 'es' ? 'METODOLOGÍA' : 'METHODOLOGY'}</p>
+                <h2 className="ac-surface-panel__title">{language === 'es' ? 'Flujo de evaluación de residencia fiscal' : 'Fiscal residency assessment workflow'}</h2>
               </div>
               <div className="ac-surface-panel__body">
                 <p>
-                  Track physical presence, avoid duplicate day counting, and keep a premium-grade record ready for compliance review whenever you need to justify your position.
+                  {language === 'es'
+                    ? 'Registra tu presencia física, evita el conteo duplicado y mantén un registro listo para revisión fiscal cuando necesites justificar tu posición.'
+                    : 'Track physical presence, avoid duplicate day counting, and keep a verified record ready for compliance review whenever you need to justify your position.'}
                 </p>
                 <div className="anclora-metric-grid">
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Date integrity</span>
-                    <strong>Overlap-aware counting across all periods</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Integridad de datos' : 'Date integrity'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'Conteo sin duplicados entre periodos solapados' : 'Overlap-aware counting across all periods'}
+                    </strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Decision support</span>
-                    <strong>Fast reading of safe zone, pressure zone and over-limit risk</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Lectura de decisión' : 'Decision support'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'Zona segura, presión fiscal y riesgo de exceso en tiempo real' : 'Safe zone, fiscal pressure and over-limit risk in real time'}
+                    </strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Output</span>
-                    <strong>Structured PDF evidence for advisory or personal review</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Resultado' : 'Output'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'PDF verificado para asesoría o revisión personal' : 'Verified PDF for advisory or personal review'}
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -242,7 +250,7 @@ const TaxNomadCalculator: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col items-center gap-3 pt-4">
-                    <div className="flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">
+                    <div className="flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--app-text-accent,#CD7F32)]">
                       <ShieldCheck className="w-3 h-3" />
                       {t('calculator.verificationComplete')}
                     </div>
@@ -259,19 +267,7 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="anclora-legal-footer">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-4 md:flex-row md:px-6">
-           <div className="flex items-center gap-4">
-              <img src={logo} alt="Anclora Advisory" className="h-16 w-16 rounded-full border border-[var(--border-default)]" />
-              <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
-           </div>
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-              <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.terms')}</Link>
-              <a href="mailto:hola@regla183.com" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
-           </div>
-        </div>
-      </footer>
+      <Footer />
 
 
       <UserDetailsModal

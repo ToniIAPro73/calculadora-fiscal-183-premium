@@ -1,4 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Allura&display=swap');
+/* ===================================================
+   ANCLORA DESIGN SYSTEM — Import Order (canonical)
+   1. tokens      →  core → semantic
+   2. foundations →  typography → primitives
+   3. taxonomy    →  tier → domain → archetype → role → clusters
+   4. themes
+   5. components
+   6. tailwindcss →  LAST
+   =================================================== */
+
+@import "@anclora/design-system/tokens/core.css";
+@import "@anclora/design-system/tokens/semantic.css";
+
+@import "@anclora/design-system/foundations/typography.css";
+@import "@anclora/design-system/foundations/primitives.css";
+
+@import "@anclora/design-system/taxonomy/tier.css";
+@import "@anclora/design-system/taxonomy/domain.css";
+@import "@anclora/design-system/taxonomy/archetype.css";
+@import "@anclora/design-system/taxonomy/role.css";
+@import "@anclora/design-system/taxonomy/clusters.css";
+
+@import "@anclora/design-system/themes/product.css";
 
 @import "@anclora/design-system/components/button.css";
 @import "@anclora/design-system/components/surface-panel.css";
@@ -30,77 +52,779 @@
 @import "@anclora/design-system/components/text-editor.css";
 @import "@anclora/design-system/components/export-suite.css";
 @import "@anclora/design-system/components/topbar.css";
-@import "@anclora/design-system/tokens/core.css";
-@import "@anclora/design-system/tokens/semantic.css";
-@import "@anclora/design-system/taxonomy/tier.css";
-@import "@anclora/design-system/taxonomy/domain.css";
-@import "@anclora/design-system/taxonomy/archetype.css";
-@import "@anclora/design-system/taxonomy/role.css";
-@import "@anclora/design-system/taxonomy/clusters.css";
-@import "@anclora/design-system/themes/product.css";
-@import "@anclora/design-system/foundations/typography.css";
-@import "@anclora/design-system/foundations/primitives.css";
 
 @import "tailwindcss";
 
+/* ==========================================================
+   BODY BASE — font + background
+   ========================================================== */
 @layer base {
-  :root {
-    --color-success: #00E599;
-    --color-success-foreground: #050505;
-    --color-warning: #f59e0b;
-    --color-warning-foreground: #1e1b4b;
-    --color-destructive: #dc2626;
-    --color-destructive-foreground: #ffffff;
-    --color-indigo-acc: #635BFF;
-    --font-serif: "Playfair Display", Georgia, serif;
-    --background: 0 0% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 156 100% 40%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 243 100% 68%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 156 100% 40%;
-    --radius: 1rem;
-  }
-
-  .dark {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 90%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 90%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 90%;
-    --primary: 156 100% 45%;
-    --primary-foreground: 0 0% 2%;
-    --secondary: 243 100% 68%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 90%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 156 100% 45%;
-  }
-
   body {
-    font-family: "Geist", sans-serif;
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    font-family: 'Inter', 'DM Sans', sans-serif;
+    background:
+      radial-gradient(ellipse at 12% 0%, var(--app-accent-subtle) 0%, transparent 36%),
+      radial-gradient(ellipse at 88% 15%, var(--app-emerald-glow) 0%, transparent 40%),
+      linear-gradient(180deg, var(--app-canvas) 0%, var(--app-canvas-deep) 55%, var(--app-canvas) 100%);
+    background-attachment: fixed;
+    color: var(--app-text-primary);
     min-height: 100vh;
   }
+}
+
+/* ==========================================================
+   APP HEADER — Evaluación Fiscal 183
+   ========================================================== */
+@layer components {
+
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    width: 100%;
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    background: rgba(15, 12, 22, 0.82);
+    border-bottom: 1px solid var(--app-border);
+    padding: 0.75rem 1.25rem;
+  }
+
+  .light .app-header {
+    background: rgba(245, 242, 238, 0.88);
+    border-bottom-color: var(--app-border);
+  }
+
+  .app-header__inner {
+    max-width: 88rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .app-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    text-decoration: none;
+    min-width: 0;
+    transition: opacity 200ms ease;
+  }
+  .app-header__brand:hover { opacity: 0.85; }
+
+  .app-header__titles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .app-header__eyebrow {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--app-text-accent);
+    line-height: 1;
+  }
+
+  .app-header__name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--app-text-primary);
+    white-space: nowrap;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+  }
+
+  .app-header__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+  }
+
+  .app-header__tagline {
+    font-size: 0.7rem;
+    color: var(--app-text-muted);
+    letter-spacing: 0.06em;
+    margin-right: 0.5rem;
+  }
+
+  /* Language pill toggle */
+  .app-ctrl-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--app-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--app-text-secondary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+  .app-ctrl-pill:hover {
+    background: rgba(205, 127, 50, 0.1);
+    border-color: var(--app-border-strong);
+    color: var(--app-text-accent);
+  }
+
+  .app-ctrl-pill__flag {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  .app-ctrl-pill__label {
+    line-height: 1;
+  }
+
+  /* Theme icon button */
+  .app-ctrl-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.125rem;
+    height: 2.125rem;
+    border-radius: 9999px;
+    border: 1px solid var(--app-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--app-text-secondary);
+    cursor: pointer;
+    transition:
+      background 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .app-ctrl-icon:hover {
+    background: rgba(205, 127, 50, 0.1);
+    border-color: var(--app-border-strong);
+    color: var(--app-text-accent);
+    transform: translateY(-1px);
+  }
+
+  /* ==========================================================
+     HERO LAYOUT
+     ========================================================== */
+
+  .anclora-premium-main {
+    flex: 1;
+  }
+
+  .anclora-hero-shell {
+    max-width: 88rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .anclora-hero-shell {
+      padding: 4rem 2rem 3rem;
+    }
+  }
+
+  .anclora-hero-grid {
+    display: grid;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .anclora-hero-grid {
+      grid-template-columns: 1fr 420px;
+      gap: 4rem;
+      align-items: center;
+    }
+  }
+
+  .anclora-hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Eyebrow pill — acento 183 */
+  .anclora-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    border: 1px solid var(--app-border-strong);
+    background: rgba(205, 127, 50, 0.08);
+    color: var(--app-text-accent);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .anclora-pill--subtle {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--app-border);
+    color: var(--app-text-muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+  }
+
+  /* Hero title */
+  .anclora-hero-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--app-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .anclora-hero-title span {
+    color: var(--app-text-accent);
+  }
+
+  /* Hero subtitle */
+  .anclora-hero-summary {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--app-text-secondary);
+    max-width: 52ch;
+  }
+
+  /* Hero aside panel */
+  .anclora-hero-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: var(--app-canvas-panel);
+    border: 1px solid var(--app-border);
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+    backdrop-filter: blur(16px);
+  }
+
+  /* Metric tiles — 3-col feature grid */
+  .anclora-metric-tile {
+    display: flex;
+    gap: 0.875rem;
+    padding: 1.25rem;
+    border-radius: 1.125rem;
+    border: 1px solid var(--app-border);
+    background: rgba(255, 255, 255, 0.03);
+    transition: background 220ms ease, border-color 220ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .anclora-metric-tile:hover {
+    background: rgba(205, 127, 50, 0.06);
+    border-color: var(--app-border-strong);
+    transform: translateY(-2px);
+  }
+
+  .anclora-metric-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--app-text-accent);
+    margin-bottom: 0.25rem;
+  }
+
+  .anclora-metric-value {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--app-text-secondary);
+  }
+
+  /* Support cards — inside methodology panel */
+  .anclora-support-card {
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid var(--app-border);
+    background: rgba(255, 255, 255, 0.025);
+    transition: background 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .anclora-support-card:hover {
+    background: rgba(205, 127, 50, 0.05);
+    transform: translateY(-1px);
+  }
+
+  .anclora-support-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--app-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .anclora-metric-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .anclora-metric-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* CTA card — right column sticky */
+  .anclora-cta-card {
+    background: var(--app-canvas-panel) !important;
+    border: 1px solid var(--app-border) !important;
+    border-radius: 1.75rem !important;
+    backdrop-filter: blur(20px);
+  }
+
+  .taxnomad-modal {
+    max-height: min(760px, calc(100dvh - 2rem));
+  }
+
+  .taxnomad-modal__body {
+    max-height: calc(100dvh - 20rem);
+    overflow-y: auto;
+  }
+
+  /* Legal footer */
+  .anclora-legal-footer {
+    border-top: 1px solid var(--app-border);
+    background: rgba(15, 12, 22, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 2.5rem 1.5rem;
+    margin-top: auto;
+  }
+
+  @media (max-width: 640px) {
+    .taxnomad-modal {
+      max-height: calc(100dvh - 1.5rem);
+    }
+
+    .taxnomad-modal__body {
+      max-height: calc(100dvh - 17rem);
+    }
+  }
+
+  .light .anclora-legal-footer {
+    background: rgba(237, 233, 226, 0.72);
+    border-top-color: var(--app-border);
+  }
+
+  .light .anclora-metric-tile {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .light .anclora-metric-tile:hover {
+    background: rgba(184, 110, 28, 0.06);
+    border-color: var(--app-border-strong);
+  }
+
+  .light .anclora-support-card {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(0, 0, 0, 0.07);
+  }
+
+  .light .anclora-support-card:hover {
+    background: rgba(184, 110, 28, 0.05);
+  }
+
+  .light .anclora-hero-aside {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .light .anclora-pill {
+    background: rgba(184, 110, 28, 0.08);
+    border-color: rgba(184, 110, 28, 0.28);
+  }
+
+  .light .anclora-pill--subtle {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* ==========================================================
+     PREMIUM MOTION CONTRACT — Lifts sin sweeps
+     ========================================================== */
+
+  .ac-surface-panel,
+  .anclora-metric-tile,
+  .anclora-support-card,
+  .anclora-cta-card {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                background 220ms ease,
+                border-color 220ms ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .anclora-metric-tile:hover,
+    .anclora-support-card:hover,
+    .app-ctrl-icon:hover {
+      transform: none;
+    }
+  }
+
+  /* ==========================================================
+     CALENDAR — Dark premium styling
+     ========================================================== */
+
+  /* Popover that contains calendar */
+  [data-radix-popper-content-wrapper] > [data-radix-popover-content] {
+    background: var(--app-canvas-raised) !important;
+    border: 1px solid var(--app-border) !important;
+    border-radius: 1.25rem !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Day cells */
+  .rdp-day {
+    color: var(--app-text-secondary) !important;
+    border-radius: 9999px !important;
+  }
+
+  .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected) {
+    background: rgba(205, 127, 50, 0.12) !important;
+    color: var(--app-text-primary) !important;
+  }
+
+  .rdp-day_selected {
+    background: var(--app-accent) !important;
+    color: #1a1525 !important;
+    font-weight: 600 !important;
+  }
+
+  .rdp-day_today:not(.rdp-day_selected) {
+    border: 1px solid var(--app-border-strong) !important;
+    color: var(--app-text-accent) !important;
+  }
+
+  .rdp-day_disabled {
+    opacity: 0.25 !important;
+  }
+
+  .rdp-caption_label {
+    color: var(--app-text-primary) !important;
+    font-weight: 600 !important;
+    font-family: 'DM Sans', sans-serif !important;
+  }
+
+  .rdp-head_cell {
+    color: var(--app-text-muted) !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .rdp-nav_button {
+    color: var(--app-text-secondary) !important;
+    border: 1px solid var(--app-border) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-radius: 9999px !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    transition: background 180ms ease, border-color 180ms ease !important;
+  }
+
+  .rdp-nav_button:hover {
+    background: rgba(205, 127, 50, 0.1) !important;
+    border-color: var(--app-border-strong) !important;
+    color: var(--app-text-accent) !important;
+  }
+
+  /* ==========================================================
+     LIGHT MODE — popover/card overrides
+     Radix portals render at body root — use :root.light scope
+     ========================================================== */
+
+  /* Calendar popover */
+  :root.light [data-radix-popper-content-wrapper] > *,
+  .light [data-radix-popper-content-wrapper] > * {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
+    color: #1a1525 !important;
+  }
+
+  :root.light .rdp-day,
+  .light .rdp-day {
+    color: rgba(26, 21, 37, 0.72) !important;
+  }
+
+  :root.light .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected),
+  .light .rdp-day:hover:not(.rdp-day_disabled):not(.rdp-day_selected) {
+    background: rgba(184, 110, 28, 0.1) !important;
+    color: #1a1525 !important;
+  }
+
+  :root.light .rdp-day_selected,
+  .light .rdp-day_selected {
+    background: #b86e1c !important;
+    color: #ffffff !important;
+  }
+
+  :root.light .rdp-day_today:not(.rdp-day_selected),
+  .light .rdp-day_today:not(.rdp-day_selected) {
+    border-color: rgba(184, 110, 28, 0.45) !important;
+    color: #b86e1c !important;
+  }
+
+  :root.light .rdp-caption_label,
+  .light .rdp-caption_label {
+    color: #1a1525 !important;
+  }
+
+  :root.light .rdp-head_cell,
+  .light .rdp-head_cell {
+    color: rgba(26, 21, 37, 0.45) !important;
+  }
+
+  :root.light .rdp-nav_button,
+  .light .rdp-nav_button {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: rgba(26, 21, 37, 0.6) !important;
+  }
+
+  :root.light .rdp-nav_button:hover,
+  .light .rdp-nav_button:hover {
+    background: rgba(184, 110, 28, 0.1) !important;
+    border-color: rgba(184, 110, 28, 0.3) !important;
+    color: #b86e1c !important;
+  }
+
+  /* Select dropdowns */
+  :root.light [data-radix-select-content],
+  .light [data-radix-select-content] {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #1a1525 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :root.light [data-radix-select-item],
+  .light [data-radix-select-item] {
+    color: rgba(26, 21, 37, 0.8) !important;
+  }
+
+  :root.light [data-radix-select-item][data-highlighted],
+  .light [data-radix-select-item][data-highlighted] {
+    background: rgba(184, 110, 28, 0.08) !important;
+    color: #1a1525 !important;
+  }
+
+  :root.light [data-radix-select-item][data-state="checked"],
+  .light [data-radix-select-item][data-state="checked"] {
+    color: #b86e1c !important;
+  }
+
+  /* ==========================================================
+     SELECT DROPDOWN — Dark premium
+     ========================================================== */
+
+  [data-radix-select-content] {
+    background: var(--app-canvas-raised) !important;
+    border: 1px solid var(--app-border) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+    color: var(--app-text-primary) !important;
+  }
+
+  [data-radix-select-item] {
+    color: var(--app-text-secondary) !important;
+    border-radius: 0.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  [data-radix-select-item][data-highlighted] {
+    background: rgba(205, 127, 50, 0.1) !important;
+    color: var(--app-text-primary) !important;
+    outline: none !important;
+  }
+
+  [data-radix-select-item][data-state="checked"] {
+    color: var(--app-text-accent) !important;
+    font-weight: 600 !important;
+  }
+
+  /* ==========================================================
+     GUIDED TOUR BUTTON
+     ========================================================== */
+
+  .guided-tour-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--app-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--app-text-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 180ms ease;
+  }
+
+  .guided-tour-btn:hover {
+    background: rgba(205, 127, 50, 0.08);
+    border-color: var(--app-border-strong);
+    color: var(--app-text-accent);
+  }
+}
+
+/* ==========================================================
+   FISCAL 183 — TOKEN OVERRIDES (unlayered, beats DS semantic.css)
+   These must be plain unlayered CSS placed after all @layer blocks
+   so they win over the DS unlayered :root declarations.
+   ========================================================== */
+
+:root {
+  /* DS base — dark canvas fiscal */
+  --bg:                 #1a1525;
+  --bg-raised:          #1f1b2e;
+  --bg-strong:          #26213a;
+  --fg1:                #f0ede8;
+  --fg2:                rgba(240, 237, 232, 0.65);
+  --fg3:                #CD7F32;
+  --accent:             #CD7F32;
+  --line-soft:          rgba(255, 255, 255, 0.05);
+  --line-strong:        rgba(205, 127, 50, 0.22);
+
+  /* DS semantic aliases (explicit, no cascade from --bg) */
+  --surface-canvas:       #1a1525;
+  --surface-subtle:       rgba(31, 27, 46, 0.54);
+  --surface-panel:        rgba(31, 27, 46, 0.82);
+  --surface-panel-strong: rgba(38, 33, 55, 0.94);
+  --surface-elevated:     rgba(44, 39, 62, 0.98);
+  --border-default:       rgba(255, 255, 255, 0.08);
+  --border-subtle:        rgba(255, 255, 255, 0.05);
+  --border-strong:        rgba(205, 127, 50, 0.22);
+  --text-primary:         #f0ede8;
+  --text-secondary:       rgba(240, 237, 232, 0.65);
+  --text-muted:           rgba(240, 237, 232, 0.38);
+  --text-eyebrow:         #CD7F32;
+  --text-link:            #CD7F32;
+
+  /* App accent — cobre fiscal */
+  --app-accent:        #CD7F32;
+  --app-accent-glow:   rgba(205, 127, 50, 0.18);
+  --app-accent-subtle: rgba(205, 127, 50, 0.08);
+  --app-emerald:       #20b4a0;
+  --app-emerald-glow:  rgba(32, 180, 160, 0.12);
+
+  /* App canvas */
+  --app-canvas:        #1a1525;
+  --app-canvas-deep:   #0f1419;
+  --app-canvas-raised: #1f1b2e;
+  --app-canvas-panel:  rgba(31, 27, 46, 0.92);
+
+  /* App text */
+  --app-text-primary:   #f0ede8;
+  --app-text-secondary: rgba(240, 237, 232, 0.65);
+  --app-text-muted:     rgba(240, 237, 232, 0.38);
+  --app-text-accent:    #CD7F32;
+
+  /* App borders */
+  --app-border:        rgba(255, 255, 255, 0.08);
+  --app-border-strong: rgba(205, 127, 50, 0.22);
+
+  /* shadcn/radix compat (HSL format) */
+  --background:         26 13% 9%;
+  --foreground:         38 20% 92%;
+  --card:               26 13% 11%;
+  --card-foreground:    38 20% 92%;
+  --popover:            26 13% 11%;
+  --popover-foreground: 38 20% 92%;
+  --primary:            30 57% 50%;
+  --primary-foreground: 38 20% 98%;
+  --secondary:          170 62% 42%;
+  --secondary-foreground: 0 0% 100%;
+  --muted:              26 13% 16%;
+  --muted-foreground:   38 10% 58%;
+  --destructive:        0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border:             26 13% 20%;
+  --input:              26 13% 20%;
+  --ring:               30 57% 50%;
+  --radius:             1.5rem;
+}
+
+/* Light mode — unlayered, placed after :root, wins on html.light */
+.light {
+  /* DS base — warm stone canvas */
+  --bg:                 #f5f2ee;
+  --bg-raised:          #ffffff;
+  --bg-strong:          #edeae5;
+  --fg1:                #1a1525;
+  --fg2:                rgba(26, 21, 37, 0.68);
+  --fg3:                #b86e1c;
+  --accent:             #b86e1c;
+  --line-soft:          rgba(0, 0, 0, 0.05);
+  --line-strong:        rgba(184, 110, 28, 0.28);
+
+  --surface-canvas:       #f5f2ee;
+  --surface-subtle:       rgba(255, 255, 255, 0.72);
+  --surface-panel:        #ffffff;
+  --surface-panel-strong: #edeae5;
+  --surface-elevated:     #ffffff;
+  --border-default:       rgba(0, 0, 0, 0.09);
+  --border-subtle:        rgba(0, 0, 0, 0.06);
+  --border-strong:        rgba(184, 110, 28, 0.28);
+  --text-primary:         #1a1525;
+  --text-secondary:       rgba(26, 21, 37, 0.68);
+  --text-muted:           rgba(26, 21, 37, 0.42);
+  --text-eyebrow:         #b86e1c;
+  --text-link:            #b86e1c;
+
+  --app-accent:        #b86e1c;
+  --app-accent-glow:   rgba(184, 110, 28, 0.12);
+  --app-accent-subtle: rgba(184, 110, 28, 0.06);
+  --app-emerald:       #178a78;
+  --app-emerald-glow:  rgba(23, 138, 120, 0.08);
+
+  --app-canvas:        #f5f2ee;
+  --app-canvas-deep:   #ede9e2;
+  --app-canvas-raised: #ffffff;
+  --app-canvas-panel:  rgba(255, 255, 255, 0.96);
+
+  --app-text-primary:   #1a1525;
+  --app-text-secondary: rgba(26, 21, 37, 0.68);
+  --app-text-muted:     rgba(26, 21, 37, 0.42);
+  --app-text-accent:    #b86e1c;
+
+  --app-border:        rgba(0, 0, 0, 0.09);
+  --app-border-strong: rgba(184, 110, 28, 0.28);
+
+  /* shadcn/radix compat (HSL format) */
+  --background:         40 20% 95%;
+  --foreground:         26 20% 12%;
+  --card:               0 0% 100%;
+  --card-foreground:    26 20% 12%;
+  --popover:            0 0% 100%;
+  --popover-foreground: 26 20% 12%;
+  --primary:            28 75% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary:          170 62% 36%;
+  --secondary-foreground: 0 0% 100%;
+  --muted:              40 15% 90%;
+  --muted-foreground:   26 10% 46%;
+  --destructive:        0 84% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --border:             40 10% 85%;
+  --input:              40 10% 85%;
+  --ring:               28 75% 44%;
 }

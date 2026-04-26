@@ -18,7 +18,7 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="border-b border-[var(--border-subtle)] pb-4">
-        <CardTitle className="text-xl font-serif font-light flex items-center gap-3">
+        <CardTitle className="text-xl font-display font-light flex items-center gap-3">
           <CalendarDays className="w-5 h-5 text-primary" />
           {t('rangeList.title')}
         </CardTitle>

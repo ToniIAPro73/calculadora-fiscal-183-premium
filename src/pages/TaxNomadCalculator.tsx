@@ -112,7 +112,7 @@ const TaxNomadCalculator: React.FC = () => {
               <div className="anclora-hero-copy">
                 <div className="anclora-pill">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>{language === 'es' ? 'Calculadora privada lista para auditoría' : 'Private audit-ready residency calculator'}</span>
+                  <span>{language === 'es' ? 'EVALUACIÓN FISCAL' : 'FISCAL ASSESSMENT'}</span>
                 </div>
                 <h1 className="anclora-hero-title">
                   {t('calculator.heroTitlePrefix')} <span>{t('calculator.heroTitleSuffix')}</span>
@@ -149,12 +149,12 @@ const TaxNomadCalculator: React.FC = () => {
 
             <div className="anclora-hero-aside">
               <div className="anclora-pill anclora-pill--subtle">
-                <span>{language === 'es' ? 'Contexto del ejercicio fiscal' : 'Fiscal year context'}</span>
+                <span>{language === 'es' ? 'EJERCICIO FISCAL' : 'FISCAL YEAR'}</span>
               </div>
               <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
               <p className="text-sm leading-7 text-[var(--text-secondary)]">
                 {language === 'es'
-                  ? 'Trabaja cada ejercicio por separado, limpia los solapes y conserva una lectura clara del umbral de residencia antes de emitir el informe.'
+                  ? 'Trabaja por ejercicio, elimina solapes y mantén una lectura clara del umbral de residencia antes de emitir el informe.'
                   : 'Work one fiscal year at a time, remove overlaps, and keep a clear reading of your residency threshold before issuing the report.'}
               </p>
             </div>
@@ -167,12 +167,14 @@ const TaxNomadCalculator: React.FC = () => {
           <div className="lg:col-span-8 space-y-12">
             <div className="ac-surface-panel ac-surface-panel--strong">
               <div className="ac-surface-panel__header">
-                <p className="ac-surface-panel__eyebrow">Methodology</p>
-                <h2 className="ac-surface-panel__title">Private residency control workflow</h2>
+                <p className="ac-surface-panel__eyebrow">{language === 'es' ? 'METODOLOGÍA' : 'METHODOLOGY'}</p>
+                <h2 className="ac-surface-panel__title">{language === 'es' ? 'Flujo de evaluación de residencia fiscal' : 'Fiscal residency assessment workflow'}</h2>
               </div>
               <div className="ac-surface-panel__body">
                 <p>
-                  Track physical presence, avoid duplicate day counting, and keep a premium-grade record ready for compliance review whenever you need to justify your position.
+                  {language === 'es'
+                    ? 'Registra tu presencia física, evita el conteo duplicado y mantén un registro listo para revisión fiscal cuando necesites justificar tu posición.'
+                    : 'Track physical presence, avoid duplicate day counting, and keep a verified record ready for compliance review whenever you need to justify your position.'}
                 </p>
                 <div className="anclora-metric-grid">
                   <div className="anclora-support-card">
@@ -263,7 +265,7 @@ const TaxNomadCalculator: React.FC = () => {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-4 md:flex-row md:px-6">
            <div className="flex items-center gap-4">
               <img src={logo} alt="Anclora Advisory" className="h-16 w-16 rounded-full border border-[var(--border-default)]" />
-              <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
+              <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 Anclora. All rights reserved.'}</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
               <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.privacy')}</Link>

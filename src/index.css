@@ -1,4 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Allura&display=swap');
+/* ===================================================
+   ANCLORA DESIGN SYSTEM — Import Order (canonical)
+   1. tokens      →  core → semantic
+   2. foundations →  typography → primitives
+   3. taxonomy    →  tier → domain → archetype → role → clusters
+   4. themes
+   5. components
+   6. tailwindcss →  LAST
+   =================================================== */
+
+@import "@anclora/design-system/tokens/core.css";
+@import "@anclora/design-system/tokens/semantic.css";
+
+@import "@anclora/design-system/foundations/typography.css";
+@import "@anclora/design-system/foundations/primitives.css";
+
+@import "@anclora/design-system/taxonomy/tier.css";
+@import "@anclora/design-system/taxonomy/domain.css";
+@import "@anclora/design-system/taxonomy/archetype.css";
+@import "@anclora/design-system/taxonomy/role.css";
+@import "@anclora/design-system/taxonomy/clusters.css";
+
+@import "@anclora/design-system/themes/product.css";
 
 @import "@anclora/design-system/components/button.css";
 @import "@anclora/design-system/components/surface-panel.css";
@@ -30,77 +52,124 @@
 @import "@anclora/design-system/components/text-editor.css";
 @import "@anclora/design-system/components/export-suite.css";
 @import "@anclora/design-system/components/topbar.css";
-@import "@anclora/design-system/tokens/core.css";
-@import "@anclora/design-system/tokens/semantic.css";
-@import "@anclora/design-system/taxonomy/tier.css";
-@import "@anclora/design-system/taxonomy/domain.css";
-@import "@anclora/design-system/taxonomy/archetype.css";
-@import "@anclora/design-system/taxonomy/role.css";
-@import "@anclora/design-system/taxonomy/clusters.css";
-@import "@anclora/design-system/themes/product.css";
-@import "@anclora/design-system/foundations/typography.css";
-@import "@anclora/design-system/foundations/primitives.css";
 
 @import "tailwindcss";
 
 @layer base {
   :root {
+    /* === Anclora Premium — Paleta Cobre/Slate === */
+    --color-accent-primary: #CD7F32;
+    --color-accent-secondary: #20b4a0;
+    --color-canvas-base: #1a1525;
+    --color-canvas-alt: #0f1419;
+    --color-text-primary: #f7f4ee;
+
+    /* Typography — Premium stack */
+    --font-display: 'DM Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Semantic overrides for shadcn/radix compatibility */
     --color-success: #00E599;
     --color-success-foreground: #050505;
     --color-warning: #f59e0b;
     --color-warning-foreground: #1e1b4b;
     --color-destructive: #dc2626;
     --color-destructive-foreground: #ffffff;
-    --color-indigo-acc: #635BFF;
-    --font-serif: "Playfair Display", Georgia, serif;
-    --background: 0 0% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 156 100% 40%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 243 100% 68%;
+
+    /* Light-mode canvas (fallback for unstyled states) */
+    --background: 26 13% 10%;
+    --foreground: 40 30% 95%;
+    --card: 26 13% 13%;
+    --card-foreground: 40 30% 95%;
+    --popover: 26 13% 13%;
+    --popover-foreground: 40 30% 95%;
+    --primary: 30 65% 50%;
+    --primary-foreground: 40 30% 98%;
+    --secondary: 174 70% 42%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 26 13% 18%;
+    --muted-foreground: 40 10% 65%;
+    --accent: 30 65% 50%;
+    --accent-foreground: 40 30% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 156 100% 40%;
-    --radius: 1rem;
+    --border: 26 13% 22%;
+    --input: 26 13% 22%;
+    --ring: 30 65% 50%;
+    --radius: 1.5rem;
   }
 
   .dark {
-    --background: 0 0% 2%;
-    --foreground: 0 0% 90%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 90%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 90%;
-    --primary: 156 100% 45%;
-    --primary-foreground: 0 0% 2%;
-    --secondary: 243 100% 68%;
+    --background: 26 13% 8%;
+    --foreground: 40 30% 95%;
+    --card: 26 13% 10%;
+    --card-foreground: 40 30% 95%;
+    --popover: 26 13% 10%;
+    --popover-foreground: 40 30% 95%;
+    --primary: 30 65% 50%;
+    --primary-foreground: 40 30% 98%;
+    --secondary: 174 70% 42%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 90%;
+    --muted: 26 13% 15%;
+    --muted-foreground: 40 10% 60%;
+    --accent: 30 65% 50%;
+    --accent-foreground: 40 30% 98%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 156 100% 45%;
+    --border: 26 13% 20%;
+    --input: 26 13% 20%;
+    --ring: 30 65% 50%;
   }
 
   body {
-    font-family: "Geist", sans-serif;
-    background-color: hsl(var(--background));
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    /* Premium Anclora canvas: slate/navy con glow sutil cobre/emerald */
+    background:
+      radial-gradient(circle at 15% 10%, rgba(205, 127, 50, 0.06) 0%, transparent 28%),
+      radial-gradient(circle at 85% 20%, rgba(32, 180, 160, 0.06) 0%, transparent 35%),
+      linear-gradient(180deg, #1a1525 0%, #0f1419 48%, #1a1525 100%);
+    background-attachment: fixed;
     color: hsl(var(--foreground));
     min-height: 100vh;
+  }
+
+  /* Premium motion contract: lifts sin sweeps */
+  .ac-btn,
+  button.ac-btn,
+  [class*="anclora-btn"] {
+    transition:
+      transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ac-btn:hover:not(:disabled),
+  [class*="anclora-btn"]:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+  }
+
+  .ac-surface-panel,
+  .anclora-metric-tile,
+  .anclora-support-card,
+  .anclora-cta-card {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ac-surface-panel:hover,
+  .anclora-metric-tile:hover,
+  .anclora-support-card:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ac-btn:hover,
+    [class*="anclora-btn"]:hover,
+    .ac-surface-panel:hover,
+    .anclora-metric-tile:hover,
+    .anclora-support-card:hover {
+      transform: none;
+    }
   }
 }

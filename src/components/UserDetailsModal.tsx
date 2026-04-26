@@ -26,34 +26,35 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] rounded-3xl overflow-hidden glass border-none">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <div className="mx-auto bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+          <p className="ac-modal__meta text-center">Private report preparation</p>
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_82%,transparent)]">
             <User className="text-primary w-8 h-8" />
           </div>
-          <DialogTitle className="text-2xl font-serif font-bold text-center">
+          <DialogTitle className="text-center">
             {t('userDetails.title')}
           </DialogTitle>
-          <DialogDescription className="text-center italic opacity-70">
+          <DialogDescription className="text-center italic">
             {t('userDetails.description')}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+        <div className="ac-modal__body space-y-4 py-2">
+          <div className="ac-form-field">
+            <Label className="ml-1">
               {t('userDetails.nameLabel')}
             </Label>
             <Input
               placeholder="e.g. Alex Rivera"
               value={userData.name}
               onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-              className="rounded-2xl h-12 border-white/5 bg-white/5 focus:bg-white/10 transition-all placeholder:opacity-20"
+              className="placeholder:opacity-40"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+          <div className="ac-form-field">
+            <Label className="ml-1">
               {t('userDetails.emailLabel') || 'Email Address'}
             </Label>
             <Input
@@ -61,12 +62,12 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
               placeholder="alex@example.com"
               value={userData.email}
               onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-              className="rounded-2xl h-12 border-white/5 bg-white/5 focus:bg-white/10 transition-all placeholder:opacity-20"
+              className="placeholder:opacity-40"
             />
           </div>
           
-          <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+          <div className="ac-form-field">
+            <Label className="ml-1">
               {t('userDetails.documentLabel')}
             </Label>
             <div className="grid grid-cols-2 gap-3">
@@ -78,10 +79,10 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
                     type="button"
                     onClick={() => setUserData({ ...userData, documentType: option.value })}
                     className={cn(
-                      "flex items-center justify-center gap-2 h-12 rounded-2xl border transition-all font-bold text-[10px] uppercase tracking-widest",
+                      "flex min-h-[3.25rem] items-center justify-center gap-2 rounded-[18px] border transition-all font-bold text-[10px] uppercase tracking-widest",
                       isSelected
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-white/5 bg-white/5 text-white/40 hover:bg-white/10"
+                        ? "border-[var(--accent)] bg-[color-mix(in_srgb,var(--accent)_14%,transparent)] text-[var(--accent)]"
+                        : "border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-subtle)_85%,transparent)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
                     )}
                   >
                     {isSelected && <Check className="h-3 w-3" />}
@@ -92,19 +93,19 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase opacity-70 tracking-[0.2em] ml-1">
+          <div className="ac-form-field">
+            <Label className="ml-1">
               {userData.documentType === 'nie' ? t('userDetails.documentTypeNie') : t('userDetails.documentTypePassport')} {t('userDetails.number') || 'NUMBER'}
             </Label>
             <Input
               placeholder={t('userDetails.taxIdPlaceholder')}
               value={userData.taxId}
               onChange={(e) => setUserData({ ...userData, taxId: e.target.value })}
-              className="rounded-2xl h-12 border-white/5 bg-white/5 focus:bg-white/10 transition-all placeholder:opacity-20"
+              className="placeholder:opacity-40"
             />
           </div>
           
-          <p className="text-[9px] opacity-60 text-center px-4 leading-relaxed font-light">
+          <p className="text-[9px] text-center px-4 font-light leading-relaxed text-[var(--text-muted)]">
             {t('userDetails.note')}
           </p>
         </div>
@@ -113,7 +114,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           <Button
             onClick={onConfirm}
             disabled={isLoading || !userData.name || !userData.taxId || !userData.email}
-            className="w-full h-14 rounded-2xl font-bold text-sm tracking-widest shadow-xl transition-all gap-3 bg-primary hover:bg-primary/80"
+            className="w-full min-h-[3.75rem] rounded-[22px] text-sm shadow-xl transition-all gap-3"
           >
             {isLoading ? <span className="animate-pulse">REDIRECTING...</span> : (
               <>

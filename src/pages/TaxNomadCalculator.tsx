@@ -16,7 +16,7 @@ import { getCurrentYear } from '@/lib/fiscalYear';
 import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileDown, ShieldCheck, Download, ExternalLink } from 'lucide-react';
+import { FileDown, ShieldCheck, Download, Sparkles, FileCheck2, CalendarRange, BadgeEuro, ScanSearch } from 'lucide-react';
 import logo from '@/assets/logo.webp';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
@@ -105,22 +105,89 @@ const TaxNomadCalculator: React.FC = () => {
       <Header />
       <OnboardingTutorial />
       
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 md:py-16">
-        <div className="grid lg:grid-cols-12 gap-12">
+      <main className="anclora-ultra-main">
+        <section className="anclora-hero-shell">
+          <div className="anclora-hero-grid">
+            <div className="space-y-6">
+              <div className="anclora-hero-copy">
+                <div className="anclora-pill">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  <span>{language === 'es' ? 'Calculadora privada lista para auditoría' : 'Private audit-ready residency calculator'}</span>
+                </div>
+                <h1 className="anclora-hero-title">
+                  {t('calculator.heroTitlePrefix')} <span>{t('calculator.heroTitleSuffix')}</span>
+                </h1>
+                <p className="anclora-hero-summary">
+                  {t('calculator.heroSubtitle')}
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <article className="anclora-metric-tile">
+                  <CalendarRange className="h-5 w-5 text-[var(--accent)]" />
+                  <div>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Control temporal' : 'Timeline control'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Registra cada estancia sin perder precisión fiscal entre periodos.' : 'Register each stay period without losing fiscal accuracy across periods.'}</p>
+                  </div>
+                </article>
+                <article className="anclora-metric-tile">
+                  <ScanSearch className="h-5 w-5 text-[var(--accent)]" />
+                  <div>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Lectura inmediata' : 'Instant reading'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Detecta enseguida zona segura, presión fiscal y riesgo de exceso.' : 'See safe zone, fiscal pressure, and over-limit risk at a glance.'}</p>
+                  </div>
+                </article>
+                <article className="anclora-metric-tile">
+                  <BadgeEuro className="h-5 w-5 text-[var(--accent)]" />
+                  <div>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Evidencia preparada' : 'Evidence ready'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Genera un informe limpio para revisión propia, asesoría o compliance.' : 'Generate a polished report for self-review, advisors, or compliance.'}</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div className="anclora-hero-aside">
+              <div className="anclora-pill anclora-pill--subtle">
+                <span>{language === 'es' ? 'Contexto del ejercicio fiscal' : 'Fiscal year context'}</span>
+              </div>
+              <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
+              <p className="text-sm leading-7 text-[var(--text-secondary)]">
+                {language === 'es'
+                  ? 'Trabaja cada ejercicio por separado, limpia los solapes y conserva una lectura clara del umbral de residencia antes de emitir el informe.'
+                  : 'Work one fiscal year at a time, remove overlaps, and keep a clear reading of your residency threshold before issuing the report.'}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 lg:grid-cols-12 lg:px-6">
 
           {/* Left Column: Input & Management */}
           <div className="lg:col-span-8 space-y-12">
-            <div className="space-y-6">
-              <div className="flex items-end justify-between gap-4">
-                <div className="flex-1">
-                  <h1 className="text-5xl md:text-7xl font-light tracking-tighter leading-none font-serif">
-                    {t('calculator.heroTitlePrefix')} <span className="neon-accent italic">{t('calculator.heroTitleSuffix')}</span>
-                  </h1>
-                  <p className="text-xl opacity-70 font-light max-w-2xl leading-relaxed mt-4">
-                    {t('calculator.heroSubtitle')}
-                  </p>
+            <div className="ac-surface-panel ac-surface-panel--strong">
+              <div className="ac-surface-panel__header">
+                <p className="ac-surface-panel__eyebrow">Methodology</p>
+                <h2 className="ac-surface-panel__title">Private residency control workflow</h2>
+              </div>
+              <div className="ac-surface-panel__body">
+                <p>
+                  Track physical presence, avoid duplicate day counting, and keep a premium-grade record ready for compliance review whenever you need to justify your position.
+                </p>
+                <div className="anclora-metric-grid">
+                  <div className="anclora-support-card">
+                    <span className="anclora-support-label">Date integrity</span>
+                    <strong>Overlap-aware counting across all periods</strong>
+                  </div>
+                  <div className="anclora-support-card">
+                    <span className="anclora-support-label">Decision support</span>
+                    <strong>Fast reading of safe zone, pressure zone and over-limit risk</strong>
+                  </div>
+                  <div className="anclora-support-card">
+                    <span className="anclora-support-label">Output</span>
+                    <strong>Structured PDF evidence for advisory or personal review</strong>
+                  </div>
                 </div>
-                <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
               </div>
             </div>
 
@@ -132,12 +199,12 @@ const TaxNomadCalculator: React.FC = () => {
 
             <section className="space-y-8 pt-8">
               <div className="flex items-center gap-4">
-                <div className="h-[1px] flex-1 bg-border/20"></div>
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40 flex items-center gap-2">
+                <div className="h-[1px] flex-1 bg-[var(--border-subtle)]"></div>
+                <h3 className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-eyebrow)]">
                   <ShieldCheck className="w-3 h-3 text-primary" />
                   {t('calculator.standards')}
                 </h3>
-                <div className="h-[1px] flex-1 bg-border/20"></div>
+                <div className="h-[1px] flex-1 bg-[var(--border-subtle)]"></div>
               </div>
 
               <DataAuthoritySection />
@@ -149,8 +216,8 @@ const TaxNomadCalculator: React.FC = () => {
             <SummaryCard totalDays={totalDays} />
 
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-[42px] blur-2xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
-              <Card className="relative rounded-[40px] border-white/5 glass overflow-hidden shadow-none">
+              <div className="absolute -inset-2 rounded-[42px] bg-[radial-gradient(circle_at_top,color-mix(in_srgb,var(--domain-glow)_30%,transparent),transparent_60%)] blur-2xl opacity-70"></div>
+              <Card className="anclora-cta-card relative overflow-hidden">
                 <div className="p-8 space-y-12">
                   <ProgressBar totalDays={totalDays} />
                   
@@ -158,7 +225,7 @@ const TaxNomadCalculator: React.FC = () => {
                     <Button
                       disabled={totalDays === 0}
                       onClick={() => setIsUserDetailsModalOpen(true)}
-                      className="w-full h-20 rounded-3xl text-sm tracking-[0.2em] font-bold gap-3 shadow-2xl bg-primary hover:bg-primary/80 transition-all active:scale-95"
+                      className="w-full min-h-[5rem] rounded-[26px] text-sm gap-3 shadow-2xl active:scale-95"
                     >
                       <FileDown className="w-5 h-5" />
                       {t('calculator.generateReport')}
@@ -167,7 +234,7 @@ const TaxNomadCalculator: React.FC = () => {
                     <Button 
                       variant="ghost" 
                       onClick={handleViewExample}
-                      className="w-full h-14 rounded-2xl font-medium opacity-40 hover:opacity-100 hover:bg-accent transition-all gap-2 text-xs uppercase tracking-widest"
+                      className="w-full min-h-[3.75rem] rounded-[22px] text-xs font-medium opacity-75 transition-all gap-2 hover:opacity-100"
                     >
                       <Download className="w-3 h-3" />
                       {t('actions.viewExample')}
@@ -175,11 +242,11 @@ const TaxNomadCalculator: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col items-center gap-3 pt-4">
-                    <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent border border-border text-primary text-[9px] font-bold uppercase tracking-[0.2em]">
+                    <div className="flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">
                       <ShieldCheck className="w-3 h-3" />
                       {t('calculator.verificationComplete')}
                     </div>
-                    <p className="text-[10px] opacity-60 font-light text-center px-4 leading-relaxed">
+                    <p className="px-4 text-center text-[10px] font-light leading-relaxed text-[var(--text-muted)]">
                       {t('calculator.complianceNote') || 'Official reporting standards for Spanish Agencia Tributaria & EU Compliance.'}
                     </p>
                   </div>
@@ -192,16 +259,16 @@ const TaxNomadCalculator: React.FC = () => {
         </div>
       </main>
 
-      <footer className="border-t border-border/20 py-16 mt-20">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
+      <footer className="anclora-legal-footer">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-4 md:flex-row md:px-6">
            <div className="flex items-center gap-4">
-              <img src={logo} alt="TaxNomad" className="w-16 h-16 rounded" />
-              <span className="font-light text-xs tracking-widest uppercase opacity-85">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
+              <img src={logo} alt="Anclora Advisory" className="h-16 w-16 rounded-full border border-[var(--border-default)]" />
+              <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 TaxNomad. All rights reserved.'}</span>
            </div>
-           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] opacity-85">
-              <Link to="/privacy" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.terms')}</Link>
-              <a href="mailto:hola@regla183.com" className="hover:text-primary transition-colors cursor-pointer hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
+           <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+              <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.privacy')}</Link>
+              <Link to="/terms" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.terms')}</Link>
+              <a href="mailto:hola@regla183.com" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
            </div>
         </div>
       </footer>

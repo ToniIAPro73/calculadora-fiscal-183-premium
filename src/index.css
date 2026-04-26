@@ -1,26 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&family=Allura&display=swap');
 
-@theme {
-  --color-success: #00E599;
-  --color-success-foreground: #050505;
-  --color-warning: #f59e0b;
-  --color-warning-foreground: #1e1b4b;
-  --color-destructive: #dc2626;
-  --color-destructive-foreground: #ffffff;
-  --color-indigo-acc: #635BFF;
-  --font-serif: "Playfair Display", Georgia, serif;
-}
+@import "@anclora/design-system/components/button.css";
+@import "@anclora/design-system/components/surface-panel.css";
+@import "@anclora/design-system/components/app-tile.css";
+@import "@anclora/design-system/components/metric-card.css";
+@import "@anclora/design-system/components/section-heading.css";
+@import "@anclora/design-system/components/language-switcher.css";
+@import "@anclora/design-system/components/theme-switcher.css";
+@import "@anclora/design-system/components/form-field.css";
+@import "@anclora/design-system/components/sidebar-nav.css";
+@import "@anclora/design-system/components/chapter-rail.css";
+@import "@anclora/design-system/components/template-catalog.css";
+@import "@anclora/design-system/components/stepper.css";
+@import "@anclora/design-system/components/tabs.css";
+@import "@anclora/design-system/components/breadcrumb.css";
+@import "@anclora/design-system/components/subnav.css";
+@import "@anclora/design-system/components/stat-strip.css";
+@import "@anclora/design-system/components/data-table.css";
+@import "@anclora/design-system/components/empty-state.css";
+@import "@anclora/design-system/components/toast.css";
+@import "@anclora/design-system/components/modal.css";
+@import "@anclora/design-system/components/drawer.css";
+@import "@anclora/design-system/components/preview-overlay.css";
+@import "@anclora/design-system/components/preview-controls.css";
+@import "@anclora/design-system/components/workspace-stage.css";
+@import "@anclora/design-system/components/workflow-shell.css";
+@import "@anclora/design-system/components/editor-studio.css";
+@import "@anclora/design-system/components/editor-shell.css";
+@import "@anclora/design-system/components/text-editor.css";
+@import "@anclora/design-system/components/export-suite.css";
+@import "@anclora/design-system/components/topbar.css";
+@import "@anclora/design-system/tokens/core.css";
+@import "@anclora/design-system/tokens/semantic.css";
+@import "@anclora/design-system/taxonomy/tier.css";
+@import "@anclora/design-system/taxonomy/domain.css";
+@import "@anclora/design-system/taxonomy/archetype.css";
+@import "@anclora/design-system/taxonomy/role.css";
+@import "@anclora/design-system/taxonomy/clusters.css";
+@import "@anclora/design-system/themes/product.css";
+@import "@anclora/design-system/foundations/typography.css";
+@import "@anclora/design-system/foundations/primitives.css";
+
+@import "tailwindcss";
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* #fafafa */
+    --color-success: #00E599;
+    --color-success-foreground: #050505;
+    --color-warning: #f59e0b;
+    --color-warning-foreground: #1e1b4b;
+    --color-destructive: #dc2626;
+    --color-destructive-foreground: #ffffff;
+    --color-indigo-acc: #635BFF;
+    --font-serif: "Playfair Display", Georgia, serif;
+    --background: 0 0% 98%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 156 100% 40%; /* Slightly darker emerald for light */
+    --primary: 156 100% 40%;
     --primary-foreground: 0 0% 100%;
     --secondary: 243 100% 68%;
     --secondary-foreground: 0 0% 100%;
@@ -35,10 +74,10 @@
     --ring: 156 100% 40%;
     --radius: 1rem;
   }
-  
+
   .dark {
-    --background: 0 0% 2%; /* #050505 */
-    --foreground: 0 0% 90%; /* #E5E5E5 */
+    --background: 0 0% 2%;
+    --foreground: 0 0% 90%;
     --card: 0 0% 5%;
     --card-foreground: 0 0% 90%;
     --popover: 0 0% 5%;
@@ -63,83 +102,5 @@
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .dark body {
-    background-image: linear-gradient(135deg, #111 0%, #050505 100%);
-  }
-
-  button,
-  a,
-  input[type="button"],
-  input[type="submit"],
-  input[type="reset"],
-  input[type="checkbox"],
-  input[type="radio"],
-  select,
-  [role="button"],
-  [role="tab"],
-  .cursor-pointer {
-    cursor: pointer;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="date"],
-  textarea {
-    cursor: text;
-  }
-
-  button:disabled,
-  input:disabled,
-  select:disabled,
-  [disabled] {
-    cursor: not-allowed;
-  }
-}
-
-@layer components {
-  .glass {
-    background-color: hsl(var(--card) / 0.95);
-    border: 1px solid hsl(var(--border) / 0.5);
-    backdrop-filter: blur(10px);
-  }
-
-  .dark .glass {
-    background-color: rgba(15, 15, 15, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-  }
-
-  .premium-gradient {
-    background-color: hsl(var(--background));
-  }
-
-  .dark .premium-gradient {
-    background: linear-gradient(135deg, #111 0%, #050505 100%);
-  }
-
-  .neon-accent {
-    color: hsl(var(--primary));
-  }
-
-  .stripe-accent {
-    color: hsl(var(--secondary));
-  }
-}
-
-@layer utilities {
-  .animate-shimmer {
-    animation: shimmer 2s infinite linear;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    background-size: 200% 100%;
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
   }
 }

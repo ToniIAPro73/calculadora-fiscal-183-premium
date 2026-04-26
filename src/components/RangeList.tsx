@@ -16,8 +16,8 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
   const { t } = useLanguage();
 
   return (
-    <Card className="glass border-none rounded-[32px] overflow-hidden">
-      <CardHeader className="pb-4 border-b border-border/10">
+    <Card className="overflow-hidden">
+      <CardHeader className="border-b border-[var(--border-subtle)] pb-4">
         <CardTitle className="text-xl font-serif font-light flex items-center gap-3">
           <CalendarDays className="w-5 h-5 text-primary" />
           {t('rangeList.title')}
@@ -26,28 +26,28 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
       <CardContent className="p-0">
         <TooltipProvider>
           {ranges.length === 0 ? (
-            <div className="p-12 text-center opacity-60 text-xs uppercase tracking-widest leading-loose">
+            <div className="p-12 text-center text-xs uppercase tracking-widest leading-loose text-[var(--text-muted)]">
               {t('rangeList.empty')}
             </div>
           ) : (
-            <div className="divide-y divide-border/10 max-h-[400px] overflow-y-auto custom-scrollbar">
+            <div className="custom-scrollbar max-h-[400px] divide-y divide-[var(--border-subtle)] overflow-y-auto">
               {ranges.map((range, index) => (
-                <div key={index} className="flex items-center justify-between p-6 hover:bg-accent/40 transition-all group">
+                <div key={index} className="group flex items-center justify-between p-6 transition-all hover:bg-[color-mix(in_srgb,var(--surface-subtle)_85%,transparent)]">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-3 font-light text-sm tracking-wide">
-                      <span className="opacity-80">{format(range.start, 'MMM d, yyyy')}</span>
-                      <span className="opacity-60">—</span>
-                      <span className="opacity-80">{format(range.end, 'MMM d, yyyy')}</span>
+                      <span className="text-[var(--text-primary)]">{format(range.start, 'MMM d, yyyy')}</span>
+                      <span className="text-[var(--text-muted)]">—</span>
+                      <span className="text-[var(--text-primary)]">{format(range.end, 'MMM d, yyyy')}</span>
                       {range.overlapDays > 0 && (
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <AlertTriangle className="w-4 h-4 text-amber-500/60 cursor-help" />
                           </TooltipTrigger>
-                          <TooltipContent className="glass border-border text-xs">{t('rangeList.overlapTooltip')}</TooltipContent>
+                          <TooltipContent className="border-[var(--border-default)] bg-[var(--surface-panel)] text-xs">{t('rangeList.overlapTooltip')}</TooltipContent>
                         </Tooltip>
                       )}
                     </div>
-                    <div className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-60 flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-muted)]">
                       <span className="text-primary">{range.days} {range.days === 1 ? t('dateSelector.day') : t('dateSelector.days')}</span>
                       {range.overlapDays > 0 && (
                         <span className="text-red-500/50">({range.overlapDays} overlapped)</span>
@@ -58,7 +58,7 @@ const RangeList: React.FC<RangeListProps> = ({ ranges, onRemoveRange }) => {
                     variant="ghost"
                     size="icon"
                     onClick={() => onRemoveRange(index)}
-                    className="h-10 w-10 opacity-20 hover:text-red-400 hover:opacity-100 hover:bg-red-400/10 rounded-full transition-all group-hover:opacity-40"
+                    className="h-10 w-10 opacity-20 transition-all group-hover:opacity-40 hover:bg-red-400/10 hover:text-red-400 hover:opacity-100"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

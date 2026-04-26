@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Loader2, Lock, AlertCircle } from 'lucide-react';
@@ -77,62 +77,66 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">
+          <p className="ac-modal__meta">Secure checkout</p>
+          <DialogTitle>
             {t('payment.title') || 'Complete Your Purchase'}
           </DialogTitle>
+          <DialogDescription>
+            Stripe-secured report delivery within the adopted Anclora ultra premium surface.
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 py-6">
+        <div className="ac-modal__body space-y-6 py-2">
           {/* Order Summary */}
-          <Card className="p-4 bg-muted/50 border border-border/20">
+          <Card className="ac-surface-panel--subtle p-4">
             <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="opacity-60">{t('payment.item') || 'Premium Report'}</span>
-                <span className="font-semibold">€9.99</span>
+                <span className="text-[var(--text-muted)]">{t('payment.item') || 'Premium Report'}</span>
+                <span className="font-semibold text-[var(--text-primary)]">€9.99</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="opacity-60">{t('payment.days') || 'Total Days'}</span>
-                <span className="font-semibold">{totalDays}</span>
+                <span className="text-[var(--text-muted)]">{t('payment.days') || 'Total Days'}</span>
+                <span className="font-semibold text-[var(--text-primary)]">{totalDays}</span>
               </div>
-              <div className="h-[1px] bg-border/20"></div>
+              <div className="h-[1px] bg-[var(--border-subtle)]"></div>
               <div className="flex justify-between items-center">
-                <span className="font-semibold">{t('payment.total') || 'Total'}</span>
+                <span className="font-semibold text-[var(--text-primary)]">{t('payment.total') || 'Total'}</span>
                 <span className="text-xl font-bold text-primary">€9.99</span>
               </div>
             </div>
           </Card>
 
           {/* User Info Display */}
-          <Card className="p-4 bg-muted/30 border border-border/20">
+          <Card className="ac-surface-panel--subtle p-4">
             <div className="space-y-2 text-sm">
               <div>
-                <p className="opacity-60 text-xs uppercase tracking-widest mb-1">
+                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--text-muted)]">
                   {t('labels.name') || 'Name'}
                 </p>
-                <p className="font-medium">{userData.name || 'N/A'}</p>
+                <p className="font-medium text-[var(--text-primary)]">{userData.name || 'N/A'}</p>
               </div>
               <div>
-                <p className="opacity-60 text-xs uppercase tracking-widest mb-1">
+                <p className="mb-1 text-xs uppercase tracking-widest text-[var(--text-muted)]">
                   {t('labels.taxId') || 'Tax ID / NIE'}
                 </p>
-                <p className="font-medium">{userData.taxId || 'N/A'}</p>
+                <p className="font-medium text-[var(--text-primary)]">{userData.taxId || 'N/A'}</p>
               </div>
             </div>
           </Card>
 
           {/* Security Info */}
-          <div className="flex items-start gap-3 p-4 rounded-lg bg-primary/5 border border-primary/10">
+          <div className="flex items-start gap-3 rounded-[20px] border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] p-4">
             <Lock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-            <p className="text-xs opacity-70 leading-relaxed">
+            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
               {t('payment.secureNote') ||
                 'Payments are securely processed by Stripe. Your card information is never stored on our servers.'}
             </p>
           </div>
 
           {/* VAT Disclaimer */}
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-50/30 border border-amber-200/20">
+          <div className="flex items-start gap-3 rounded-[18px] border border-amber-200/30 bg-amber-50/20 p-3">
             <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-            <p className="text-xs opacity-70 leading-relaxed">
+            <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
               {t('payment.vatNote') || 'Price includes 21% VAT. EU consumers will receive a VAT invoice.'}
             </p>
           </div>
@@ -144,14 +148,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             variant="ghost"
             onClick={onClose}
             disabled={isProcessing || isLoading}
-            className="flex-1"
+            className="flex-1 rounded-[22px]"
           >
             {t('actions.cancel') || 'Cancel'}
           </Button>
           <Button
             onClick={handleInitiatePayment}
             disabled={isProcessing || isLoading}
-            className="flex-1 gap-2"
+            className="flex-1 gap-2 rounded-[22px]"
           >
             {isProcessing || isLoading ? (
               <>

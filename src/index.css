@@ -107,6 +107,48 @@
     --radius:             1.5rem;
   }
 
+  /* ── LIGHT MODE overrides ── */
+  .light {
+    --app-accent:        #b86e1c;
+    --app-accent-glow:   rgba(184, 110, 28, 0.12);
+    --app-accent-subtle: rgba(184, 110, 28, 0.06);
+    --app-emerald:       #178a78;
+    --app-emerald-glow:  rgba(23, 138, 120, 0.08);
+
+    --app-canvas:        #f5f2ee;
+    --app-canvas-deep:   #ede9e2;
+    --app-canvas-raised: #ffffff;
+    --app-canvas-panel:  rgba(255, 255, 255, 0.94);
+
+    --app-text-primary:   #1a1525;
+    --app-text-secondary: rgba(26, 21, 37, 0.68);
+    --app-text-muted:     rgba(26, 21, 37, 0.42);
+    --app-text-accent:    #b86e1c;
+
+    --app-border:        rgba(0, 0, 0, 0.09);
+    --app-border-strong: rgba(184, 110, 28, 0.28);
+
+    --background:         40 20% 95%;
+    --foreground:         26 20% 12%;
+    --card:               0 0% 100%;
+    --card-foreground:    26 20% 12%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 26 20% 12%;
+    --primary:            28 75% 44%;
+    --primary-foreground: 0 0% 100%;
+    --secondary:          170 62% 36%;
+    --secondary-foreground: 0 0% 100%;
+    --muted:              40 15% 90%;
+    --muted-foreground:   26 10% 46%;
+    --accent:             28 75% 44%;
+    --accent-foreground:  0 0% 100%;
+    --destructive:        0 84% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border:             40 10% 85%;
+    --input:              40 10% 85%;
+    --ring:               28 75% 44%;
+  }
+
   body {
     font-family: 'Inter', 'DM Sans', sans-serif;
     background:
@@ -134,6 +176,11 @@
     background: rgba(15, 12, 22, 0.82);
     border-bottom: 1px solid var(--app-border);
     padding: 0.75rem 1.25rem;
+  }
+
+  .light .app-header {
+    background: rgba(245, 242, 238, 0.88);
+    border-bottom-color: var(--app-border);
   }
 
   .app-header__inner {
@@ -525,6 +572,40 @@
     background: rgba(205, 127, 50, 0.1) !important;
     border-color: var(--app-border-strong) !important;
     color: var(--app-text-accent) !important;
+  }
+
+  /* ==========================================================
+     LIGHT MODE — popover/card overrides
+     ========================================================== */
+
+  .light [data-radix-popper-content-wrapper] > [data-radix-popover-content] {
+    background: #ffffff !important;
+    border-color: var(--app-border) !important;
+  }
+
+  .light .rdp-day {
+    color: rgba(26, 21, 37, 0.72) !important;
+  }
+
+  .light .rdp-nav_button {
+    background: rgba(0, 0, 0, 0.04) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: rgba(26, 21, 37, 0.6) !important;
+  }
+
+  .light [data-radix-select-content] {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #1a1525 !important;
+  }
+
+  .light [data-radix-select-item] {
+    color: rgba(26, 21, 37, 0.8) !important;
+  }
+
+  .light [data-radix-select-item][data-highlighted] {
+    background: rgba(184, 110, 28, 0.08) !important;
+    color: #1a1525 !important;
   }
 
   /* ==========================================================

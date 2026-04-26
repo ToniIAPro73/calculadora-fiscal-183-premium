@@ -1,98 +1,101 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Card, CardContent } from '@/components/ui/card';
-import { BarChart3, TrendingUp, AlertCircle } from 'lucide-react';
 
 interface SummaryCardProps {
   totalDays: number;
 }
 
 const SummaryCard: React.FC<SummaryCardProps> = ({ totalDays }) => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
 
   const limit = 183;
   const remaining = Math.max(limit - totalDays, 0);
   const percentage = Math.min((totalDays / limit) * 100, 100);
 
-  const getStatusColor = () => {
-    if (totalDays <= 150) return 'text-emerald-500';
-    if (totalDays <= 183) return 'text-yellow-500';
-    return 'text-red-500';
+  const getStatus = () => {
+    if (totalDays <= 150) return {
+      label: language === 'es' ? 'Seguro' : 'Safe',
+      color: 'text-emerald-400',
+      barColor: 'bg-emerald-500',
+      badgeBg: 'bg-emerald-500/10 border-emerald-500/25',
+    };
+    if (totalDays <= 183) return {
+      label: language === 'es' ? 'Próximo al límite' : 'Near limit',
+      color: 'text-amber-400',
+      barColor: 'bg-amber-500',
+      badgeBg: 'bg-amber-500/10 border-amber-500/25',
+    };
+    return {
+      label: language === 'es' ? 'Límite superado' : 'Over limit',
+      color: 'text-red-400',
+      barColor: 'bg-red-500',
+      badgeBg: 'bg-red-500/10 border-red-500/25',
+    };
   };
 
-  const getStatusText = () => {
-    if (totalDays <= 150) return t('progress.safe') || 'Safe Zone';
-    if (totalDays <= 183) return t('progress.approaching') || 'Approaching Limit';
-    return t('progress.over') || 'Over Limit';
-  };
-
-  const stats = [
-    {
-      label: t('stats.totalDays') || 'Total Days',
-      value: totalDays,
-      icon: BarChart3,
-    },
-    {
-      label: t('stats.remainingDays') || 'Remaining Days',
-      value: remaining,
-      icon: TrendingUp,
-    },
-    {
-      label: t('stats.limitUsage') || 'Limit Usage',
-      value: `${percentage.toFixed(1)}%`,
-      icon: AlertCircle,
-    },
-  ];
+  const status = getStatus();
 
   return (
     <Card className="ac-surface-panel--strong overflow-hidden">
-      <CardContent className="p-8 space-y-8">
-        <div className="space-y-4">
-          <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[var(--accent,var(--color-accent-primary))]">
-            {t('summary.eyebrow') || 'RESIDENCIA FISCAL'}
+      <CardContent className="p-6 space-y-6">
+
+        {/* Eyebrow + title + status badge */}
+        <div className="space-y-3">
+          <p className="text-[10px] uppercase tracking-[0.22em] font-bold text-[var(--app-text-accent,#CD7F32)]">
+            {language === 'es' ? 'RESIDENCIA FISCAL' : 'FISCAL RESIDENCY'}
           </p>
-          <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-display font-semibold text-[var(--text-primary)]">{t('summary.title') || 'Resumen'}</h3>
-            <span className={`rounded-full border border-[var(--border-default)] px-3 py-1 text-xs font-semibold ${getStatusColor()}`}>
-              {getStatusText()}
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-xl font-display font-semibold text-[var(--app-text-primary,#f0ede8)]">
+              {language === 'es' ? 'Resumen' : 'Summary'}
+            </h3>
+            <span className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${status.color} ${status.badgeBg}`}>
+              {status.label}
             </span>
           </div>
+        </div>
 
-          {/* Progress bar */}
-          <div className="space-y-2">
-            <div className="w-full h-2 overflow-hidden rounded-full bg-[var(--surface-subtle)]">
-              <div
-                className={`h-full transition-all duration-500 ${
-                  totalDays <= 150
-                    ? 'bg-emerald-500'
-                    : totalDays <= 183
-                      ? 'bg-yellow-500'
-                      : 'bg-red-500'
-                }`}
-                style={{ width: `${Math.min(percentage, 100)}%` }}
-              />
-            </div>
-            <p className="text-xs text-right text-[var(--text-muted)]">
-              {totalDays} / {limit} days
-            </p>
+        {/* Progress bar */}
+        <div className="space-y-1.5">
+          <div className="w-full h-1.5 overflow-hidden rounded-full bg-white/8">
+            <div
+              className={`h-full rounded-full transition-all duration-700 ease-out ${status.barColor}`}
+              style={{ width: `${Math.min(percentage, 100)}%` }}
+            />
+          </div>
+          <p className="text-[11px] text-right text-[var(--app-text-muted,rgba(240,237,232,0.38))] font-medium">
+            {totalDays} / {limit} {language === 'es' ? 'días' : 'days'}
+          </p>
+        </div>
+
+        {/* Stats — vertical list, no overflow */}
+        <div className="space-y-2">
+          <div className="flex items-baseline justify-between py-2.5 border-b border-white/6">
+            <span className="text-xs text-[var(--app-text-muted,rgba(240,237,232,0.38))] font-medium">
+              {language === 'es' ? 'Días registrados' : 'Logged days'}
+            </span>
+            <span className="text-2xl font-bold font-display text-[var(--app-text-primary,#f0ede8)] tabular-nums">
+              {totalDays}
+            </span>
+          </div>
+          <div className="flex items-baseline justify-between py-2.5 border-b border-white/6">
+            <span className="text-xs text-[var(--app-text-muted,rgba(240,237,232,0.38))] font-medium">
+              {language === 'es' ? 'Días restantes' : 'Remaining days'}
+            </span>
+            <span className={`text-2xl font-bold font-display tabular-nums ${status.color}`}>
+              {remaining}
+            </span>
+          </div>
+          <div className="flex items-baseline justify-between py-2.5">
+            <span className="text-xs text-[var(--app-text-muted,rgba(240,237,232,0.38))] font-medium">
+              {language === 'es' ? 'Uso del límite' : 'Limit usage'}
+            </span>
+            <span className="text-2xl font-bold font-display text-[var(--app-text-primary,#f0ede8)] tabular-nums">
+              {percentage.toFixed(0)}<span className="text-sm font-normal ml-0.5">%</span>
+            </span>
           </div>
         </div>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-3 gap-4">
-          {stats.map((stat, idx) => {
-            const Icon = stat.icon;
-            return (
-              <div key={idx} className="anclora-metric-tile text-center space-y-3">
-                <Icon className="w-5 h-5 opacity-60 mx-auto" />
-                <div>
-                  <p className="mb-1 text-xs font-light text-[var(--text-muted)]">{stat.label}</p>
-                  <p className="text-xl font-semibold text-[var(--text-primary)]">{stat.value}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </CardContent>
     </Card>
   );

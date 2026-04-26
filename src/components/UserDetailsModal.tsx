@@ -26,11 +26,11 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+      <DialogContent className="taxnomad-modal w-[min(92vw,30rem)] max-w-none overflow-hidden p-0">
+        <DialogHeader className="px-6 pb-4 pt-6 text-center">
           <p className="ac-modal__meta text-center">Private report preparation</p>
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_82%,transparent)]">
-            <User className="text-primary w-8 h-8" />
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_82%,transparent)]">
+            <User className="h-7 w-7 text-primary" />
           </div>
           <DialogTitle className="text-center">
             {t('userDetails.title')}
@@ -40,7 +40,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
           </DialogDescription>
         </DialogHeader>
 
-        <div className="ac-modal__body space-y-4 py-2">
+        <div className="taxnomad-modal__body ac-modal__body space-y-4 px-6 pb-4">
           <div className="ac-form-field">
             <Label className="ml-1">
               {t('userDetails.nameLabel')}
@@ -105,12 +105,12 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({ isOpen, onClose, on
             />
           </div>
           
-          <p className="text-[9px] text-center px-4 font-light leading-relaxed text-[var(--text-muted)]">
+          <p className="px-2 text-center text-[9px] font-light leading-relaxed text-[var(--text-muted)]">
             {t('userDetails.note')}
           </p>
         </div>
 
-        <DialogFooter className="px-0">
+        <DialogFooter className="border-t border-[var(--border-subtle)] px-6 pb-6 pt-4">
           <Button
             onClick={onConfirm}
             disabled={isLoading || !userData.name || !userData.taxId || !userData.email}

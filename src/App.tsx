@@ -15,20 +15,20 @@ export default function App() {
     const root = window.document.documentElement;
     const body = window.document.body;
     const taxonomyClasses = [
-      'tier-ultra-premium',
-      'domain-real-estate',
-      'archetype-app',
+      'tier-premium',
+      'domain-fiscal',
+      'archetype-utility',
       'role-consumer',
-      'cluster-core',
-      'product-anclora-adoption-lab',
+      'cluster-activation',
+      'product-calculadora-fiscal-183',
     ];
 
     body.classList.add('anclora-adoption-body', ...taxonomyClasses);
-    root.classList.add('anclora-adoption-root');
+    root.classList.add('anclora-adoption-root', ...taxonomyClasses);
 
     return () => {
       body.classList.remove('anclora-adoption-body', ...taxonomyClasses);
-      root.classList.remove('anclora-adoption-root');
+      root.classList.remove('anclora-adoption-root', ...taxonomyClasses);
     };
   }, []);
 

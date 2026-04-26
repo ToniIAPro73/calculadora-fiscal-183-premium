@@ -45,7 +45,7 @@ const DateRangeSelector: React.FC<DateRangeSelectorProps> = ({ onAddRange }) => 
   return (
     <Card className="ac-surface-panel--strong overflow-hidden">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-3 font-serif text-2xl font-light">
+        <CardTitle className="flex items-center gap-3 font-display text-2xl font-light">
           <CalendarIcon className="text-primary w-5 h-5" />
           {t('dateSelector.title')}
         </CardTitle>

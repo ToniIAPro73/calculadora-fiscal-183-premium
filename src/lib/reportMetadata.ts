@@ -1,7 +1,7 @@
 export const reportOwner = {
-  name: 'Antonio Ballesteros Alonso',
-  address: 'Carrer Miquel Rosselló i Alemany, 48 07015 Palma de Mallorca (España)',
-  nif: '08997554T',
+  name: 'TaxNomad',
+  address: 'regla183.com',
+  nif: '',
   email: 'hola@regla183.com',
 };
 

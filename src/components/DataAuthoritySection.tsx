@@ -25,7 +25,7 @@ const DataAuthoritySection: React.FC = () => {
     <div className="space-y-8">
       <div className="flex items-center gap-3">
         <ShieldCheck className="w-5 h-5 text-primary" />
-        <h3 className="text-2xl font-serif font-light">
+        <h3 className="text-2xl font-display font-light">
           {t('authority.title') || '183-Day Rule Authority'}
         </h3>
       </div>
@@ -33,7 +33,7 @@ const DataAuthoritySection: React.FC = () => {
       <div className="grid md:grid-cols-2 gap-6">
         <Card className="ac-surface-panel--subtle">
           <CardContent className="p-8 space-y-4">
-            <h4 className="font-serif text-lg text-primary">{t('authority.whatIsTitle') || 'What is the 183-Day Rule?'}</h4>
+            <h4 className="font-display text-lg text-primary">{t('authority.whatIsTitle') || 'What is the 183-Day Rule?'}</h4>
             <p className="text-sm font-light leading-relaxed text-[var(--text-secondary)]">
               {t('authority.whatIsDesc') ||
                 'An individual is considered a tax resident if they spend more than 183 days in Spain during a calendar year.'}
@@ -43,7 +43,7 @@ const DataAuthoritySection: React.FC = () => {
 
         <Card className="ac-surface-panel--subtle">
           <CardContent className="p-8 space-y-4">
-            <h4 className="font-serif text-lg text-primary">{t('authority.whatCountsTitle') || 'What Counts?'}</h4>
+            <h4 className="font-display text-lg text-primary">{t('authority.whatCountsTitle') || 'What Counts?'}</h4>
             <ul className="space-y-2 text-sm font-light text-[var(--text-secondary)]">
               <li>✓ {t('authority.whatCountsList1') || 'Any part of a day spent in Spain'}</li>
               <li>✓ {t('authority.whatCountsList2') || 'Personal property residing there'}</li>
@@ -56,7 +56,7 @@ const DataAuthoritySection: React.FC = () => {
 
       <Card>
         <CardContent className="p-8 space-y-6">
-          <h4 className="font-serif text-lg text-primary">
+          <h4 className="font-display text-lg text-primary">
             {t('authority.sourcesTitle') || 'Official Sources'}
           </h4>
           <div className="grid md:grid-cols-2 gap-4">

@@ -24,7 +24,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ totalDays }) => {
       <div className="flex justify-between items-end">
         <div className="space-y-1">
           <p className="text-[10px] uppercase tracking-[0.2em] opacity-70 mb-1">{t('progress.title')}</p>
-          <p className="text-4xl font-light font-serif flex items-baseline gap-2">
+          <p className="text-4xl font-light font-display flex items-baseline gap-2">
             <span className={status.color.includes('success') ? 'text-primary' : status.color.includes('warning') ? 'text-amber-500' : 'text-red-500'}>
               {totalDays}
             </span>

@@ -49,7 +49,7 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ totalDays }) => {
       <CardContent className="p-8 space-y-8">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-serif font-light text-[var(--text-primary)]">{t('summary.title') || 'Summary'}</h3>
+            <h3 className="text-2xl font-display font-light text-[var(--text-primary)]">{t('summary.title') || 'Summary'}</h3>
             <span className={`rounded-full border border-[var(--border-default)] px-3 py-1 text-sm font-semibold ${getStatusColor()}`}>
               {getStatusText()}
             </span>

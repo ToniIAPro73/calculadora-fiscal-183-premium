@@ -2,7 +2,6 @@ import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, Languages } from 'lucide-react';
-import logo from '@/assets/logo.webp';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Header: React.FC = () => {
@@ -13,20 +12,25 @@ const Header: React.FC = () => {
     <header className="anclora-sticky-header sticky top-0 z-50 w-full px-4 py-4 md:px-6">
       <div className="anclora-header-shell mx-auto flex w-full max-w-[88rem] items-center justify-between ac-topbar">
         <Link to="/" className="ac-topbar__brand min-w-0 hover:opacity-90 transition-opacity cursor-pointer">
+          {/* Medallón Anclora — accesorio de ecosistema (32px) */}
           <img
-            src={logo}
-            alt="183 Residency Intelligence"
-            className="h-14 w-14 rounded-full border border-[var(--border-default)] object-cover shadow-lg md:h-16 md:w-16"
+            src="/anclora-group.png"
+            alt="Anclora"
+            className="h-8 w-8 rounded-full object-cover"
           />
           <div className="ac-topbar__titles min-w-0">
-            <p className="ac-topbar__eyebrow">Residency Intelligence Suite</p>
-            <h1 className="ac-topbar__title anclora-brand-title">Residency Intelligence 183</h1>
+            <p className="ac-topbar__eyebrow">
+              {language === 'es' ? 'Ecosistema Anclora' : 'Anclora Ecosystem'}
+            </p>
+            <h1 className="ac-topbar__title" style={{ fontFamily: 'var(--font-display, DM Sans, sans-serif)' }}>
+              {language === 'es' ? 'Evaluación Fiscal 183' : 'Fiscal Assessment 183'}
+            </h1>
           </div>
         </Link>
 
         <div className="ac-topbar__actions shrink-0">
           <div className="ac-topbar__meta hidden xl:flex">
-            <span>Private residency calculator</span>
+            <span>{language === 'es' ? 'Herramienta de residencia fiscal' : 'Fiscal residency tool'}</span>
           </div>
           <div className="anclora-header-controls">
             <button

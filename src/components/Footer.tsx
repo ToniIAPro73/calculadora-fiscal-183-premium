@@ -1,47 +1,51 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
-import logo from '@/assets/logo.webp';
 
 const Footer: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border/20 bg-background/80 backdrop-blur-md mt-24">
       <div className="max-w-7xl mx-auto px-4 py-16">
-        {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+          {/* Brand — Anclora Premium */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src={logo}
-                alt="TaxNomad"
-                className="w-16 h-16 rounded"
+                src="/anclora-group.png"
+                alt="Anclora"
+                className="w-8 h-8 rounded-full object-cover"
               />
               <div>
-                <p className="font-serif text-lg font-bold">TaxNomad</p>
-                <p className="text-xs opacity-80 font-light">{t('footer.subtitle') || 'Premium Tax Calculator'}</p>
+                <p className="font-display text-base font-semibold" style={{ fontFamily: 'var(--font-display, DM Sans, sans-serif)' }}>
+                  {language === 'es' ? 'Evaluación Fiscal 183' : 'Fiscal Assessment 183'}
+                </p>
+                <p className="text-xs opacity-60 font-light">Anclora Ecosystem</p>
               </div>
             </div>
-            <p className="text-sm opacity-80 font-light leading-relaxed">
-              {t('footer.tagline') || 'Master your fiscal residency with our premium audit-ready calculator for 2026'}
+            <p className="text-sm opacity-75 font-light leading-relaxed">
+              {t('footer.tagline') || (language === 'es'
+                ? 'Herramienta de evaluación de residencia fiscal para 2026.'
+                : 'Fiscal residency assessment tool for 2026.')}
             </p>
           </div>
 
           {/* Product */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.product') || 'Product'}</h4>
+            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
+              {t('footer.product') || (language === 'es' ? 'Herramienta' : 'Tool')}
+            </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.calculator') || 'Calculator'}
+                <Link to="/" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                  {language === 'es' ? 'Calculadora' : 'Calculator'}
                 </Link>
               </li>
               <li>
-                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.authority') || 'Tax Authority'}
+                <a href="https://sede.agenciatributaria.gob.es/" target="_blank" rel="noopener noreferrer" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                  {t('footer.authority') || 'Agencia Tributaria'}
                 </a>
               </li>
             </ul>
@@ -49,16 +53,18 @@ const Footer: React.FC = () => {
 
           {/* Legal */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.legal') || 'Legal'}</h4>
+            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
+              {t('footer.legal') || 'Legal'}
+            </h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link to="/privacy" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.privacy') || 'Privacy Policy'}
+                <Link to="/privacy" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                  {t('footer.privacy') || 'Privacidad'}
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
-                  {t('footer.terms') || 'Terms of Service'}
+                <Link to="/terms" className="opacity-75 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary font-light">
+                  {t('footer.terms') || 'Términos'}
                 </Link>
               </li>
             </ul>
@@ -66,34 +72,30 @@ const Footer: React.FC = () => {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold uppercase tracking-widest opacity-100">{t('footer.support') || 'Support'}</h4>
-            <div className="space-y-3 text-sm">
-              <div className="font-light">
-                <p className="text-xs opacity-85 mb-1">{t('footer.contactEmail') || 'Email'}</p>
-                <a href="mailto:hola@regla183.com" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
+            <h4 className="text-xs font-bold uppercase tracking-widest opacity-80">
+              {t('footer.support') || (language === 'es' ? 'Contacto' : 'Support')}
+            </h4>
+            <div className="space-y-3 text-sm font-light">
+              <div>
+                <p className="text-xs opacity-60 mb-1">{t('footer.contactEmail') || 'Email'}</p>
+                <a href="mailto:hola@regla183.com" className="opacity-75 hover:opacity-100 transition-opacity hover:text-primary">
                   hola@regla183.com
-                </a>
-              </div>
-              <div className="font-light">
-                <p className="text-xs opacity-85 mb-1">{t('footer.website') || 'Website'}</p>
-                <a href="https://regla183.com" className="opacity-85 cursor-pointer hover:opacity-100 transition-opacity hover:text-primary">
-                  regla183.com
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-[1px] bg-border/10 my-8"></div>
 
-        {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs opacity-80 font-light">
-            © {currentYear} TaxNomad. {t('footer.rights') || 'All rights reserved. Premium tax calculator for digital nomads.'}
+          <p className="text-xs opacity-60 font-light">
+            © {currentYear} Anclora. {language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
           </p>
-          <p className="text-xs opacity-80 font-light text-center md:text-right">
-            {t('footer.disclaimer') || 'This calculator is for informational purposes only. Consult a tax professional for your specific situation.'}
+          <p className="text-xs opacity-60 font-light text-center md:text-right">
+            {t('footer.disclaimer') || (language === 'es'
+              ? 'Herramienta informativa. Consulta un profesional fiscal para tu situación específica.'
+              : 'For informational purposes only. Consult a tax professional for your specific situation.')}
           </p>
         </div>
       </div>

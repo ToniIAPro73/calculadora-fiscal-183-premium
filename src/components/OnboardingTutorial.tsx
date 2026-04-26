@@ -94,7 +94,7 @@ const OnboardingTutorial: React.FC = () => {
                 className="space-y-2"
               >
                 <p className="ac-modal__meta">Guided onboarding</p>
-                <h2 className="text-3xl font-serif tracking-tight text-[var(--text-primary)]">
+                <h2 className="text-3xl font-display tracking-tight text-[var(--text-primary)]">
                   {t(`onboarding.step${currentStep + 1}Title`)}
                 </h2>
                 <p className="text-sm font-light leading-relaxed text-[var(--text-secondary)]">

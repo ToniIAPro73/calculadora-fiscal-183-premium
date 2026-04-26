@@ -1,18 +1,31 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Sun, Moon } from 'lucide-react';
 import logo from '@/assets/logo.webp';
 import { useTheme } from '@/contexts/ThemeContext';
+import { getLanguageFromPath, swapLanguageInPath } from '@/lib/seo';
 
 const Header: React.FC = () => {
   const { language, setLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLanguageToggle = () => {
+    const nextLanguage = language === 'es' ? 'en' : 'es';
+    setLanguage(nextLanguage);
+
+    const routeLanguage = getLanguageFromPath(location.pathname);
+    if (routeLanguage) {
+      navigate(`${swapLanguageInPath(location.pathname, nextLanguage)}${location.search}${location.hash}`);
+    }
+  };
 
   return (
     <header className="app-header">
       <div className="app-header__inner">
-        <Link to="/" className="app-header__brand">
+        <Link to={`/${language}`} className="app-header__brand">
           <img
             src={logo}
             alt="TaxNomad"
@@ -28,7 +41,7 @@ const Header: React.FC = () => {
         <div className="app-header__controls">
           <button
             type="button"
-            onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+            onClick={handleLanguageToggle}
             className="app-ctrl-pill"
           >
             <span className="app-ctrl-pill__flag">

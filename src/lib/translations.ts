@@ -113,19 +113,28 @@ export const translations = {
     },
     footer: {
       tagline: "Master your fiscal residency with our premium audit-ready calculator for 2026",
+      brand: "TaxNomad",
       subtitle: "Premium Tax Calculator",
       product: "Product",
       calculator: "Calculator",
       authority: "Tax Authority",
       legal: "Legal",
+      legalTitle: "Legal",
       privacy: "Privacy Policy",
       terms: "Terms of Service",
+      legalNotice: "Legal Notice",
+      cookies: "Cookie Policy",
       support: "Support",
       contact: "Contact",
+      contactTitle: "Contact",
       contactEmail: "Email",
+      cookiePreferences: "Cookie preferences",
       website: "Website",
       copyright: "© 2026 TaxNomad. All rights reserved.",
+      copyrightShort: "TaxNomad",
       rights: "All rights reserved.",
+      docs: "AEO/LLMS Documentation",
+      openApi: "OpenAPI Specification",
       disclaimer: "This calculator is for informational purposes only. Consult a tax professional for your specific situation."
     },
     calculator: {
@@ -210,6 +219,14 @@ export const translations = {
         "✓ For declined payment, verify that you return to home"
       ],
       backHome: "Back to Home"
+    },
+    cookies: {
+      bannerEyebrow: "Cookies and privacy",
+      bannerTitle: "We only use necessary technologies and local preferences.",
+      bannerBody: "You can accept or reject optional cookies. Right now, accepting only stores your preference for future optional features.",
+      accept: "Accept",
+      reject: "Reject",
+      policy: "Cookie Policy"
     }
   },
   es: {
@@ -325,19 +342,28 @@ export const translations = {
     },
     footer: {
       tagline: "Domina tu residencia fiscal con nuestra calculadora premium lista para auditoría 2026",
+      brand: "TaxNomad",
       subtitle: "Calculadora Fiscal Premium",
       product: "Producto",
       calculator: "Calculadora",
       authority: "Autoridad Fiscal",
       legal: "Legal",
+      legalTitle: "Legal",
       privacy: "Política de Privacidad",
       terms: "Términos de Servicio",
+      legalNotice: "Aviso Legal",
+      cookies: "Política de Cookies",
       support: "Soporte",
       contact: "Contacto",
+      contactTitle: "Contacto",
       contactEmail: "Correo",
+      cookiePreferences: "Preferencias de cookies",
       website: "Sitio Web",
       copyright: "© 2026 TaxNomad. Todos los derechos reservados.",
+      copyrightShort: "TaxNomad",
       rights: "Todos los derechos reservados.",
+      docs: "Documentación AEO/LLMS",
+      openApi: "Especificación OpenAPI",
       disclaimer: "Esta calculadora es solo para fines informativos. Consulta con un profesional fiscal para tu situación específica."
     },
     calculator: {
@@ -422,6 +448,14 @@ export const translations = {
         "✓ Para pago rechazado, verifica que vuelves a la home"
       ],
       backHome: "Volver a Home"
+    },
+    cookies: {
+      bannerEyebrow: "Cookies y privacidad",
+      bannerTitle: "Solo usamos tecnologías necesarias y preferencias locales.",
+      bannerBody: "Puedes aceptar o rechazar cookies opcionales. Ahora mismo, aceptar solo guarda tu preferencia para futuras funciones opcionales.",
+      accept: "Aceptar",
+      reject: "Rechazar",
+      policy: "Política de Cookies"
     }
   }
 };

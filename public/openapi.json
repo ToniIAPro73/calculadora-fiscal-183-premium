@@ -1,0 +1,130 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TaxNomad Premium API",
+    "version": "1.0.0",
+    "description": "Machine-readable API contract for TaxNomad premium checkout and report delivery verification."
+  },
+  "servers": [
+    {
+      "url": "https://www.regla183.com"
+    }
+  ],
+  "paths": {
+    "/api/create-checkout-session": {
+      "post": {
+        "summary": "Create a Stripe checkout session",
+        "description": "Creates a checkout session for the premium PDF report.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCheckoutSessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Checkout session created"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        }
+      }
+    },
+    "/api/checkout-session-status": {
+      "get": {
+        "summary": "Verify checkout session status",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Checkout session status"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "405": {
+            "description": "Method not allowed"
+          }
+        }
+      }
+    },
+    "/api/stripe-webhook": {
+      "post": {
+        "summary": "Receive Stripe webhook events",
+        "responses": {
+          "200": {
+            "description": "Webhook accepted"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": ["start", "end"]
+      },
+      "CreateCheckoutSessionRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "taxId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "totalDays": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 365
+          },
+          "statusLabel": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "string",
+            "enum": ["passport", "nie"]
+          },
+          "ranges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateRange"
+            }
+          }
+        },
+        "required": ["name", "taxId", "totalDays"]
+      }
+    }
+  }
+}

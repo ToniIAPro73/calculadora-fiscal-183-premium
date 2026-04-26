@@ -2,6 +2,7 @@ import { jsPDF } from 'jspdf';
 import { format, differenceInCalendarDays, eachDayOfInterval, isWithinInterval } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
 import { reportOwner } from './reportMetadata';
+import logoPng from '@/assets/logo.png';
 
 const pdfLabels = {
   es: {
@@ -96,6 +97,37 @@ const C = {
   paper: [248, 244, 238] as [number, number, number],
   panel: [34, 28, 47] as [number, number, number],
 };
+
+let pdfLogoDataUrlPromise: Promise<string | null> | null = null;
+
+function loadAssetAsDataUrl(assetUrl: string): Promise<string | null> {
+  if (typeof window === 'undefined' || typeof fetch === 'undefined') {
+    return Promise.resolve(null);
+  }
+
+  return fetch(assetUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to load asset: ${assetUrl}`);
+      }
+      return response.blob();
+    })
+    .then((blob) => new Promise<string | null>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : null);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    }))
+    .catch(() => null);
+}
+
+function getPdfLogoDataUrl() {
+  if (!pdfLogoDataUrlPromise) {
+    pdfLogoDataUrlPromise = loadAssetAsDataUrl(logoPng);
+  }
+
+  return pdfLogoDataUrlPromise;
+}
 
 function statusInfo(totalDays: number, language: string = 'es') {
   const labels = pdfLabels[language as keyof typeof pdfLabels] || pdfLabels.es;
@@ -298,19 +330,25 @@ export async function generateTaxReport({
     ? `Contact: ${reportOwner.email}`
     : `Contacto: ${reportOwner.email}`;
   const topBandHeight = exampleMode ? 48 : 54;
+  const logoDataUrl = await getPdfLogoDataUrl();
   
   paintPageShell(doc, W, H, topBandHeight);
 
-  // App Logo & Subtitle (Left Column)
+  if (logoDataUrl) {
+    doc.addImage(logoDataUrl, 'PNG', M, 8, 12, 12);
+  }
+
+  const brandTextX = logoDataUrl ? M + 16 : M;
+
   doc.setTextColor(C.primary[0], C.primary[1], C.primary[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(24);
-  doc.text('TaxNomad', M, 18);
+  doc.text('TaxNomad', brandTextX, 18);
 
   doc.setFontSize(8);
   doc.setTextColor(C.slate400[0], C.slate400[1], C.slate400[2]);
   doc.setFont('helvetica', 'normal');
-  doc.text(labels.advancedTaxResidencyAnalysis, M, 24, { align: 'justify' });
+  doc.text(labels.advancedTaxResidencyAnalysis, brandTextX, 24, { align: 'justify' });
 
   if (exampleMode) {
     doc.setFillColor(C.warning[0], C.warning[1], C.warning[2]);

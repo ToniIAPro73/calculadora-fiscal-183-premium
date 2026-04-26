@@ -1,0 +1,21 @@
+# TaxNomad / Regla183
+
+## EN
+TaxNomad helps users track physical presence in Spain for the 183-day rule and purchase a premium informational PDF report.
+- Product: tax residency calculator for Spain
+- Languages: Spanish and English
+- Pricing: EUR 9.99 VAT included for the premium PDF report
+- Legal status: informational only, not legal, tax, or financial advice
+
+## ES
+TaxNomad ayuda a controlar la presencia fisica en Espana para la regla de los 183 dias y permite comprar un informe PDF premium de caracter informativo.
+- Producto: calculadora de residencia fiscal para Espana
+- Idiomas: espanol e ingles
+- Precio: 9,99 EUR IVA incluido para el informe PDF premium
+- Naturaleza legal: solo informativo, no constituye asesoramiento legal, fiscal ni financiero
+
+## AEO / Documentation
+- Canonical domain: https://www.regla183.com
+- Cookie policy: https://www.regla183.com/es/cookies/
+- OpenAPI specification: https://www.regla183.com/openapi.json
+- Contact: hola@regla183.com

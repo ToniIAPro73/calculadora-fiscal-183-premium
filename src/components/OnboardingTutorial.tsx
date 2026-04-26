@@ -31,8 +31,8 @@ const OnboardingTutorial: React.FC = () => {
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
-    if (!hasSeenOnboarding) {
-      setIsOpen(true);
+    if (hasSeenOnboarding) {
+      setIsOpen(false);
     }
   }, []);
 
@@ -52,9 +52,22 @@ const OnboardingTutorial: React.FC = () => {
   const Icon = currentStep >= 0 ? steps[currentStep].icon : Calendar;
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-[440px] p-0 overflow-hidden border-none glass shadow-none">
-        <div className="p-12 flex flex-col items-center text-center space-y-8">
+    <>
+      {!isOpen ? (
+        <div className="mx-auto max-w-7xl px-4 pt-2 md:px-6">
+          <Button
+            variant="ghost"
+            onClick={() => setIsOpen(true)}
+            className="rounded-full border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-panel)_82%,transparent)] px-4 text-[10px] text-[var(--text-eyebrow)] hover:text-[var(--text-primary)]"
+          >
+            Guided Tour
+          </Button>
+        </div>
+      ) : null}
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="w-full max-w-[460px] overflow-hidden p-0 sm:max-w-[460px]">
+          <div className="flex flex-col items-center space-y-8 p-12 text-center">
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -63,18 +76,10 @@ const OnboardingTutorial: React.FC = () => {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: -20 }}
               transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-              className={`w-24 h-24 rounded-[32px] flex items-center justify-center bg-gradient-to-br ${
-                steps[currentStep].color === 'emerald' 
-                  ? 'from-emerald-500/20 to-emerald-500/5 border-emerald-500/20' 
-                  : 'from-indigo-500/20 to-indigo-500/5 border-indigo-500/20'
-              } border shadow-2xl relative group`}
+              className="relative flex h-24 w-24 items-center justify-center rounded-[32px] border border-[var(--border-default)] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--surface-panel-strong)_92%,transparent),color-mix(in_srgb,var(--surface-panel)_88%,transparent))] shadow-2xl"
             >
-              <div className={`absolute inset-0 blur-2xl opacity-40 rounded-full transition-all duration-700 ${
-                steps[currentStep].color === 'emerald' ? 'bg-emerald-500' : 'bg-indigo-500'
-              }`} />
-              <Icon className={`w-10 h-10 relative z-10 ${
-                steps[currentStep].color === 'emerald' ? 'text-emerald-400' : 'text-indigo-400'
-              }`} />
+              <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,color-mix(in_srgb,var(--domain-glow)_32%,transparent),transparent_65%)] blur-2xl opacity-70" />
+              <Icon className="relative z-10 h-10 w-10 text-[var(--accent)]" />
             </motion.div>
           </AnimatePresence>
 
@@ -88,10 +93,11 @@ const OnboardingTutorial: React.FC = () => {
                 transition={{ duration: 0.3 }}
                 className="space-y-2"
               >
-                <h2 className="text-3xl font-serif tracking-tight text-white">
+                <p className="ac-modal__meta">Guided onboarding</p>
+                <h2 className="text-3xl font-serif tracking-tight text-[var(--text-primary)]">
                   {t(`onboarding.step${currentStep + 1}Title`)}
                 </h2>
-                <p className="text-sm text-white/50 leading-relaxed font-light">
+                <p className="text-sm font-light leading-relaxed text-[var(--text-secondary)]">
                   {t(`onboarding.step${currentStep + 1}Desc`)}
                 </p>
               </motion.div>
@@ -103,7 +109,7 @@ const OnboardingTutorial: React.FC = () => {
               <div 
                 key={i} 
                 className={`h-1 rounded-full transition-all duration-500 ${
-                  i === currentStep ? 'w-8 bg-emerald-400' : 'w-2 bg-white/10'
+                  i === currentStep ? 'w-8 bg-[var(--accent)]' : 'w-2 bg-[var(--border-subtle)]'
                 }`}
               />
             ))}
@@ -112,7 +118,7 @@ const OnboardingTutorial: React.FC = () => {
           <div className="w-full space-y-3">
             <Button 
               onClick={handleNext}
-              className="w-full h-14 rounded-2xl bg-white text-black hover:bg-emerald-400 transition-colors tracking-widest font-bold text-xs uppercase group"
+              className="group min-h-[3.75rem] w-full rounded-[22px] text-xs transition-colors"
             >
               {currentStep === steps.length - 1 ? t('onboarding.finish') : t('onboarding.next')}
               <ChevronRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -121,14 +127,15 @@ const OnboardingTutorial: React.FC = () => {
             <Button 
               variant="ghost" 
               onClick={handleClose}
-              className="w-full h-10 text-[10px] uppercase tracking-[0.2em] font-bold text-white/30 hover:text-white"
+              className="h-10 w-full text-[10px] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               {t('onboarding.skip')}
             </Button>
           </div>
-        </div>
-      </DialogContent>
-    </Dialog>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

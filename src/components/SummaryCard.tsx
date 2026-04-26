@@ -45,19 +45,19 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ totalDays }) => {
   ];
 
   return (
-    <Card className="glass border-none rounded-3xl overflow-hidden">
+    <Card className="ac-surface-panel--strong overflow-hidden">
       <CardContent className="p-8 space-y-8">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-2xl font-serif font-light">{t('summary.title') || 'Summary'}</h3>
-            <span className={`text-sm font-semibold px-3 py-1 rounded-full bg-accent/20 ${getStatusColor()}`}>
+            <h3 className="text-2xl font-serif font-light text-[var(--text-primary)]">{t('summary.title') || 'Summary'}</h3>
+            <span className={`rounded-full border border-[var(--border-default)] px-3 py-1 text-sm font-semibold ${getStatusColor()}`}>
               {getStatusText()}
             </span>
           </div>
 
           {/* Progress bar */}
           <div className="space-y-2">
-            <div className="w-full h-2 bg-border/20 rounded-full overflow-hidden">
+            <div className="w-full h-2 overflow-hidden rounded-full bg-[var(--surface-subtle)]">
               <div
                 className={`h-full transition-all duration-500 ${
                   totalDays <= 150
@@ -69,7 +69,7 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ totalDays }) => {
                 style={{ width: `${Math.min(percentage, 100)}%` }}
               />
             </div>
-            <p className="text-xs opacity-50 text-right">
+            <p className="text-xs text-right text-[var(--text-muted)]">
               {totalDays} / {limit} days
             </p>
           </div>
@@ -80,11 +80,11 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ totalDays }) => {
           {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
-              <div key={idx} className="p-4 rounded-2xl bg-accent/10 text-center space-y-3">
+              <div key={idx} className="anclora-metric-tile text-center space-y-3">
                 <Icon className="w-5 h-5 opacity-60 mx-auto" />
                 <div>
-                  <p className="text-xs opacity-60 font-light mb-1">{stat.label}</p>
-                  <p className="text-xl font-semibold">{stat.value}</p>
+                  <p className="mb-1 text-xs font-light text-[var(--text-muted)]">{stat.label}</p>
+                  <p className="text-xl font-semibold text-[var(--text-primary)]">{stat.value}</p>
                 </div>
               </div>
             );

@@ -31,20 +31,20 @@ const DataAuthoritySection: React.FC = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="glass border-none rounded-3xl">
+        <Card className="ac-surface-panel--subtle">
           <CardContent className="p-8 space-y-4">
             <h4 className="font-serif text-lg text-primary">{t('authority.whatIsTitle') || 'What is the 183-Day Rule?'}</h4>
-            <p className="text-sm opacity-70 leading-relaxed font-light">
+            <p className="text-sm font-light leading-relaxed text-[var(--text-secondary)]">
               {t('authority.whatIsDesc') ||
                 'An individual is considered a tax resident if they spend more than 183 days in Spain during a calendar year.'}
             </p>
           </CardContent>
         </Card>
 
-        <Card className="glass border-none rounded-3xl">
+        <Card className="ac-surface-panel--subtle">
           <CardContent className="p-8 space-y-4">
             <h4 className="font-serif text-lg text-primary">{t('authority.whatCountsTitle') || 'What Counts?'}</h4>
-            <ul className="text-sm opacity-70 space-y-2 font-light">
+            <ul className="space-y-2 text-sm font-light text-[var(--text-secondary)]">
               <li>✓ {t('authority.whatCountsList1') || 'Any part of a day spent in Spain'}</li>
               <li>✓ {t('authority.whatCountsList2') || 'Personal property residing there'}</li>
               <li>✓ {t('authority.whatCountsList3') || 'Family members living there'}</li>
@@ -54,7 +54,7 @@ const DataAuthoritySection: React.FC = () => {
         </Card>
       </div>
 
-      <Card className="glass border-none rounded-3xl">
+      <Card>
         <CardContent className="p-8 space-y-6">
           <h4 className="font-serif text-lg text-primary">
             {t('authority.sourcesTitle') || 'Official Sources'}
@@ -66,17 +66,17 @@ const DataAuthoritySection: React.FC = () => {
                 href={auth.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 rounded-2xl bg-accent/10 hover:bg-accent/20 transition-colors flex items-center justify-between group"
+                className="group flex items-center justify-between rounded-[22px] border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-subtle)_88%,transparent)] p-4 transition-colors hover:border-[var(--border-strong)]"
               >
                 <div>
-                  <p className="text-xs opacity-70 font-light">{auth.abbr}</p>
-                  <p className="text-sm font-medium group-hover:text-primary transition-colors">{t(auth.nameKey) || auth.nameFallback}</p>
+                  <p className="text-xs font-light text-[var(--text-muted)]">{auth.abbr}</p>
+                  <p className="text-sm font-medium text-[var(--text-primary)] transition-colors group-hover:text-primary">{t(auth.nameKey) || auth.nameFallback}</p>
                 </div>
                 <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
               </a>
             ))}
           </div>
-          <p className="text-xs opacity-60 italic">
+          <p className="text-xs italic text-[var(--text-muted)]">
             {t('authority.disclaimer') ||
               'This calculator is for informational purposes only. Consult with a tax professional for your specific situation.'}
           </p>

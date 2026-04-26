@@ -1,3 +1,14 @@
+@import "../../anclora-design-system/src/tokens/core.css";
+@import "../../anclora-design-system/src/tokens/semantic.css";
+@import "../../anclora-design-system/src/taxonomy/tier.css";
+@import "../../anclora-design-system/src/taxonomy/domain.css";
+@import "../../anclora-design-system/src/taxonomy/archetype.css";
+@import "../../anclora-design-system/src/taxonomy/role.css";
+@import "../../anclora-design-system/src/taxonomy/clusters.css";
+@import "../../anclora-design-system/src/themes/product.css";
+@import "../../anclora-design-system/src/foundations/typography.css";
+@import "../../anclora-design-system/src/foundations/primitives.css";
+@import "../../anclora-design-system/src/components/index.css";
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 
@@ -60,14 +71,8 @@
 
   body {
     font-family: "Geist", sans-serif;
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .dark body {
-    background-image: linear-gradient(135deg, #111 0%, #050505 100%);
   }
 
   button,
@@ -102,36 +107,194 @@
 }
 
 @layer components {
-  .glass {
-    background-color: hsl(var(--card) / 0.95);
-    border: 1px solid hsl(var(--border) / 0.5);
-    backdrop-filter: blur(10px);
+  .anclora-adoption-app {
+    min-height: 100vh;
+    color: var(--text-primary);
+    background:
+      radial-gradient(circle at top, color-mix(in srgb, var(--domain-glow) 20%, transparent) 0%, transparent 30%),
+      linear-gradient(180deg, color-mix(in srgb, var(--surface-canvas) 96%, black 4%) 0%, color-mix(in srgb, var(--surface-subtle) 72%, var(--surface-canvas)) 100%);
   }
 
-  .dark .glass {
-    background-color: rgba(15, 15, 15, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
+  .dark .anclora-adoption-app {
+    background:
+      radial-gradient(circle at top, color-mix(in srgb, var(--domain-glow) 30%, transparent) 0%, transparent 28%),
+      linear-gradient(180deg, #08131b 0%, #050a10 100%);
   }
 
   .premium-gradient {
-    background-color: hsl(var(--background));
+    background: transparent;
   }
 
-  .dark .premium-gradient {
-    background: linear-gradient(135deg, #111 0%, #050505 100%);
+  .glass {
+    background: var(--surface-glass);
+    border: 1px solid var(--border-default);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .ac-modal-backdrop {
+    min-height: 100vh;
   }
 
   .neon-accent {
-    color: hsl(var(--primary));
+    color: var(--accent);
   }
 
   .stripe-accent {
-    color: hsl(var(--secondary));
+    color: var(--accent-strong);
+  }
+
+  .anclora-ultra-main {
+    flex: 1;
+    width: 100%;
+  }
+
+  .anclora-hero-shell {
+    padding: 2rem 1rem 1rem;
+  }
+
+  .anclora-hero-grid {
+    max-width: 80rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border: 1px solid var(--border-default);
+    border-radius: calc(var(--surface-radius-panel) + 8px);
+    background:
+      linear-gradient(135deg,
+        color-mix(in srgb, var(--surface-panel-strong) 94%, transparent) 0%,
+        color-mix(in srgb, var(--surface-panel) 86%, transparent) 55%,
+        color-mix(in srgb, var(--domain-glow) 10%, var(--surface-panel)) 100%);
+    box-shadow: var(--shadow-lg), var(--shadow-inset);
+  }
+
+  .anclora-hero-copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .anclora-hero-title {
+    margin: 0;
+    max-width: 11ch;
+    color: var(--text-primary);
+    font-family: var(--font-display), "Playfair Display", serif;
+    font-size: clamp(2.9rem, 7vw, 4.9rem);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: var(--track-display);
+  }
+
+  .anclora-hero-title span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .anclora-hero-summary {
+    max-width: 45rem;
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 1.5vw, 1.08rem);
+    line-height: 1.75;
+  }
+
+  .anclora-hero-aside {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    padding: 1.25rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: calc(var(--surface-radius-panel) - 10px);
+    background: color-mix(in srgb, var(--surface-subtle) 85%, transparent);
+  }
+
+  .anclora-pill {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border-default));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-panel) 84%, transparent);
+    color: var(--accent);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .anclora-pill--subtle {
+    color: var(--text-eyebrow);
+    border-color: var(--border-subtle);
+  }
+
+  .anclora-metric-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  }
+
+  .anclora-metric-tile,
+  .anclora-support-card {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1rem 1.05rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    background: color-mix(in srgb, var(--surface-subtle) 82%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .anclora-metric-label,
+  .anclora-support-label {
+    margin: 0;
+    color: var(--text-eyebrow);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .anclora-metric-value,
+  .anclora-support-card strong {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .anclora-cta-card {
+    border-radius: 40px;
+  }
+
+  .anclora-brand-title {
+    font-size: clamp(1.45rem, 2vw, 2rem);
+    line-height: 1.05;
+  }
+
+  .anclora-legal-footer {
+    margin-top: 5rem;
+    padding: 4rem 0;
+    border-top: 1px solid var(--border-subtle);
   }
 }
 
 @layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 999px;
+  }
+
   .animate-shimmer {
     animation: shimmer 2s infinite linear;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
@@ -141,5 +304,23 @@
   @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+  }
+
+  @media (min-width: 960px) {
+    .anclora-hero-grid {
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+      align-items: end;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .anclora-hero-shell {
+      padding-top: 1rem;
+    }
+
+    .anclora-hero-grid {
+      padding: 1.25rem;
+      border-radius: 28px;
+    }
   }
 }

@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/i18nContext';
 import logo from '@/assets/logo.webp';
+import { clearCookieConsent } from '@/lib/cookieConsent';
+import { getLocalizedPath } from '@/lib/seo';
 
 const Footer: React.FC = () => {
   const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
+  const langPrefix = language === 'en' ? 'en' : 'es';
 
   return (
     <footer className="mt-auto border-t border-[var(--app-border)] bg-[rgba(15,12,22,0.6)] px-4 py-8 backdrop-blur-md sm:px-6 lg:px-8">
@@ -33,12 +36,25 @@ const Footer: React.FC = () => {
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[var(--app-text-muted,rgba(240,237,232,0.5))]">
               {t('footer.legal') || 'Legal'}
             </h4>
-            <Link to="/privacy" className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+            <Link to={getLocalizedPath(langPrefix, '/privacy')} className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
               {t('footer.privacy') || 'Privacidad'}
             </Link>
-            <Link to="/terms" className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+            <Link to={getLocalizedPath(langPrefix, '/terms')} className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
               {t('footer.terms') || 'Términos'}
             </Link>
+            <Link to={getLocalizedPath(langPrefix, '/legal')} className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+              {t('footer.legalNotice') || 'Aviso Legal'}
+            </Link>
+            <Link to={getLocalizedPath(langPrefix, '/cookies')} className="text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]">
+              {t('footer.cookies') || 'Política de Cookies'}
+            </Link>
+            <button
+              type="button"
+              onClick={clearCookieConsent}
+              className="text-left text-sm text-[var(--app-text-secondary,rgba(240,237,232,0.7))] transition-colors duration-200 hover:text-[var(--app-text-primary)]"
+            >
+              {t('footer.cookiePreferences') || 'Preferencias de cookies'}
+            </button>
           </div>
 
           <div className="flex flex-col gap-3">

@@ -1,95 +1,77 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import Header from '@/components/Header';
-import MinimalFooter from '@/components/MinimalFooter';
+import Footer from '@/components/Footer';
 import { ShieldCheck, Eye, Lock, Mail, FileText, UserCheck, Trash2, Globe } from 'lucide-react';
 import { useLanguage } from '@/contexts/i18nContext';
+import { getCanonicalUrl, getDefaultUrl } from '@/lib/seo';
 
 const contentByLanguage = {
   es: {
     title: 'Política de Privacidad · TaxNomad',
-    updatedAt: 'Última actualización: 20 de abril de 2026',
+    description: 'Política de privacidad de TaxNomad para la calculadora de la regla de 183 días y el informe premium.',
+    updatedAt: 'Última actualización: 27 de abril de 2026',
     heading: 'Política de Privacidad',
     intro: 'Transparencia total sobre el tratamiento de tus datos personales.',
     quickSummaryTitle: 'Resumen rápido',
     quickSummary: [
-      {
-        icon: Lock,
-        title: 'Pagos seguros',
-        description: 'Procesados 100% por Stripe. No accedemos a tus datos bancarios.',
-      },
-      {
-        icon: Eye,
-        title: 'Sin almacenamiento',
-        description: 'Nombre e identificación solo se usan para generar el PDF y no se guardan.',
-      },
-      {
-        icon: Trash2,
-        title: 'Eliminación inmediata',
-        description: 'Los datos se borran de memoria tras la descarga del PDF.',
-      },
-      {
-        icon: UserCheck,
-        title: 'Tus derechos',
-        description: 'Acceso, rectificación y supresión disponibles en todo momento.',
-      },
-      {
-        icon: Mail,
-        title: 'Contacto DPO',
-        description: 'hola@regla183.com',
-        mailto: true,
-      },
+      { icon: Lock, title: 'Pagos seguros', description: 'Procesados 100% por Stripe. No accedemos a tus datos bancarios.' },
+      { icon: Eye, title: 'Datos mínimos', description: 'Solo tratamos la información necesaria para generar y entregar tu informe.' },
+      { icon: Trash2, title: 'Retención limitada', description: 'No conservamos de forma permanente los datos del informe por nuestra parte.' },
+      { icon: UserCheck, title: 'Tus derechos', description: 'Acceso, rectificación y supresión disponibles en todo momento.' },
+      { icon: Mail, title: 'Contacto privacidad', description: 'hola@regla183.com', mailto: true },
     ],
     sections: [
       {
         title: '1. Responsable del Tratamiento',
         body: [
-          'En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), el Responsable del Tratamiento es:',
+          'En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), el responsable del tratamiento es TaxNomad.',
+          'El servicio es operado por Antonio Ballesteros Alonso.',
+          'Para cualquier cuestión relacionada con privacidad o protección de datos puedes escribir a hola@regla183.com.',
         ],
         list: [
-          ['Nombre / Razón social', 'Antonio Ballesteros Alonso'],
-          ['Dirección', 'Carrer Miquel Rosselló i Alemany, 48 07015 Palma de Mallorca (España)'],
-          ['NIF', '08997554T'],
-          ['Email', 'hola@regla183.com'],
+          ['Servicio', 'TaxNomad / Regla183'],
+          ['Dominio', 'https://www.regla183.com'],
+          ['Contacto', 'hola@regla183.com'],
+          ['Referencia legal', 'La identificación completa del titular figura en el Aviso Legal.'],
         ],
       },
       {
-        title: '2. Datos que recopilamos y finalidad',
+        title: '2. Datos que tratamos',
         blocks: [
           {
-            title: '2.1 Datos de uso de la calculadora',
-            body: 'Los rangos de fechas introducidos se procesan localmente en tu navegador para calcular días de presencia física. No se envían a ningún servidor.',
+            title: '2.1 Rangos de fechas introducidos por el usuario',
+            body: 'Los rangos de fechas se utilizan para calcular días de presencia física en España. Durante el flujo estándar de la calculadora se procesan localmente en el navegador.',
           },
           {
             title: '2.2 Datos del informe PDF',
-            body: 'Para generar el informe personalizado recopilamos nombre completo y número de identificación (pasaporte o NIE). Estos datos se usan exclusivamente para insertar tu información en el PDF generado.',
-            note: 'Base jurídica: Art. 6.1.b RGPD — ejecución de contrato.',
+            body: 'Si el usuario decide adquirir el informe premium, tratamos nombre completo, email e identificación (pasaporte o NIE) para generar y entregar el PDF personalizado.',
+            note: 'Base jurídica: Art. 6.1.b RGPD - ejecución de contrato.',
           },
           {
             title: '2.3 Datos de pago',
             body: 'Los pagos son procesados íntegramente por Stripe, Inc. No almacenamos ni accedemos a datos de tarjetas bancarias.',
-            note: 'Base jurídica: Art. 6.1.b RGPD — ejecución de contrato.',
+            note: 'Base jurídica: Art. 6.1.b RGPD - ejecución de contrato.',
             link: { href: 'https://stripe.com/es/privacy', label: 'stripe.com/es/privacy' },
           },
           {
-            title: '2.4 Datos técnicos y cookies de publicidad',
-            body: 'Si activas publicidad mediante Google AdSense, Google puede utilizar cookies para mostrar anuncios personalizados en función de tu historial de navegación.',
-            note: 'Base jurídica: Art. 6.1.a RGPD — consentimiento del interesado.',
-            link: { href: 'https://adssettings.google.com', label: 'adssettings.google.com' },
+            title: '2.4 Finalidades del tratamiento',
+            body: 'Tratamos los datos exclusivamente para prestar el servicio, generar el informe contratado y gestionar el pago asociado.',
+            note: 'No vendemos datos ni los compartimos con terceros para fines propios de marketing.',
           },
         ],
       },
       {
         title: '3. Plazo de conservación',
         body: [
-          'Los datos personales del informe no se almacenan de forma persistente por nuestra parte. Se procesan durante la generación del PDF y se descartan después.',
+          'Los datos del informe no se almacenan de forma permanente por nuestra parte. Se utilizan para la generación y entrega del PDF y, fuera de ese proceso, no se conservan de forma persistente.',
           'Los datos de transacción pueden ser conservados por Stripe conforme a sus obligaciones legales y políticas de retención.',
         ],
       },
       {
         title: '4. Transferencias internacionales',
         body: [
-          'Los datos de pago son gestionados por Stripe, Inc. (EE.UU.), bajo mecanismos de transferencia internacional adecuados como el Data Privacy Framework y las Cláusulas Contractuales Tipo.',
+          'Los datos de pago son gestionados por Stripe, Inc. y pueden implicar transferencias internacionales bajo las garantías adecuadas aplicables en cada momento.',
           'No realizamos ninguna otra transferencia internacional de datos personales.',
         ],
       },
@@ -110,11 +92,12 @@ const contentByLanguage = {
         ],
       },
       {
-        title: '6. Cookies',
-        body: ['Utilizamos exclusivamente los siguientes mecanismos locales o de terceros:'],
+        title: '6. Tecnologías locales del navegador',
+        body: ['Actualmente utilizamos únicamente mecanismos locales necesarios para la experiencia básica del servicio:'],
         plainList: [
-          'localStorage para guardar tu preferencia de idioma y tema visual. No contiene datos personales sensibles.',
-          'Cookies de Google AdSense, solo si se activa publicidad y siempre sujetas a consentimiento previo cuando resulte exigible.',
+          'localStorage para guardar la preferencia de idioma y tema visual.',
+          'localStorage para registrar tu preferencia de consentimiento de cookies opcionales.',
+          'Mecanismos propios de Stripe durante el checkout alojado, cuando accedes al proceso de pago.',
         ],
       },
     ],
@@ -123,88 +106,69 @@ const contentByLanguage = {
   },
   en: {
     title: 'Privacy Policy · TaxNomad',
-    updatedAt: 'Last updated: April 20, 2026',
+    description: 'Privacy policy for TaxNomad’s 183-day rule calculator and premium report service.',
+    updatedAt: 'Last updated: April 27, 2026',
     heading: 'Privacy Policy',
     intro: 'Full transparency about how your personal data is processed.',
     quickSummaryTitle: 'Quick summary',
     quickSummary: [
-      {
-        icon: Lock,
-        title: 'Secure payments',
-        description: 'Handled 100% by Stripe. We do not access your banking details.',
-      },
-      {
-        icon: Eye,
-        title: 'No retention',
-        description: 'Name and identification are only used to generate the PDF and are not stored permanently.',
-      },
-      {
-        icon: Trash2,
-        title: 'Immediate deletion',
-        description: 'Report data is cleared from working memory after delivery.',
-      },
-      {
-        icon: UserCheck,
-        title: 'Your rights',
-        description: 'Access, rectification and erasure rights are available at any time.',
-      },
-      {
-        icon: Mail,
-        title: 'Privacy contact',
-        description: 'hola@regla183.com',
-        mailto: true,
-      },
+      { icon: Lock, title: 'Secure payments', description: 'Handled 100% by Stripe. We do not access your banking details.' },
+      { icon: Eye, title: 'Minimal data', description: 'We only process the information needed to generate and deliver your report.' },
+      { icon: Trash2, title: 'Limited retention', description: 'We do not permanently retain report data on our side.' },
+      { icon: UserCheck, title: 'Your rights', description: 'Access, rectification and erasure rights are available at any time.' },
+      { icon: Mail, title: 'Privacy contact', description: 'hola@regla183.com', mailto: true },
     ],
     sections: [
       {
         title: '1. Data controller',
         body: [
-          'In accordance with Regulation (EU) 2016/679 (GDPR), the data controller is:',
+          'In accordance with Regulation (EU) 2016/679 (GDPR), the data controller is TaxNomad.',
+          'The service is operated by Antonio Ballesteros Alonso.',
+          'For any privacy or data protection matter, you can contact hola@regla183.com.',
         ],
         list: [
-          ['Name', 'Antonio Ballesteros Alonso'],
-          ['Address', 'Carrer Miquel Rosselló i Alemany, 48 07015 Palma de Mallorca, Spain'],
-          ['Tax ID', '08997554T'],
-          ['Email', 'hola@regla183.com'],
+          ['Service', 'TaxNomad / Regla183'],
+          ['Domain', 'https://www.regla183.com'],
+          ['Contact', 'hola@regla183.com'],
+          ['Legal reference', 'Full owner details are available in the Legal Notice.'],
         ],
       },
       {
-        title: '2. Data we collect and why',
+        title: '2. Data we process',
         blocks: [
           {
-            title: '2.1 Calculator usage data',
-            body: 'The date ranges you enter are processed locally in your browser to calculate physical presence days. They are not sent to a server during the standard calculator flow.',
+            title: '2.1 User-entered date ranges',
+            body: 'Date ranges are used to calculate days of physical presence in Spain. During the standard calculator flow, they are processed locally in the browser.',
           },
           {
             title: '2.2 PDF report data',
-            body: 'To generate the personalised report we collect your full name and identification number (passport or NIE). This information is used solely to populate your PDF report.',
-            note: 'Legal basis: Article 6(1)(b) GDPR — performance of a contract.',
+            body: 'If the user purchases the premium report, we process full name, email, and identification details (passport or NIE) to generate and deliver the personalised PDF.',
+            note: 'Legal basis: Article 6(1)(b) GDPR - performance of a contract.',
           },
           {
             title: '2.3 Payment data',
             body: 'Payments are processed entirely by Stripe, Inc. We do not store or access your card data.',
-            note: 'Legal basis: Article 6(1)(b) GDPR — performance of a contract.',
+            note: 'Legal basis: Article 6(1)(b) GDPR - performance of a contract.',
             link: { href: 'https://stripe.com/privacy', label: 'stripe.com/privacy' },
           },
           {
-            title: '2.4 Technical data and advertising cookies',
-            body: 'If advertising is enabled through Google AdSense, Google may use cookies to personalise ads based on your browsing history.',
-            note: 'Legal basis: Article 6(1)(a) GDPR — consent.',
-            link: { href: 'https://adssettings.google.com', label: 'adssettings.google.com' },
+            title: '2.4 Processing purposes',
+            body: 'We process data solely to deliver the service, generate the purchased report, and manage the related payment flow.',
+            note: 'We do not sell data or share it with third parties for our own marketing purposes.',
           },
         ],
       },
       {
         title: '3. Retention period',
         body: [
-          'Report personal data is not stored persistently by us. It is processed for delivery and then discarded.',
+          'Report data is not permanently stored by us. It is used for PDF generation and delivery and is not retained persistently beyond that process.',
           'Transaction data may be retained by Stripe according to its legal obligations and retention policies.',
         ],
       },
       {
         title: '4. International transfers',
         body: [
-          'Payment data is handled by Stripe, Inc. in the United States under recognised international transfer mechanisms such as the EU-U.S. Data Privacy Framework and Standard Contractual Clauses.',
+          'Payment data is handled by Stripe, Inc. and may involve international transfers under the safeguards applicable at the relevant time.',
           'We do not perform any other international transfers of personal data.',
         ],
       },
@@ -225,11 +189,12 @@ const contentByLanguage = {
         ],
       },
       {
-        title: '6. Cookies',
-        body: ['We only rely on the following local or third-party mechanisms:'],
+        title: '6. Local browser technologies',
+        body: ['At present, we only rely on local mechanisms necessary for the basic service experience:'],
         plainList: [
-          'localStorage to remember language and theme preferences. It does not contain sensitive personal data.',
-          'Google AdSense cookies, only if advertising is enabled and subject to prior consent when legally required.',
+          'localStorage to remember language and theme preferences.',
+          'localStorage to record your optional cookie consent preference.',
+          'Stripe-owned mechanisms during hosted checkout whenever you access the payment flow.',
         ],
       },
     ],
@@ -238,26 +203,29 @@ const contentByLanguage = {
   },
 };
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy: React.FC = () => {
   const { language } = useLanguage();
-  const content = contentByLanguage[language] || contentByLanguage.en;
+  const content = contentByLanguage[language as 'es' | 'en'] || contentByLanguage.en;
 
   return (
     <>
-      <Helmet><title>{content.title}</title></Helmet>
+      <Helmet>
+        <title>{content.title}</title>
+        <meta name="description" content={content.description} />
+        <link rel="canonical" href={getCanonicalUrl(language, '/privacy')} />
+        <link rel="alternate" hrefLang="es" href={getCanonicalUrl('es', '/privacy')} />
+        <link rel="alternate" hrefLang="en" href={getCanonicalUrl('en', '/privacy')} />
+        <link rel="alternate" hrefLang="x-default" href={`${getDefaultUrl()}privacy/`} />
+      </Helmet>
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
         <main className="flex-1 max-w-5xl mx-auto px-6 py-16 w-full">
           <div className="mb-12 border-b border-border pb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
-              {content.updatedAt}
-            </p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3">{content.updatedAt}</p>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
               {content.heading.split(' ')[0]} <span className="text-primary">{content.heading.split(' ').slice(1).join(' ')}</span>
             </h1>
-            <p className="text-muted-foreground text-lg italic">
-              {content.intro}
-            </p>
+            <p className="text-muted-foreground text-lg italic">{content.intro}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -269,15 +237,12 @@ const PrivacyPolicy = () => {
                 <ul className="space-y-4 text-sm">
                   {content.quickSummary.map((item) => {
                     const Icon = item.icon;
-
                     return (
                       <li key={item.title} className="flex gap-3">
                         <Icon className="w-4 h-4 text-primary shrink-0" />
                         <span>
                           <strong>{item.title}:</strong>{' '}
-                          {item.mailto ? (
-                            <a href={`mailto:${item.description}`} className="underline">{item.description}</a>
-                          ) : item.description}
+                          {item.mailto ? <a href={`mailto:${item.description}`} className="underline">{item.description}</a> : item.description}
                         </span>
                       </li>
                     );
@@ -290,10 +255,7 @@ const PrivacyPolicy = () => {
               {content.sections.map((section) => (
                 <section key={section.title}>
                   <h2 className="text-2xl font-bold text-foreground mb-4">{section.title}</h2>
-
-                  {section.body?.map((paragraph) => (
-                    <p key={paragraph} className="mb-3">{paragraph}</p>
-                  ))}
+                  {section.body?.map((paragraph) => <p key={paragraph} className="mb-3">{paragraph}</p>)}
 
                   {section.list && (
                     <ul className="mt-3 space-y-1 text-sm list-none pl-4 border-l-2 border-primary/20">
@@ -331,9 +293,7 @@ const PrivacyPolicy = () => {
 
                   {section.plainList && (
                     <ul className="mt-2 space-y-1 text-sm list-disc pl-5">
-                      {section.plainList.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
+                      {section.plainList.map((item) => <li key={item}>{item}</li>)}
                     </ul>
                   )}
 
@@ -361,14 +321,12 @@ const PrivacyPolicy = () => {
                 <h2 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
                   <Globe className="w-5 h-5 text-primary" /> {content.commitmentTitle}
                 </h2>
-                <p className="text-sm italic">
-                  {content.commitment}
-                </p>
+                <p className="text-sm italic">{content.commitment}</p>
               </section>
             </div>
           </div>
         </main>
-        <MinimalFooter />
+        <Footer />
       </div>
     </>
   );

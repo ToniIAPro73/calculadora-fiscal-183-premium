@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { useLanguage } from '@/contexts/i18nContext';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import Header from '@/components/Header';
 import DateRangeSelector from '@/components/DateRangeSelector';
@@ -20,9 +21,11 @@ import { Button } from '@/components/ui/button';
 import { FileDown, ShieldCheck, Download, Sparkles, FileCheck2, CalendarRange, BadgeEuro, ScanSearch } from 'lucide-react';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
+import { getCanonicalUrl, getDefaultUrl } from '@/lib/seo';
 
 const TaxNomadCalculator: React.FC = () => {
   const { t, language } = useLanguage();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
@@ -99,9 +102,31 @@ const TaxNomadCalculator: React.FC = () => {
     toast.success(t('toast.fiscalYearChanged') || `Fiscal year changed to ${newYear}. Data has been reset.`);
   };
 
+  const isCalculatorAlias = location.pathname.includes('/calculator');
+  const canonicalPath = isCalculatorAlias ? '/calculator' : '/';
+  const pageTitle = language === 'es'
+    ? 'Calculadora Regla 183 Espana | Residencia Fiscal'
+    : '183-Day Rule Calculator Spain | Tax Residency';
+  const pageDescription = language === 'es'
+    ? 'Calcula tus dias de presencia en Espana y genera un informe PDF premium para analizar la regla de los 183 dias de residencia fiscal.'
+    : 'Calculate your days of presence in Spain and generate a premium PDF report to assess the 183-day tax residency rule.';
+
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={getCanonicalUrl(language, canonicalPath)} />
+        <link rel="alternate" hrefLang="es" href={getCanonicalUrl('es', canonicalPath)} />
+        <link rel="alternate" hrefLang="en" href={getCanonicalUrl('en', canonicalPath)} />
+        <link rel="alternate" hrefLang="x-default" href={`${getDefaultUrl()}${canonicalPath === '/' ? '' : 'calculator/'}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={getCanonicalUrl(language, canonicalPath)} />
+        <meta property="og:site_name" content="Regla183" />
+      </Helmet>
       <Header />
       <OnboardingTutorial />
       

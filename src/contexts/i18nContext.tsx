@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { translations } from '@/lib/translations';
+import { normalizeLanguage } from '@/lib/seo';
 
 interface I18nContextType {
   language: string;
@@ -9,11 +10,19 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const I18nProvider: React.FC<{ children: React.ReactNode; initialLanguage?: string }> = ({ children, initialLanguage = 'es' }) => {
   const [language, setLanguage] = useState(() => {
+    if (typeof window === 'undefined') {
+      return normalizeLanguage(initialLanguage);
+    }
+
     const savedLang = localStorage.getItem('language');
-    return savedLang || 'es';
+    return normalizeLanguage(initialLanguage || savedLang || 'es');
   });
+
+  useEffect(() => {
+    setLanguage(normalizeLanguage(initialLanguage));
+  }, [initialLanguage]);
 
   useEffect(() => {
     localStorage.setItem('language', language);

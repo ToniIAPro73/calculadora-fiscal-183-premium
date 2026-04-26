@@ -37,6 +37,7 @@ export const translations = {
       status: "Status",
     },
     summary: {
+      eyebrow: "FISCAL RESIDENCY",
       title: "Summary",
       status: "Status",
     },
@@ -83,6 +84,7 @@ export const translations = {
       advertisement: "Advertisement"
     },
     authority: {
+      eyebrow: "OFFICIAL SOURCES",
       title: "Understanding the 183-day rule",
       whatIsTitle: "What is the 183-day rule?",
       whatIsDesc: "The 183-day rule is a key criterion used by Spain and many EU countries to determine tax residency. If you spend 183 days or more in a calendar year within a country's territory, you are generally considered a tax resident of that country and may be subject to taxation on your worldwide income.",
@@ -247,6 +249,7 @@ export const translations = {
       status: "Estado",
     },
     summary: {
+      eyebrow: "RESIDENCIA FISCAL",
       title: "Resumen",
       status: "Estado",
     },
@@ -293,6 +296,7 @@ export const translations = {
       advertisement: "Anuncio"
     },
     authority: {
+      eyebrow: "FUENTES OFICIALES",
       title: "Entendiendo la regla de los 183 días",
       whatIsTitle: "¿Qué es la regla de los 183 días?",
       whatIsDesc: "La regla de los 183 días es un criterio clave utilizado por España y muchos países de la UE para determinar la residencia fiscal. Si pasas 183 días o más en un año natural dentro del territorio de un país, generalmente se te considera residente fiscal de ese país y puedes estar sujeto a impuestos sobre tus ingresos mundiales.",

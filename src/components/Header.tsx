@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, Languages } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
+import logo from '@/assets/logo.webp';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Header: React.FC = () => {
@@ -9,48 +10,57 @@ const Header: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="anclora-sticky-header sticky top-0 z-50 w-full px-4 py-4 md:px-6">
-      <div className="anclora-header-shell mx-auto flex w-full max-w-[88rem] items-center justify-between ac-topbar">
-        <Link to="/" className="ac-topbar__brand min-w-0 hover:opacity-90 transition-opacity cursor-pointer">
-          {/* Medallón Anclora — accesorio de ecosistema (32px) */}
+    <header className="app-header">
+      <div className="app-header__inner">
+        {/* Brand */}
+        <Link to="/" className="app-header__brand">
           <img
-            src="/anclora-group.png"
-            alt="Anclora"
-            className="h-8 w-8 rounded-full object-cover"
+            src={logo}
+            alt="Evaluación Fiscal 183"
+            className="h-11 w-11 rounded-full border border-white/10 object-cover shadow-lg"
           />
-          <div className="ac-topbar__titles min-w-0">
-            <p className="ac-topbar__eyebrow">
-              {language === 'es' ? 'Ecosistema Anclora' : 'Anclora Ecosystem'}
+          <div className="app-header__titles">
+            <p className="app-header__eyebrow">
+              {language === 'es' ? 'ECOSISTEMA ANCLORA' : 'ANCLORA ECOSYSTEM'}
             </p>
-            <h1 className="ac-topbar__title" style={{ fontFamily: 'var(--font-display, DM Sans, sans-serif)' }}>
+            <h1 className="app-header__name">
               {language === 'es' ? 'Evaluación Fiscal 183' : 'Fiscal Assessment 183'}
             </h1>
           </div>
         </Link>
 
-        <div className="ac-topbar__actions shrink-0">
-          <div className="ac-topbar__meta hidden xl:flex">
-            <span>{language === 'es' ? 'Herramienta de residencia fiscal' : 'Fiscal residency tool'}</span>
-          </div>
-          <div className="anclora-header-controls">
-            <button
-              type="button"
-              onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
-              className="anclora-control-chip"
-            >
-              <Languages className="h-4 w-4" />
-              <span>{language === 'es' ? 'English' : 'Español'}</span>
-            </button>
+        {/* Controls */}
+        <div className="app-header__controls">
+          <span className="app-header__tagline hidden xl:block">
+            {language === 'es' ? 'Herramienta de residencia fiscal' : 'Fiscal residency tool'}
+          </span>
 
-            <button
-              type="button"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="anclora-control-chip anclora-control-chip--icon"
-              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-          </div>
+          {/* Language toggle */}
+          <button
+            type="button"
+            onClick={() => setLanguage(language === 'es' ? 'en' : 'es')}
+            className="app-ctrl-pill"
+          >
+            <span className="app-ctrl-pill__flag">
+              {language === 'es' ? '🇬🇧' : '🇪🇸'}
+            </span>
+            <span className="app-ctrl-pill__label">
+              {language === 'es' ? 'English' : 'Español'}
+            </span>
+          </button>
+
+          {/* Theme toggle */}
+          <button
+            type="button"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="app-ctrl-icon"
+            aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+          >
+            {theme === 'dark'
+              ? <Sun className="h-4 w-4" />
+              : <Moon className="h-4 w-4" />
+            }
+          </button>
         </div>
       </div>
     </header>

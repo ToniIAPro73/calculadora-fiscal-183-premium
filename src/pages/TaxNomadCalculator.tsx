@@ -101,7 +101,7 @@ const TaxNomadCalculator: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <OnboardingTutorial />
       
@@ -124,21 +124,21 @@ const TaxNomadCalculator: React.FC = () => {
 
               <div className="grid gap-4 md:grid-cols-3">
                 <article className="anclora-metric-tile">
-                  <CalendarRange className="h-5 w-5 text-[var(--accent)]" />
+                  <CalendarRange className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Control temporal' : 'Timeline control'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Registra cada estancia sin perder precisión fiscal entre periodos.' : 'Register each stay period without losing fiscal accuracy across periods.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <ScanSearch className="h-5 w-5 text-[var(--accent)]" />
+                  <ScanSearch className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Lectura inmediata' : 'Instant reading'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Detecta enseguida zona segura, presión fiscal y riesgo de exceso.' : 'See safe zone, fiscal pressure, and over-limit risk at a glance.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <BadgeEuro className="h-5 w-5 text-[var(--accent)]" />
+                  <BadgeEuro className="h-5 w-5 text-[var(--app-text-accent,#CD7F32)]" />
                   <div>
                     <p className="anclora-metric-label">{language === 'es' ? 'Evidencia preparada' : 'Evidence ready'}</p>
                     <p className="anclora-metric-value">{language === 'es' ? 'Genera un informe limpio para revisión propia, asesoría o compliance.' : 'Generate a polished report for self-review, advisors, or compliance.'}</p>
@@ -152,7 +152,7 @@ const TaxNomadCalculator: React.FC = () => {
                 <span>{language === 'es' ? 'EJERCICIO FISCAL' : 'FISCAL YEAR'}</span>
               </div>
               <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
-              <p className="text-sm leading-7 text-[var(--text-secondary)]">
+              <p className="text-sm leading-7 text-[var(--app-text-secondary,rgba(240,237,232,0.65))]">
                 {language === 'es'
                   ? 'Trabaja por ejercicio, elimina solapes y mantén una lectura clara del umbral de residencia antes de emitir el informe.'
                   : 'Work one fiscal year at a time, remove overlaps, and keep a clear reading of your residency threshold before issuing the report.'}
@@ -178,16 +178,22 @@ const TaxNomadCalculator: React.FC = () => {
                 </p>
                 <div className="anclora-metric-grid">
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Date integrity</span>
-                    <strong>Overlap-aware counting across all periods</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Integridad de datos' : 'Date integrity'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'Conteo sin duplicados entre periodos solapados' : 'Overlap-aware counting across all periods'}
+                    </strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Decision support</span>
-                    <strong>Fast reading of safe zone, pressure zone and over-limit risk</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Lectura de decisión' : 'Decision support'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'Zona segura, presión fiscal y riesgo de exceso en tiempo real' : 'Safe zone, fiscal pressure and over-limit risk in real time'}
+                    </strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Output</span>
-                    <strong>Structured PDF evidence for advisory or personal review</strong>
+                    <span className="anclora-support-label">{language === 'es' ? 'Resultado' : 'Output'}</span>
+                    <strong className="text-sm font-semibold text-[var(--app-text-primary,#f0ede8)]">
+                      {language === 'es' ? 'PDF verificado para asesoría o revisión personal' : 'Verified PDF for advisory or personal review'}
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -244,7 +250,7 @@ const TaxNomadCalculator: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col items-center gap-3 pt-4">
-                    <div className="flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--accent)]">
+                    <div className="flex items-center gap-2 rounded-full border border-[var(--border-default)] bg-[color-mix(in_srgb,var(--surface-panel)_88%,transparent)] px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--app-text-accent,#CD7F32)]">
                       <ShieldCheck className="w-3 h-3" />
                       {t('calculator.verificationComplete')}
                     </div>
@@ -268,9 +274,9 @@ const TaxNomadCalculator: React.FC = () => {
               <span className="text-xs font-light uppercase tracking-widest text-[var(--text-secondary)]">{t('footer.copyright') || '© 2026 Anclora. All rights reserved.'}</span>
            </div>
            <div className="flex gap-10 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">
-              <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.privacy')}</Link>
-              <Link to="/terms" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.terms')}</Link>
-              <a href="mailto:hola@regla183.com" className="cursor-pointer transition-colors hover:text-[var(--accent)] hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
+              <Link to="/privacy" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.privacy')}</Link>
+              <Link to="/terms" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.terms')}</Link>
+              <a href="mailto:hola@regla183.com" className="cursor-pointer transition-colors hover:text-[var(--app-text-accent,#CD7F32)] hover:opacity-100">{t('footer.contact') || 'Contact'}</a>
            </div>
         </div>
       </footer>

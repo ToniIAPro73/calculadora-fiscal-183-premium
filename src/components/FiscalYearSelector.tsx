@@ -15,20 +15,20 @@ interface FiscalYearSelectorProps {
 }
 
 const FiscalYearSelector: React.FC<FiscalYearSelectorProps> = ({ selectedYear, onYearChange }) => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const availableYears = getAvailableYears(5);
   const currentYear = getCurrentYear();
 
   return (
-    <div className="flex items-center gap-3 rounded-full border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-subtle)_82%,transparent)] px-4 py-3">
+    <div className="flex flex-col gap-3 rounded-[28px] border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-subtle)_92%,transparent)] px-4 py-4 md:flex-row md:items-center">
       <label className="field-label whitespace-nowrap">
         {language === 'es' ? 'Ejercicio Fiscal' : 'Fiscal Year'}
       </label>
       <Select value={selectedYear.toString()} onValueChange={(value) => onYearChange(parseInt(value, 10))}>
-        <SelectTrigger className="field-input h-11 w-36 rounded-full text-sm font-light">
+        <SelectTrigger className="field-input h-12 w-full min-w-0 rounded-full text-sm font-medium md:w-[15rem]">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent className="border-[var(--border-default)] bg-[var(--surface-panel)] shadow-2xl">
+        <SelectContent>
           {availableYears.map((year) => (
             <SelectItem key={year} value={year.toString()}>
               {formatFiscalYear(year, language)}

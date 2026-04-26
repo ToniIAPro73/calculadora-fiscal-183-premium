@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/i18nContext';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, Check, Calendar, Merge, BarChart3, FileText } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ChevronRight, Calendar, Merge, BarChart3, FileText } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 const steps = [
   {
@@ -31,9 +31,7 @@ const OnboardingTutorial: React.FC = () => {
 
   useEffect(() => {
     const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
-    if (hasSeenOnboarding) {
-      setIsOpen(false);
-    }
+    setIsOpen(!hasSeenOnboarding);
   }, []);
 
   const handleNext = () => {
@@ -54,11 +52,11 @@ const OnboardingTutorial: React.FC = () => {
   return (
     <>
       {!isOpen ? (
-        <div className="mx-auto max-w-7xl px-4 pt-2 md:px-6">
+        <div className="mx-auto flex max-w-[88rem] justify-center px-4 pt-3 md:px-6">
           <Button
             variant="ghost"
             onClick={() => setIsOpen(true)}
-            className="rounded-full border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-panel)_82%,transparent)] px-4 text-[10px] text-[var(--text-eyebrow)] hover:text-[var(--text-primary)]"
+            className="min-h-[2.5rem] rounded-full border border-[var(--border-subtle)] bg-[color-mix(in_srgb,var(--surface-panel)_92%,transparent)] px-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-eyebrow)] hover:text-[var(--text-primary)]"
           >
             Guided Tour
           </Button>
@@ -66,7 +64,9 @@ const OnboardingTutorial: React.FC = () => {
       ) : null}
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="w-full max-w-[460px] overflow-hidden p-0 sm:max-w-[460px]">
+        <DialogContent className="my-auto w-full max-w-[460px] overflow-hidden p-0 sm:max-w-[460px]">
+          <DialogTitle className="sr-only">{t(`onboarding.step${currentStep + 1}Title`)}</DialogTitle>
+          <DialogDescription className="sr-only">{t(`onboarding.step${currentStep + 1}Desc`)}</DialogDescription>
           <div className="flex flex-col items-center space-y-8 p-12 text-center">
 
           <AnimatePresence mode="wait">

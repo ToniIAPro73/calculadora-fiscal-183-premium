@@ -20,7 +20,7 @@ export default function App() {
       'archetype-app',
       'role-consumer',
       'cluster-core',
-      'product-anclora-private-estates',
+      'product-anclora-adoption-lab',
     ];
 
     body.classList.add('anclora-adoption-body', ...taxonomyClasses);

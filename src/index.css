@@ -12,6 +12,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 
+html.anclora-adoption-root.dark {
+  --surface-canvas: #050a10;
+  --surface-subtle: #0b1520;
+  --surface-panel: #131d29;
+  --surface-panel-strong: #1a2431;
+  --surface-glass: rgba(15, 23, 33, 0.88);
+  --text-primary: #f3f6fb;
+  --text-secondary: #b6c0cf;
+  --text-muted: #8e9aab;
+  --text-eyebrow: #d4b15a;
+  --border-default: rgba(171, 184, 204, 0.22);
+  --border-subtle: rgba(171, 184, 204, 0.14);
+  --border-strong: rgba(221, 228, 239, 0.34);
+  --focus-ring: rgba(212, 177, 90, 0.58);
+  --accent: #d4b15a;
+  --accent-strong: #ebc872;
+  --domain-glow: rgba(212, 177, 90, 0.22);
+}
+
+html.anclora-adoption-root.light {
+  --surface-canvas: #f4efe6;
+  --surface-subtle: #ebe3d4;
+  --surface-panel: #fffaf1;
+  --surface-panel-strong: #ffffff;
+  --surface-glass: rgba(255, 250, 242, 0.9);
+  --text-primary: #1f2430;
+  --text-secondary: #4e5665;
+  --text-muted: #707989;
+  --text-eyebrow: #8a6a2f;
+  --border-default: rgba(108, 97, 76, 0.18);
+  --border-subtle: rgba(108, 97, 76, 0.1);
+  --border-strong: rgba(108, 97, 76, 0.28);
+  --focus-ring: rgba(157, 123, 56, 0.36);
+  --accent: #8b6a2f;
+  --accent-strong: #6f5321;
+  --domain-glow: rgba(201, 163, 86, 0.2);
+}
+
 @theme {
   --color-success: #00E599;
   --color-success-foreground: #050505;
@@ -121,6 +159,12 @@
       linear-gradient(180deg, #08131b 0%, #050a10 100%);
   }
 
+  .light .anclora-adoption-app {
+    background:
+      radial-gradient(circle at top, rgba(201, 163, 86, 0.12) 0%, transparent 24%),
+      linear-gradient(180deg, #fcf7ee 0%, #f2ecdf 100%);
+  }
+
   .premium-gradient {
     background: transparent;
   }
@@ -133,7 +177,65 @@
   }
 
   .ac-modal-backdrop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: 100vh;
+    padding: 2rem;
+    background:
+      radial-gradient(circle at top, color-mix(in srgb, var(--domain-glow) 18%, transparent) 0%, transparent 34%),
+      rgba(5, 10, 16, 0.82);
+  }
+
+  .light .ac-modal-backdrop {
+    background:
+      radial-gradient(circle at top, rgba(201, 163, 86, 0.14) 0%, transparent 34%),
+      rgba(244, 238, 227, 0.8);
+  }
+
+  .ac-modal {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--surface-panel-strong) 99%, #08111a 1%) 0%,
+        color-mix(in srgb, var(--surface-panel) 98%, #050a10 2%) 100%);
+    box-shadow: 0 30px 120px rgba(0, 0, 0, 0.48), var(--shadow-inset);
+  }
+
+  .ac-topbar {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--surface-panel-strong) 96%, transparent) 0%,
+        color-mix(in srgb, var(--surface-panel) 94%, transparent) 100%);
+  }
+
+  .light .ac-topbar,
+  .light .ac-surface-panel,
+  .light .ac-card,
+  .light .anclora-hero-grid,
+  .light .anclora-hero-aside,
+  .light .anclora-metric-tile,
+  .light .anclora-support-card,
+  .light .anclora-cta-card {
+    box-shadow: 0 18px 50px rgba(122, 102, 56, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .light .ac-topbar {
+    background:
+      linear-gradient(180deg, rgba(255, 251, 244, 0.98) 0%, rgba(252, 247, 238, 0.96) 100%);
+  }
+
+  .light .ac-surface-panel,
+  .light .ac-card {
+    background:
+      linear-gradient(180deg, rgba(255, 252, 246, 0.99) 0%, rgba(248, 241, 229, 0.98) 100%);
+  }
+
+  .ac-surface-panel,
+  .ac-card {
+    background:
+      linear-gradient(180deg,
+        color-mix(in srgb, var(--surface-panel) 98%, #07111a 2%) 0%,
+        color-mix(in srgb, var(--surface-canvas) 96%, #050a10 4%) 100%);
   }
 
   .neon-accent {
@@ -150,15 +252,15 @@
   }
 
   .anclora-hero-shell {
-    padding: 2rem 1rem 1rem;
+    padding: 1.5rem 1rem 1rem;
   }
 
   .anclora-hero-grid {
-    max-width: 80rem;
+    max-width: 88rem;
     margin: 0 auto;
     display: grid;
     gap: 1.5rem;
-    padding: clamp(1.5rem, 3vw, 2.25rem);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
     border: 1px solid var(--border-default);
     border-radius: calc(var(--surface-radius-panel) + 8px);
     background:
@@ -167,6 +269,14 @@
         color-mix(in srgb, var(--surface-panel) 86%, transparent) 55%,
         color-mix(in srgb, var(--domain-glow) 10%, var(--surface-panel)) 100%);
     box-shadow: var(--shadow-lg), var(--shadow-inset);
+  }
+
+  .light .anclora-hero-grid {
+    background:
+      linear-gradient(135deg,
+        rgba(255, 252, 246, 0.99) 0%,
+        rgba(247, 240, 227, 0.98) 58%,
+        rgba(237, 228, 209, 0.96) 100%);
   }
 
   .anclora-hero-copy {
@@ -202,10 +312,14 @@
     display: grid;
     align-content: start;
     gap: 1rem;
-    padding: 1.25rem;
+    padding: 1.35rem;
     border: 1px solid var(--border-subtle);
     border-radius: calc(var(--surface-radius-panel) - 10px);
-    background: color-mix(in srgb, var(--surface-subtle) 85%, transparent);
+    background: color-mix(in srgb, var(--surface-subtle) 94%, transparent);
+  }
+
+  .light .anclora-hero-aside {
+    background: rgba(255, 249, 240, 0.85);
   }
 
   .anclora-pill {
@@ -239,11 +353,18 @@
   .anclora-support-card {
     display: grid;
     gap: 0.65rem;
-    padding: 1rem 1.05rem;
+    align-content: start;
+    min-height: 9.5rem;
+    padding: 1.15rem;
     border: 1px solid var(--border-subtle);
     border-radius: 24px;
     background: color-mix(in srgb, var(--surface-subtle) 82%, transparent);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .light .anclora-metric-tile,
+  .light .anclora-support-card {
+    background: rgba(255, 251, 243, 0.92);
   }
 
   .anclora-metric-label,
@@ -269,7 +390,7 @@
   }
 
   .anclora-brand-title {
-    font-size: clamp(1.45rem, 2vw, 2rem);
+    font-size: clamp(1.2rem, 1.8vw, 1.7rem);
     line-height: 1.05;
   }
 
@@ -277,6 +398,93 @@
     margin-top: 5rem;
     padding: 4rem 0;
     border-top: 1px solid var(--border-subtle);
+  }
+
+  .anclora-sticky-header {
+    border-bottom: 1px solid var(--border-subtle);
+    background: rgba(7, 13, 20, 0.92);
+    box-shadow: 0 14px 36px rgba(4, 9, 14, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .light .anclora-sticky-header {
+    background: rgba(252, 247, 238, 0.94);
+    box-shadow: 0 14px 36px rgba(143, 119, 71, 0.08);
+  }
+
+  .anclora-header-shell {
+    gap: 1rem;
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 28px;
+  }
+
+  .ac-topbar__brand {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ac-topbar__titles {
+    min-width: 0;
+  }
+
+  .ac-topbar__title,
+  .anclora-brand-title {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .ac-topbar__eyebrow {
+    color: var(--text-eyebrow);
+  }
+
+  .ac-topbar__meta {
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .anclora-header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .anclora-control-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.9rem;
+    padding: 0 1rem;
+    border: 1px solid var(--border-default);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--surface-panel-strong) 94%, transparent);
+    color: var(--text-primary);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  }
+
+  .anclora-control-chip:hover {
+    transform: translateY(-1px);
+    border-color: var(--border-strong);
+  }
+
+  .anclora-control-chip--icon {
+    justify-content: center;
+    width: 2.9rem;
+    padding: 0;
+  }
+
+  .light .anclora-control-chip {
+    background: rgba(255, 250, 243, 0.96);
   }
 }
 
@@ -314,6 +522,36 @@
   }
 
   @media (max-width: 760px) {
+    .anclora-sticky-header {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .anclora-header-shell {
+      align-items: flex-start;
+      border-radius: 24px;
+      padding: 0.9rem;
+    }
+
+    .ac-topbar__brand {
+      align-items: flex-start;
+    }
+
+    .ac-topbar__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .anclora-header-controls {
+      width: 100%;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .anclora-control-chip {
+      min-width: 0;
+    }
+
     .anclora-hero-shell {
       padding-top: 1rem;
     }
@@ -321,6 +559,16 @@
     .anclora-hero-grid {
       padding: 1.25rem;
       border-radius: 28px;
+    }
+
+    .anclora-hero-title {
+      max-width: none;
+      font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .anclora-metric-tile,
+    .anclora-support-card {
+      min-height: auto;
     }
   }
 }

@@ -16,7 +16,7 @@ import { getCurrentYear } from '@/lib/fiscalYear';
 import { DateRange, mergeDateRanges, calculateUniqueDays, validateDateRanges } from '@/lib/dateRangeMerger';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileDown, ShieldCheck, Download, Sparkles, Building2, BriefcaseBusiness } from 'lucide-react';
+import { FileDown, ShieldCheck, Download, Sparkles, FileCheck2, CalendarRange, BadgeEuro, ScanSearch } from 'lucide-react';
 import logo from '@/assets/logo.webp';
 import { buildExampleReportPayload } from '@/lib/reportMetadata';
 import { generateTaxReport } from '@/lib/generatePdf';
@@ -112,7 +112,7 @@ const TaxNomadCalculator: React.FC = () => {
               <div className="anclora-hero-copy">
                 <div className="anclora-pill">
                   <Sparkles className="h-3.5 w-3.5" />
-                  <span>Adopted Into Anclora Ultra Premium</span>
+                  <span>{language === 'es' ? 'Calculadora privada lista para auditoría' : 'Private audit-ready residency calculator'}</span>
                 </div>
                 <h1 className="anclora-hero-title">
                   {t('calculator.heroTitlePrefix')} <span>{t('calculator.heroTitleSuffix')}</span>
@@ -124,24 +124,24 @@ const TaxNomadCalculator: React.FC = () => {
 
               <div className="grid gap-4 md:grid-cols-3">
                 <article className="anclora-metric-tile">
-                  <Building2 className="h-5 w-5 text-[var(--accent)]" />
+                  <CalendarRange className="h-5 w-5 text-[var(--accent)]" />
                   <div>
-                    <p className="anclora-metric-label">Positioning</p>
-                    <p className="anclora-metric-value">Institutional advisory shell</p>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Control temporal' : 'Timeline control'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Registra cada estancia sin perder precisión fiscal entre periodos.' : 'Register each stay period without losing fiscal accuracy across periods.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <ShieldCheck className="h-5 w-5 text-[var(--accent)]" />
+                  <ScanSearch className="h-5 w-5 text-[var(--accent)]" />
                   <div>
-                    <p className="anclora-metric-label">Evidence Layer</p>
-                    <p className="anclora-metric-value">Audit-ready compliance narrative</p>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Lectura inmediata' : 'Instant reading'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Detecta enseguida zona segura, presión fiscal y riesgo de exceso.' : 'See safe zone, fiscal pressure, and over-limit risk at a glance.'}</p>
                   </div>
                 </article>
                 <article className="anclora-metric-tile">
-                  <BriefcaseBusiness className="h-5 w-5 text-[var(--accent)]" />
+                  <BadgeEuro className="h-5 w-5 text-[var(--accent)]" />
                   <div>
-                    <p className="anclora-metric-label">Stress-Test Goal</p>
-                    <p className="anclora-metric-value">Validate UI/UX absorption capacity</p>
+                    <p className="anclora-metric-label">{language === 'es' ? 'Evidencia preparada' : 'Evidence ready'}</p>
+                    <p className="anclora-metric-value">{language === 'es' ? 'Genera un informe limpio para revisión propia, asesoría o compliance.' : 'Generate a polished report for self-review, advisors, or compliance.'}</p>
                   </div>
                 </article>
               </div>
@@ -149,11 +149,13 @@ const TaxNomadCalculator: React.FC = () => {
 
             <div className="anclora-hero-aside">
               <div className="anclora-pill anclora-pill--subtle">
-                <span>Fiscal Year Context</span>
+                <span>{language === 'es' ? 'Contexto del ejercicio fiscal' : 'Fiscal year context'}</span>
               </div>
               <FiscalYearSelector selectedYear={fiscalYear} onYearChange={handleFiscalYearChange} />
               <p className="text-sm leading-7 text-[var(--text-secondary)]">
-                This adopted surface reframes a standalone calculator into an ultra premium advisory experience without changing its underlying fiscal workflow.
+                {language === 'es'
+                  ? 'Trabaja cada ejercicio por separado, limpia los solapes y conserva una lectura clara del umbral de residencia antes de emitir el informe.'
+                  : 'Work one fiscal year at a time, remove overlaps, and keep a clear reading of your residency threshold before issuing the report.'}
               </p>
             </div>
           </div>
@@ -165,25 +167,25 @@ const TaxNomadCalculator: React.FC = () => {
           <div className="lg:col-span-8 space-y-12">
             <div className="ac-surface-panel ac-surface-panel--strong">
               <div className="ac-surface-panel__header">
-                <p className="ac-surface-panel__eyebrow">Adoption shell</p>
+                <p className="ac-surface-panel__eyebrow">Methodology</p>
                 <h2 className="ac-surface-panel__title">Private residency control workflow</h2>
               </div>
               <div className="ac-surface-panel__body">
                 <p>
-                  The original utility remains intact, but its surface is now evaluated against Anclora&apos;s ultra premium grammar: composure, advisory tone, evidentiary trust and institutional finish.
+                  Track physical presence, avoid duplicate day counting, and keep a premium-grade record ready for compliance review whenever you need to justify your position.
                 </p>
                 <div className="anclora-metric-grid">
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Profile target</span>
-                    <strong>Ultra premium app</strong>
+                    <span className="anclora-support-label">Date integrity</span>
+                    <strong>Overlap-aware counting across all periods</strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Surface role</span>
-                    <strong>Concierge-style compliance tool</strong>
+                    <span className="anclora-support-label">Decision support</span>
+                    <strong>Fast reading of safe zone, pressure zone and over-limit risk</strong>
                   </div>
                   <div className="anclora-support-card">
-                    <span className="anclora-support-label">Adoption mode</span>
-                    <strong>Foreign repo transformation</strong>
+                    <span className="anclora-support-label">Output</span>
+                    <strong>Structured PDF evidence for advisory or personal review</strong>
                   </div>
                 </div>
               </div>

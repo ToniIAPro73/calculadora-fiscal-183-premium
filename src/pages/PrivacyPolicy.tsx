@@ -7,7 +7,7 @@ import { useLanguage } from '@/contexts/i18nContext';
 
 const contentByLanguage = {
   es: {
-    title: 'Política de Privacidad · TaxNomad',
+    title: 'Política de Privacidad · Anclora',
     updatedAt: 'Última actualización: 20 de abril de 2026',
     heading: 'Política de Privacidad',
     intro: 'Transparencia total sobre el tratamiento de tus datos personales.',
@@ -122,7 +122,7 @@ const contentByLanguage = {
     commitment: 'No vendemos, alquilamos ni compartimos tu información personal con terceros para fines comerciales propios. Tu informe PDF es de tu exclusiva propiedad.',
   },
   en: {
-    title: 'Privacy Policy · TaxNomad',
+    title: 'Privacy Policy · Anclora',
     updatedAt: 'Last updated: April 20, 2026',
     heading: 'Privacy Policy',
     intro: 'Full transparency about how your personal data is processed.',

@@ -7,10 +7,10 @@ import { useLanguage } from '@/contexts/i18nContext';
 
 const contentByLanguage = {
   es: {
-    title: 'Términos de Servicio · TaxNomad',
+    title: 'Términos de Servicio · Anclora',
     updatedAt: 'Última actualización: 20 de abril de 2026',
     heading: 'Términos de Servicio',
-    intro: 'Condiciones legales de uso del servicio TaxNomad. Léelas antes de realizar cualquier compra.',
+    intro: 'Condiciones legales de uso del servicio Anclora. Léelas antes de realizar cualquier compra.',
     providerTitle: '1. Identificación del prestador del servicio',
     providerIntro: 'En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se informa:',
     providerList: [
@@ -22,7 +22,7 @@ const contentByLanguage = {
     ],
     purposeTitle: '2. Propósito del servicio y limitación de responsabilidad',
     purposeBody: [
-      'TaxNomad es una herramienta de utilidad técnica diseñada para ayudar a los usuarios a calcular sus días de presencia física en España con fines informativos.',
+      'Anclora es una herramienta de utilidad técnica diseñada para ayudar a los usuarios a calcular sus días de presencia física en España con fines informativos.',
       'El informe generado no constituye asesoramiento legal o fiscal oficial ni reemplaza la consulta con un asesor fiscal, abogado o gestor colegiado.',
       'La exactitud del resultado depende exclusivamente de los datos introducidos por el usuario.',
     ],
@@ -37,17 +37,17 @@ const contentByLanguage = {
     ],
     salesFooter: 'Si el PDF no pudiera descargarse por un error técnico imputable al servicio, el usuario podrá solicitar la regeneración del informe o el reembolso en hola@regla183.com en un plazo de 48 horas.',
     liabilityTitle: '4. Limitación de responsabilidad',
-    liabilityLead: 'TaxNomad no será responsable de:',
+    liabilityLead: 'Anclora no será responsable de:',
     liabilityList: [
       'Decisiones fiscales o legales tomadas basándose en el informe generado.',
       'Errores derivados de datos incorrectos o incompletos introducidos por el usuario.',
       'Cambios normativos posteriores a la fecha de generación del informe.',
       'Interrupciones temporales del servicio por mantenimiento o causas de fuerza mayor.',
     ],
-    liabilityFooter: 'En cualquier caso, la responsabilidad máxima de TaxNomad quedará limitada al importe abonado por el servicio contratado.',
+    liabilityFooter: 'En cualquier caso, la responsabilidad máxima de Anclora quedará limitada al importe abonado por el servicio contratado.',
     intellectualTitle: '5. Propiedad intelectual',
     intellectualBody: [
-      'Todos los elementos del sitio web, incluidos diseño, código, textos, logotipos y la marca TaxNomad, son propiedad exclusiva del titular del servicio y están protegidos por la normativa aplicable.',
+      'Todos los elementos del sitio web, incluidos diseño, código, textos, logotipos y la marca Anclora, son propiedad exclusiva del titular del servicio y están protegidos por la normativa aplicable.',
       'El informe PDF generado es de uso personal y exclusivo del usuario comprador. No puede ser revendido, redistribuido ni presentado como elaborado por un profesional fiscal colegiado.',
     ],
     lawTitle: '6. Legislación aplicable y resolución de disputas',
@@ -56,13 +56,13 @@ const contentByLanguage = {
       'Los consumidores de la UE pueden acceder a la plataforma europea de resolución de litigios en línea (ODR) en ec.europa.eu/consumers/odr.',
     ],
     changesTitle: '7. Modificaciones de los términos',
-    changesBody: 'TaxNomad se reserva el derecho de modificar estos Términos de Servicio en cualquier momento. Los cambios se publicarán en esta página con la fecha de actualización correspondiente.',
+    changesBody: 'Anclora se reserva el derecho de modificar estos Términos de Servicio en cualquier momento. Los cambios se publicarán en esta página con la fecha de actualización correspondiente.',
   },
   en: {
-    title: 'Terms of Service · TaxNomad',
+    title: 'Terms of Service · Anclora',
     updatedAt: 'Last updated: April 20, 2026',
     heading: 'Terms of Service',
-    intro: 'Legal terms governing the use of the TaxNomad service. Please read them before purchasing.',
+    intro: 'Legal terms governing the use of the Anclora service. Please read them before purchasing.',
     providerTitle: '1. Service provider identification',
     providerIntro: 'In accordance with article 10 of Spain’s Law 34/2002 on Information Society Services and Electronic Commerce, the following information is provided:',
     providerList: [
@@ -74,7 +74,7 @@ const contentByLanguage = {
     ],
     purposeTitle: '2. Service purpose and liability limitation',
     purposeBody: [
-      'TaxNomad is a technical utility designed to help users calculate days of physical presence in Spain for informational purposes.',
+      'Anclora is a technical utility designed to help users calculate days of physical presence in Spain for informational purposes.',
       'The generated report does not constitute official legal or tax advice and does not replace consultation with a qualified advisor.',
       'The accuracy of the result depends entirely on the data entered by the user.',
     ],
@@ -89,17 +89,17 @@ const contentByLanguage = {
     ],
     salesFooter: 'If the PDF cannot be downloaded due to a technical error attributable to the service, the user may request report regeneration or a refund at hola@regla183.com within 48 hours.',
     liabilityTitle: '4. Limitation of liability',
-    liabilityLead: 'TaxNomad shall not be liable for:',
+    liabilityLead: 'Anclora shall not be liable for:',
     liabilityList: [
       'Tax or legal decisions made based on the generated report.',
       'Errors derived from incomplete or incorrect user input.',
       'Regulatory changes introduced after the report generation date.',
       'Temporary service interruptions due to maintenance or force majeure.',
     ],
-    liabilityFooter: 'In any event, TaxNomad’s maximum liability shall be limited to the amount paid for the contracted service.',
+    liabilityFooter: 'In any event, Anclora’s maximum liability shall be limited to the amount paid for the contracted service.',
     intellectualTitle: '5. Intellectual property',
     intellectualBody: [
-      'All website elements, including design, code, texts, logos and the TaxNomad brand, are the exclusive property of the service owner and are protected by applicable intellectual property laws.',
+      'All website elements, including design, code, texts, logos and the Anclora brand, are the exclusive property of the service owner and are protected by applicable intellectual property laws.',
       'The generated PDF report is for the exclusive personal use of the purchasing user. It may not be resold, redistributed or presented as professional tax advice.',
     ],
     lawTitle: '6. Governing law and dispute resolution',
@@ -108,7 +108,7 @@ const contentByLanguage = {
       'EU consumers may access the European Online Dispute Resolution platform at ec.europa.eu/consumers/odr.',
     ],
     changesTitle: '7. Changes to these terms',
-    changesBody: 'TaxNomad reserves the right to modify these Terms of Service at any time. Any change will be published on this page together with the updated revision date.',
+    changesBody: 'Anclora reserves the right to modify these Terms of Service at any time. Any change will be published on this page together with the updated revision date.',
   },
 };
 

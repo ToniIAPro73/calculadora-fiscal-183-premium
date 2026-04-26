@@ -98,7 +98,7 @@ const PaymentSuccess: React.FC = () => {
         ranges: session.report_payload.ranges,
       });
 
-      doc.save(`TaxNomad_Report_2026_Premium.pdf`);
+      doc.save(`Informe_Fiscal_183_Anclora.pdf`);
       toast.success(t('toast.successReport') || 'Report downloaded successfully!');
     } catch (err) {
       const error = err as Error;
@@ -113,7 +113,7 @@ const PaymentSuccess: React.FC = () => {
     return (
       <>
         <Helmet>
-          <title>Payment Processing · TaxNomad</title>
+          <title>Procesando · Anclora</title>
         </Helmet>
         <div className="min-h-screen bg-background flex flex-col">
           <Header />
@@ -134,7 +134,7 @@ const PaymentSuccess: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{isVerified ? 'Payment Success' : 'Payment Status'} · TaxNomad</title>
+        <title>{isVerified ? 'Payment Success' : 'Payment Status'} · Anclora</title>
       </Helmet>
       <div className="min-h-screen premium-gradient flex flex-col font-sans text-foreground">
         <Header />

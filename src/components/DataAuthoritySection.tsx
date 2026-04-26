@@ -23,10 +23,13 @@ const DataAuthoritySection: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center gap-3">
-        <ShieldCheck className="w-5 h-5 text-primary" />
-        <h3 className="text-2xl font-display font-light">
-          {t('authority.title') || '183-Day Rule Authority'}
+      <div className="space-y-3">
+        <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-[var(--accent,var(--color-accent-primary))] flex items-center gap-2">
+          <ShieldCheck className="w-3 h-3" />
+          {t('authority.eyebrow') || 'FUENTES OFICIALES'}
+        </p>
+        <h3 className="text-2xl font-display font-semibold">
+          {t('authority.title') || 'Regla de los 183 Días'}
         </h3>
       </div>
 

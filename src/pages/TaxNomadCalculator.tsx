@@ -105,7 +105,7 @@ const TaxNomadCalculator: React.FC = () => {
       <Header />
       <OnboardingTutorial />
       
-      <main className="anclora-ultra-main">
+      <main className="anclora-premium-main">
         <section className="anclora-hero-shell">
           <div className="anclora-hero-grid">
             <div className="space-y-6">
